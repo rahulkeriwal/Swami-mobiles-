@@ -10,7 +10,7 @@
  html, body { 
      height: 100%; 
      width: 100%; 
-     overflow-x: hidden; /* लेफ्ट-राइट हिलना बिल्कुल बंद */
+     overflow-x: hidden;
  } 
 
  body { 
@@ -33,7 +33,7 @@
      position: relative; 
      z-index: 1; 
      width: 100%; 
-     max-width: 360px; /* मोबाइल के लिए एकदम सही चौड़ाई */
+     max-width: 360px; 
      background: rgba(255, 255, 255, 0.10); 
      border: 1.5px solid rgba(255, 255, 255, 0.35); 
      border-radius: 22px; 
@@ -89,9 +89,8 @@
  }
  .search-box input { width: 100%; background: transparent; border: none; outline: none; color: #fff; font-size: 15px; padding-left: 8px; }
  .search-box input::placeholder { color: rgba(255, 255, 255, 0.6); }
- .search-box svg { width: 18px; height: 18px; fill: rgba(255, 255, 255, 0.8); }
 
- /* --- MAIN CONTENT AREA (📱 FOR PRODUCT GRID) --- */
+ /* --- MAIN CONTENT AREA --- */
  .app-content { 
      position: relative; 
      z-index: 1; 
@@ -122,22 +121,22 @@
  .modal-content h3 { margin-bottom: 12px; color: #1b2a4a; font-size: 18px; }
  .modal-content input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccd5d4; border-radius: 8px; outline: none; font-size: 14px; }
 
- /* --- 📌 STRICTLY FIXED BOTTOM NAVIGATION BAR --- */
+ /* --- BOTTOM NAVIGATION BAR --- */
  .bottom-nav { 
      position: fixed; 
      bottom: 0; 
      left: 0; 
-     width: 100%; /* पूरी स्क्रीन कवर करेगा */
-     background: rgba(20, 35, 55, 0.92); /* थोड़ा सॉलिड किया ताकि पीछे का कंटेंट न दिखे */
+     width: 100%; 
+     background: rgba(20, 35, 55, 0.92); 
      border-top: 1px solid rgba(255, 255, 255, 0.15); 
      backdrop-filter: blur(25px); 
      -webkit-backdrop-filter: blur(25px); 
      display: flex; 
      justify-content: space-around; 
      align-items: center; 
-     padding: 6px 10px 12px 10px; /* बॉटम पैडिंग सेफ रखने के लिए */
+     padding: 6px 10px 12px 10px; 
      box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.4); 
-     z-index: 9999; /* हमेशा सबसे ऊपर रहेगा */
+     z-index: 9999; 
  }
  .nav-item { 
      display: flex; 
@@ -154,7 +153,6 @@
  .nav-item svg { width: 22px; height: 22px; fill: currentColor; margin-bottom: 2px; }
  .nav-item.active { color: #fff; font-weight: 600; }
  
- /* Unique Floating Cart Button Fix */
  .nav-item.unique-cart { 
      position: relative; 
      top: -14px; 
@@ -176,7 +174,7 @@
  
  <header class="main-header hidden" id="appHeader">
  <div class="search-box">
- <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+ <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff;margin-right:5px;"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
  <input type="text" placeholder="Search mobile, accessories...">
  </div>
  </header>
@@ -276,22 +274,21 @@
  onAuthStateChanged
  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
  
- // 📦 Realtime Database के फंक्शन्स इम्पोर्ट किए
  import { getDatabase, ref, onValue, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
  const firebaseConfig = {
-     apiKey: "AIzaSyDiZSWon47tBdSIkUB3qCSsU19LN_FOBgg",
-  authDomain: "swami-mobiles-29ee3.firebaseapp.com",
-  projectId: "swami-mobiles-29ee3",
-  storageBucket: "swami-mobiles-29ee3.firebasestorage.app",
-  messagingSenderId: "497794164748",
-  appId: "1:497794164748:web:fecc6f04615fa35a5f6629",
-  measurementId: "G-GL9VG05PRN"
+ apiKey: "AIzaSyDiZSWon47tBdSIkUB3qCSsU19LN_FOBgg",
+ authDomain: "swami-mobiles-29ee3.firebaseapp.com",
+ projectId: "swami-mobiles-29ee3",
+ storageBucket: "swami-mobiles-29ee3.firebasestorage.app",
+ messagingSenderId: "497794164748",
+ appId: "1:497794164748:web:fecc6f04615fa35a5f6629",
+ databaseURL: "https://swami-mobiles-29ee3-default-rtdb.firebaseio.com/" 
  };
 
  const app = initializeApp(firebaseConfig);
  const auth = getAuth(app);
- const database = getDatabase(app); // डेटाबेस इनिशियलाइज़ किया
+ const database = getDatabase(app); 
 
  const authContainer = document.getElementById('authContainer');
  const appHeader = document.getElementById('appHeader');
@@ -305,14 +302,13 @@
  appHeader.classList.remove('hidden'); 
  appBottomNav.classList.remove('hidden'); 
  mainAppContent.classList.remove('hidden'); 
- loadLiveProducts(); // लॉगिन होते ही प्रोडक्ट्स लोड होंगे
+ loadLiveProducts(); 
  }
 
  onAuthStateChanged(auth, (user) => {
  if (user) { activateMainDashboard(); }
  });
 
- // 🔄 Firebase से रीयल-टाइम प्रोडक्ट्स लोड करने का लॉजिक
  function loadLiveProducts() {
      mainAppContent.innerHTML = "<p style='text-align:center;color:#666;'>स्टोर लोड हो रहा है...</p>";
      const productsRef = ref(database, 'products');
@@ -335,7 +331,6 @@
                      </div>`;
              });
              
-             // सब Buy Now बटन पर क्लिक इवेंट जोड़ें
              document.querySelectorAll('.buy-btn').forEach(btn => {
                  btn.addEventListener('click', (e) => {
                      const name = e.target.getAttribute('data-name');
@@ -344,12 +339,11 @@
                  });
              });
          } else {
-             mainAppContent.innerHTML = "<p style='text-align:center;color:#777;padding-top:30px;'>अभी स्टोर में कोई प्रोडक्ट नहीं है।</p>";
+             mainAppContent.innerHTML = "<p style='text-align:center;color:#777;padding-top:30px;'>अभी स्टोर में कोई接 प्रोडक्ट नहीं है।</p>";
          }
      });
  }
 
- // 🛒 ऑर्डर मॉडल लॉजिक
  function openOrderModal(name, price) {
      currentSelectedProduct = { name, price };
      document.getElementById('modalProductTitle').innerText = name;
@@ -392,7 +386,6 @@
  document.getElementById('goToSignupLink').addEventListener('click', () => switchTab('signup'));
  document.getElementById('goToLoginLink').addEventListener('click', () => switchTab('login'));
 
- // 📱 नेविगेशन बार क्लिक हैंडलर
  window.handleNavClick = function(page, elementId) {
      document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
      document.getElementById(elementId).classList.add('active');
@@ -421,3 +414,18 @@
  });
 
  // LOGIN
+ document.getElementById('mainLoginForm').addEventListener('submit', (e) => {
+ e.preventDefault();
+ const email = document.getElementById('loginEmail').value;
+ const password = document.getElementById('loginPassword').value;
+ signInWithEmailAndPassword(auth, email, password)
+ .then(() => { activateMainDashboard(); })
+ .catch((err) => alert("Login Error:\n" + err.message));
+ });
+
+ // GOOGLE LOGIN
+ const googleProvider = new GoogleAuthProvider();
+ document.querySelectorAll('.google-login-btn').forEach(btn => {
+ btn.addEventListener('click', () => {
+ signInWithPopup(auth, googleProvider)
+ .then(() => { activa
