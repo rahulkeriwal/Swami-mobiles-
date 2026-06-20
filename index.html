@@ -82,6 +82,7 @@
      display: flex; 
      flex-direction: column; 
      justify-content: space-between; 
+     cursor: pointer;
  }
  .product-box-card img { 
      width: 100%; 
@@ -120,7 +121,7 @@
      font-weight: 800; 
      color: #d97a5e; 
  }
- .buy-btn-box { 
+ .view-btn-box { 
      background: #2a6b6b; 
      color: #fff; 
      border: none; 
@@ -129,9 +130,22 @@
      border-radius: 6px; 
      font-size: 10px; 
      font-weight: 700; 
-     cursor: pointer; 
      text-align: center; 
  }
+
+ /* 👑 CART STYLING */
+ .cart-list { display: flex; flex-direction: column; gap: 10px; width: 100%; padding: 5px 0; }
+ .cart-item { background: rgba(255, 255, 255, 0.95); border-radius: 12px; padding: 10px; display: flex; align-items: center; justify-content: space-between; gap: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+ .cart-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; background: #eee; }
+ .cart-item-details { flex: 1; text-align: left; }
+ .cart-item-title { font-size: 13px; font-weight: 700; color: #1b2a4a; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+ .cart-item-price { font-size: 13px; font-weight: 800; color: #d97a5e; margin-top: 2px; }
+ .cart-remove-btn { background: none; border: none; color: #e2654f; font-size: 12px; font-weight: 700; cursor: pointer; padding: 5px; }
+ 
+ .cart-summary { background: rgba(27, 42, 74, 0.9); border-radius: 16px; padding: 16px; color: #fff; margin-top: 15px; text-align: left; border: 1px solid rgba(255,255,255,0.2); }
+ .summary-row { display: flex; justify-content: space-between; font-size: 15px; font-weight: 700; margin-bottom: 12px; border-bottom: 1px dashed rgba(255,255,255,0.3); padding-bottom: 8px; }
+ .checkout-btn { width: 100%; background: #fff; color: #1b2a4a; border: none; padding: 12px; border-radius: 25px; font-weight: 800; font-size: 14px; cursor: pointer; text-align: center; box-shadow: 0 4px 12px rgba(255,255,255,0.2); transition: 0.2s; }
+ .checkout-btn:active { transform: scale(0.97); }
 
  /* 👑 10 CATEGORIES GRID CONTAINER STYLE */
  .category-page-grid {
@@ -162,10 +176,18 @@
      color: #1b2a4a;
  }
 
- .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 10005; }
- .modal-content { background: white; width: 100%; max-width: 320px; padding: 20px; border-radius: 20px; text-align: center; color: #333; }
- .modal-content h3 { margin-bottom: 12px; color: #1b2a4a; font-size: 18px; }
- .modal-content input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccd5d4; border-radius: 8px; outline: none; font-size: 14px; }
+ .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 10005; }
+ .modal-content { background: white; width: 100%; max-width: 340px; padding: 20px; border-radius: 20px; text-align: center; color: #333; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+ 
+ /* 📱 DETAIL MODAL STYLE */
+ #modalProductImg { width: 100%; max-height: 200px; object-fit: contain; border-radius: 12px; margin-bottom: 12px; background: #f9f9f9; }
+ #modalProductTitleDetail { font-size: 18px; font-weight: 700; color: #1b2a4a; margin-bottom: 6px; text-align: left; }
+ #modalProductDesc { font-size: 13px; color: #666; text-align: left; margin-bottom: 12px; max-height: 60px; overflow-y: auto; line-height: 1.4; }
+ .modal-price-row { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; justify-content: flex-start; }
+ .modal-before-p { font-size: 13px; text-decoration: line-through; color: #999; }
+ .modal-after-p { font-size: 18px; font-weight: 800; color: #d97a5e; }
+ .add-cart-btn { width: 100%; background: #2a6b6b; color: white; border: none; padding: 12px; border-radius: 25px; font-weight: 700; font-size: 15px; cursor: pointer; box-shadow: 0 4px 12px rgba(42, 107, 107, 0.3); margin-bottom: 8px; }
+ .close-txt-btn { width: 100%; background: transparent; color: #e2654f; border: none; font-weight: 600; cursor: pointer; font-size: 13px; padding: 4px 0; }
 
  .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(20, 35, 55, 0.95); border-top: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); display: flex; justify-content: space-around; align-items: center; padding: 6px 10px 12px 10px; box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.4); z-index: 9999; }
  .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; background: none; border: none; color: rgba(255, 255, 255, 0.6); font-size: 10px; cursor: pointer; flex: 1; }
@@ -239,9 +261,24 @@
 
  <div class="app-content hidden" id="mainAppContent"></div>
 
+ <div id="productDetailModal" class="modal hidden">
+     <div class="modal-content">
+         <img id="modalProductImg" src="" alt="Product">
+         <h3 id="modalProductTitleDetail">Product Title</h3>
+         <p id="modalProductDesc">Product full description text goes here...</p>
+         <div class="modal-price-row">
+             <span id="modalBeforePrice" class="modal-before-p"></span>
+             <span id="modalAfterPrice" class="modal-after-p"></span>
+         </div>
+         <button class="add-cart-btn" onclick="addToCartLive()">Add to Cart 🛒</button>
+         <button class="close-txt-btn" onclick="closeDetailModal()">Close</button>
+     </div>
+ </div>
+
  <div id="userOrderModal" class="modal hidden">
      <div class="modal-content">
-         <h3 id="modalProductTitle">Order Now</h3>
+         <h3>Checkout Details</h3>
+         <p style="font-size:13px; color:#666; margin-bottom:12px;">ऑर्डर पूरा करने के लिए अपना विवरण भरें।</p>
          <input type="text" id="orderCustName" placeholder="आपका नाम" required>
          <input type="tel" id="orderCustPhone" placeholder="मोबाइल नंबर" required>
          <button onclick="submitOrderLive()" style="width: 100%; background: #2a6b6b; color: white; border: none; padding: 10px; border-radius: 20px; font-weight: 700; cursor:pointer;">Order Confirm (COD)</button>
@@ -293,6 +330,7 @@
  
  let currentSelectedProduct = null;
  let allProductsArray = []; 
+ let userCartArray = []; // User Local Cart Holder
  let activeCategory = "All";
 
  // LIVE USER STATE DETECTOR
@@ -313,7 +351,7 @@
  }
 
  function deactivateMainDashboard() {
-     authContainer.remove('hidden'); 
+     authContainer.classList.remove('hidden'); 
      appHeader.classList.add('hidden'); 
      appBottomNav.classList.add('hidden'); 
      mainAppContent.classList.add('hidden'); 
@@ -361,11 +399,11 @@
          if(snapshot.exists()) {
              snapshot.forEach((childSnapshot) => {
                  let data = childSnapshot.val();
-                 data.key = childSnapshot.key; // स्टोर की-वैल्यू ट्रैक रखने के लिए
+                 data.key = childSnapshot.key; 
                  allProductsArray.push(data);
              });
          }
-         renderCurrentTab(); // करंट टैब रेंडर करें
+         renderCurrentTab(); 
      });
  }
 
@@ -376,9 +414,13 @@
      if(productsToRender.length > 0) {
          let gridHTML = '<div class="user-grid">';
          productsToRender.forEach((product) => {
+             let safeName = (product.name || '').replace(/'/g, "\\'");
+             let safeDesc = (product.description || 'कोई विवरण उपलब्ध नहीं है।').replace(/'/g, "\\'").replace(/\n/g, " ");
+             let safeImg = product.image || 'https://via.placeholder.com/150';
+
              gridHTML += `
-                 <div class="product-box-card">
-                     <img src="${product.image || 'https://via.placeholder.com/150'}" alt="Product">
+                 <div class="product-box-card" onclick="openDetailModal('${product.key}', '${safeName}', '${product.beforePrice}', '${product.afterPrice}', '${safeImg}', '${safeDesc}')">
+                     <img src="${safeImg}" alt="Product">
                      <div>
                          <div class="p-box-title">${product.name}</div>
                          <div class="price-box-row">
@@ -386,13 +428,13 @@
                              <span class="after-p-box">${product.afterPrice}</span>
                          </div>
                      </div>
-                     <button class="buy-btn-box" onclick="openOrderModal('${product.key}', '${product.name.replace(/'/g, "\\'")}', '${product.afterPrice}')">Buy</button>
+                     <div class="view-btn-box">View</div>
                  </div>`;
          });
          gridHTML += '</div>';
          mainAppContent.innerHTML = gridHTML;
      } else {
-          mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;'>इस कैटेगरी में कोई प्रोडक्ट नहीं मिला।</p>";
+         mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;'>इस कैटेगरी में कोई प्रोडक्ट नहीं मिला।</p>";
      }
  }
 
@@ -412,7 +454,7 @@
      } else if (currentTab === "category") {
          renderCategoryGridPage();
      } else if (currentTab === "cart") {
-         mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;'>🛒 आपका कार्ट खाली है।</p>";
+         renderCartItemsPage(); // लोड कार्ट फंक्शन
      } else if (currentTab === "offers") {
          mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;'>🔥 महासेल डील्स जल्द आ रही हैं!</p>";
      } else if (currentTab === "me") {
@@ -461,10 +503,81 @@
      }
  }
 
+ // 📱 OPEN DETAIL MODAL FUNCTION
+ window.openDetailModal = function(key, name, beforePrice, afterPrice, img, desc) {
+     currentSelectedProduct = { key: key, name: name, beforePrice: beforePrice, price: afterPrice, image: img, description: desc };
+     
+     document.getElementById('modalProductImg').src = img;
+     document.getElementById('modalProductTitleDetail').innerText = name;
+     document.getElementById('modalProductDesc').innerText = desc;
+     document.getElementById('modalBeforePrice').innerText = beforePrice;
+     document.getElementById('modalAfterPrice').innerText = afterPrice;
+     
+     document.getElementById('productDetailModal').classList.remove('hidden');
+ }
+
+ window.closeDetailModal = function() {
+     document.getElementById('productDetailModal').classList.add('hidden');
+ }
+
+ // 🛒 ADD TO CART TRIGGER LIVE
+ window.addToCartLive = function() {
+     if(currentSelectedProduct) {
+         userCartArray.push(currentSelectedProduct);
+         alert(`${currentSelectedProduct.name} को आपके कार्ट में जोड़ दिया गया है!`);
+         closeDetailModal();
+     }
+ }
+
+ // 👑 RENDER CART DYNAMICALLY WITH TOTAL & CHECKOUT
+ function renderCartItemsPage() {
+     if (userCartArray.length === 0) {
+         mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;'>🛒 आपका कार्ट खाली है।</p>";
+         return;
+     }
+
+     let cartHTML = '<div class="cart-list">';
+     let totalAmount = 0;
+
+     userCartArray.forEach((item, index) => {
+         // नंबर साफ़ करने के लिए ताकि कैलकुलेशन सही हो (उदा. ₹15,000 -> 15000)
+         let cleanPrice = parseInt(item.price.replace(/[^0-8]/g, '')) || 0;
+         totalAmount += cleanPrice;
+
+         cartHTML += `
+             <div class="cart-item">
+                 <img src="${item.image}" alt="Product">
+                 <div class="cart-item-details">
+                     <div class="cart-item-title">${item.name}</div>
+                     <div class="cart-item-price">${item.price}</div>
+                 </div>
+                 <button class="cart-remove-btn" onclick="removeFromCartLive(${index})">Remove</button>
+             </div>`;
+     });
+
+     cartHTML += '</div>';
+
+     // टोटल और चेकआउट ब्लॉक जोड़ना
+     cartHTML += `
+         <div class="cart-summary">
+             <div class="summary-row">
+                 <span>Total Payable:</span>
+                 <span>₹${totalAmount.toLocaleString('en-IN')}</span>
+             </div>
+             <button class="checkout-btn" onclick="openOrderModal()">Checkout (Order Now) 🚀</button>
+         </div>`;
+
+     mainAppContent.innerHTML = cartHTML;
+ }
+
+ // REMOVE ITEM FROM CART
+ window.removeFromCartLive = function(index) {
+     userCartArray.splice(index, 1);
+     renderCartItemsPage();
+ }
+
  // ORDER MODAL FUNCTIONS
- window.openOrderModal = function(key, name, price) {
-     currentSelectedProduct = { key: key, name: name, price: price };
-     document.getElementById('modalProductTitle').innerText = name;
+ window.openOrderModal = function() {
      document.getElementById('userOrderModal').classList.remove('hidden');
  }
 
@@ -472,9 +585,9 @@
      document.getElementById('userOrderModal').classList.add('hidden');
      document.getElementById('orderCustName').value = "";
      document.getElementById('orderCustPhone').value = "";
-     currentSelectedProduct = null;
  }
 
+ // FINALIZE & SUBMIT ENTIRE CART ORDER TO FIREBASE
  window.submitOrderLive = function() {
      const name = document.getElementById('orderCustName').value.trim();
      const phone = document.getElementById('orderCustPhone').value.trim();
@@ -484,19 +597,26 @@
          return;
      }
 
-     if(currentSelectedProduct) {
+     if(userCartArray.length > 0) {
+         // कार्ट के सभी आइटम्स का डेटा कलेक्ट करना
+         const itemsOrdered = userCartArray.map(item => ({
+             productKey: item.key,
+             productName: item.name,
+             price: item.price
+         }));
+
          const orderData = {
-             productKey: currentSelectedProduct.key,
-             productName: currentSelectedProduct.name,
-             price: currentSelectedProduct.price,
              customerName: name,
              customerPhone: phone,
+             items: itemsOrdered,
              timestamp: Date.now()
          };
 
          database.ref('orders').push(orderData).then(() => {
              alert("आपका ऑर्डर सफलतापूर्वक दर्ज हो गया है!");
+             userCartArray = []; // ऑर्डर होते ही कार्ट खाली करें
              closeOrderModal();
+             handleNavClick('home', 'nav-home'); // होम पर भेजें
          }).catch((err) => {
              alert("ऑर्डर दर्ज करने में समस्या आई: " + err.message);
          });
