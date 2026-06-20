@@ -116,7 +116,7 @@
 
  .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 10005; }
  .modal-content { background: white; width: 100%; max-width: 340px; padding: 20px; border-radius: 20px; text-align: center; color: #333; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
- input[type="text"], input[type="tel"], input[type="password"] { width: 100%; padding: 10px 14px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 12px; outline: none; font-size: 14px; color: #333; }
+ input[type="text"], input[type="email"], input[type="tel"], input[type="password"] { width: 100%; padding: 10px 14px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 12px; outline: none; font-size: 14px; color: #333; }
  .payment-select { width: 100%; padding: 10px 14px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 12px; outline: none; font-size: 14px; color: #333; font-weight: 600; }
  
  #modalProductImg { width: 100%; max-height: 190px; object-fit: contain; border-radius: 12px; margin-bottom: 12px; background: #f9f9f9; }
@@ -160,32 +160,20 @@
      <div id="loginForm"> 
          <div class="toggle-method"> 
              <button class="active" id="loginEmailBtn">Email</button> 
-             <button id="loginPhoneBtn">Phone</button> 
          </div> 
          <form id="mainLoginForm" onsubmit="event.preventDefault(); handleLogin();"> 
              <div class="input-group" id="loginEmailGroup"> 
                  <label>Email</label> 
                  <input type="email" id="loginEmail" placeholder="your@email.com" required> 
              </div> 
-             <div class="input-group hidden" id="loginPhoneGroup"> 
-                 <label>Phone Number</label> 
-                 <input type="tel" id="loginPhone" placeholder="+91 98765 43210"> 
-             </div> 
              <div class="input-group"> 
                  <label>Password</label> 
                  <input type="password" id="loginPassword" placeholder="••••••••" required> 
              </div> 
-             <div class="options-row"> 
-                 <label class="checkbox-row"><input type="checkbox"> Remember me</label> 
-                 <a href="#">Forgot?</a> 
-             </div> 
              <button type="submit" class="submit-btn">Login</button> 
          </form> 
-         <div class="divider"><span>or continue with</span></div> 
-         <div class="social-buttons"> 
-             <button class="social-btn" onclick="handleGoogleLogin()">Google</button> 
-             <button class="social-btn">Facebook</button> 
-         </div> 
+         <div class="divider"><span>or</span></div> 
+         <button class="social-btn" style="width:100%;" onclick="handleGoogleLogin()">Continue with Google</button> 
          <p class="switch-text">Don't have an account? <a onclick="switchTab('signup')">Register</a></p> 
      </div> 
 
@@ -247,7 +235,7 @@
  <div id="editAddressModal" class="modal hidden">
      <div class="modal-content">
          <h3 style="margin-bottom:12px; color:#1b2a4a;">Update Address</h3>
-         <input type="text" id="newAddressInput" placeholder="House No, Street, City, Pincode...">
+         <input type="text" id="newAddressInput" placeholder="House No, Street, City...">
          <button onclick="saveProfileAddressLive()" style="width: 100%; background: #2a6b6b; color: white; border: none; padding: 10px; border-radius: 20px; font-weight: 700; cursor:pointer;">Save Address</button>
          <button onclick="closeEditAddressModal()" style="width: 100%; background: transparent; color: #e2654f; border: none; margin-top: 8px; font-weight:600; cursor:pointer;">Cancel</button>
      </div>
@@ -264,7 +252,7 @@
 
  <div id="cartToast" class="toast-cylinder">
      <span class="toast-success-icon">✓</span>
-     <span id="toastMessage">Product added to cart</span>
+     <span id="toastMessage">Action Completed</span>
  </div>
 
  <div class="bottom-nav hidden" id="appBottomNav">
@@ -289,6 +277,7 @@
      </button> 
  </div>
   <script>
+ // Firebase Initialization Config
  const firebaseConfig = {
      apiKey: "AIzaSyDiZSWon47tBdSIkUB3qCSsU19LN_FOBgg",
      authDomain: "swami-mobiles-29ee3.firebaseapp.com",
@@ -317,12 +306,13 @@
  let userCustomAddress = "Click edit to add your delivery address"; 
  let userCustomAvatar = localStorage.getItem('swami_user_avatar') || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
- // LINKS & PAYTM CONFIGURATION
+ // APP SOCIAL REFS & UPI ROUTE CONFIG
  const YOUTUBE_LINK = "#";   
  const WHATSAPP_LINK = "#";  
  const INSTAGRAM_LINK = "#"; 
- const MY_PAYTM_UPI_ID = "YOUR_PAYTM_UPI_HERE@paytm"; // <-- Yahan apni Paytm Business UPI ID dalo!
+ const MY_PAYTM_UPI_ID = "YOUR_PAYTM_UPI_HERE@paytm"; // <-- Yahan apni Paytm UPI ID change karo
 
+ // Auth Observer State Handler
  auth.onAuthStateChanged((user) => {
      if (user) { 
          database.ref('users/' + user.uid).once('value').then((snapshot) => {
@@ -354,7 +344,8 @@
  }
 
  function deactivateMainDashboard() {
-     authContainer.classList.remove('hidden'); 
+     authContainer.remove('hidden'); // Show Login Box
+     authContainer.classList.remove('hidden');
      appHeader.classList.add('hidden'); 
      appBottomNav.classList.add('hidden'); 
      mainAppContent.classList.add('hidden'); 
@@ -410,19 +401,19 @@
                  email: result.user.email
              });
          }
-     }).catch((err) => showCustomToastLive("Google Sign-In Error"));
+     }).catch((err) => showCustomToastLive("Google Authentication Failed"));
  }
 
  window.handleLogout = function() {
      auth.signOut().then(() => { 
          localStorage.removeItem('swami_cart'); 
          userCartArray = [];
-         showCustomToastLive("Successfully Logged Out!"); 
+         showCustomToastLive("Logged Out Successfully!"); 
      });
  }
 
- function loadLiveProducts() {
-     mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:20px;'>Loading Store...</p>";
+   function loadLiveProducts() {
+     mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:20px;'>Syncing Catalog...</p>";
      database.ref('products').on('value', (snapshot) => {
          allProductsArray = [];
          if(snapshot.exists()) {
@@ -614,8 +605,8 @@
          reader.onload = function(e) { userCustomAvatar = e.target.result; localStorage.setItem('swami_user_avatar', userCustomAvatar); document.getElementById('userProfilePic').src = userCustomAvatar; };
          reader.readAsDataURL(inputElement.files[0]);
      }
- }
- function renderCategoryGridPage() {
+      }
+   function renderCategoryGridPage() {
      mainAppContent.innerHTML = `<div class="category-page-grid">
          <button class="category-card-btn" onclick="openCategoryFromGrid('iphone')">🍏 iPhone</button>
          <button class="category-card-btn" onclick="openCategoryFromGrid('samsung')">📱 Samsung</button>
@@ -628,8 +619,8 @@
      </div>`;
  }
  window.openCategoryFromGrid = function(catKey) { activeCategory = catKey; handleNavClick('home', 'nav-home'); }
- window.filterBySpecificCategory = function(catKey) { activeCategory = catKey; if(catKey === "All") { renderUserProductsGrid(allProductsArray); } else { renderUserProductsGrid(allProductsArray.filter(p => p.category === catKey)); } 
-  window.handleSearch = function() { let query = document.getElementById('searchInput').value.toLowerCase().trim(); if(query === "") { renderCurrentTab(); } else { renderUserProductsGrid(allProductsArray.filter(p => p.name.toLowerCase().includes(query))); } }
+ window.filterBySpecificCategory = function(catKey) { activeCategory = catKey; if(catKey === "All") { renderUserProductsGrid(allProductsArray); } else { renderUserProductsGrid(allProductsArray.filter(p => p.category === catKey)); } }
+ window.handleSearch = function() { let query = document.getElementById('searchInput').value.toLowerCase().trim(); if(query === "") { renderCurrentTab(); } else { renderUserProductsGrid(allProductsArray.filter(p => p.name.toLowerCase().includes(query))); } }
  window.openDetailModal = function(key, name, beforePrice, afterPrice, img, desc) { currentSelectedProduct = { key: key, name: name, beforePrice: beforePrice, price: afterPrice, image: img, description: desc }; document.getElementById('modalProductImg').src = img; document.getElementById('modalProductTitleDetail').innerText = name; document.getElementById('modalProductDesc').innerText = desc; document.getElementById('modalBeforePrice').innerText = beforePrice; document.getElementById('modalAfterPrice').innerText = afterPrice; document.getElementById('productDetailModal').classList.remove('hidden'); }
  window.closeDetailModal = function() { document.getElementById('productDetailModal').classList.add('hidden'); }
  function showCustomToastLive(message) { let toast = document.getElementById('cartToast'); document.getElementById('toastMessage').innerText = message; toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); }, 2000); }
@@ -660,18 +651,11 @@
 
      const localOrderId = "SWAMI_" + Date.now();
 
-     // Case 1: Agar user Paytm UPI chunta hai
      if(pMethod === "PAYTM_UPI") {
          let upiUrl = `upi://pay?pa=${encodeURIComponent(MY_PAYTM_UPI_ID)}&pn=Swami%20Mobiles&am=${totalAmount}&cu=INR&tn=Order%20${localOrderId}`;
-         
-         // Direct mobile payment apps toggle trigger karega
          window.location.href = upiUrl;
-
-         // User payment karke jaise hi app par lautega, order automatically store ho chuka hoga
          saveOrderToFirebaseLive(name, phone, "Paytm UPI / Online", localOrderId);
-     } 
-     // Case 2: Agar user Cash on Delivery chunta hai
-     else {
+     } else {
          saveOrderToFirebaseLive(name, phone, "Cash on Delivery (COD)", localOrderId);
      }
  }
@@ -688,7 +672,7 @@
          userCartArray = []; 
          localStorage.removeItem('swami_cart'); 
          closeOrderModal(); 
-         alert("Order updates sent! Thank you. 🎉");
+         alert("Order Placed Successfully! 🎉");
          activeCategory = "All"; 
          handleNavClick('home', 'nav-home'); 
      });
