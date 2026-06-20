@@ -53,36 +53,30 @@
  .search-box input { width: 100%; background: transparent; border: none; outline: none; color: #fff; font-size: 15px; padding-left: 8px; }
  .search-box input::placeholder { color: rgba(255, 255, 255, 0.6); }
 
- /* 👑 CATEGORY SCROLL WRAPPER (Right To Left) */
- .category-scroll-container { display: flex; gap: 10px; overflow-x: auto; padding: 12px 4px; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; width: 100%; max-width: 360px; margin: 65px auto 0 auto; z-index: 99; position: relative;}
- .category-scroll-container::-webkit-scrollbar { display: none; }
- .cat-pill { background: rgba(255,255,255,0.2); color: #fff; padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(255,255,255,0.3); white-space: nowrap; cursor: pointer; transition: all 0.2s ease; backdrop-filter: blur(10px); }
- .cat-pill.active { background: #fff; color: #1b2a4a; border-color: #fff; box-shadow: 0 4px 12px rgba(255,255,255,0.3); }
-
- /* 🛒 BOX VIEW MODERATION GRID - UPDATE */
+ /* 🛒 BOX VIEW MODERATION GRID */
  .app-content { 
      position: relative; 
      z-index: 1; 
      width: 100%; 
      max-width: 360px; 
-     background: transparent; /* पीछे का सफेद बॉक्स हटाया */
+     background: transparent; 
      border-radius: 0; 
      padding: 8px; 
      color: #333; 
-     margin-top: 5px; 
+     margin-top: 65px; /* ऊपर से स्पेस सेट किया क्योंकि पुराना बार हट चुका है */
      margin-bottom: 90px; 
  }
  .user-grid { 
      display: grid; 
      grid-template-columns: repeat(2, 1fr); 
-     gap: 10px; /* डब्बों के बीच की दूरी */
+     gap: 10px; 
      width: 100%; 
      text-align: left; 
  }
  .product-box-card { 
-     background: rgba(255, 255, 255, 0.95); /* सुंदर चमकदार ग्लास लुक डब्बा */
+     background: rgba(255, 255, 255, 0.95); 
      border-radius: 14px; 
-     padding: 8px; /* पैडिंग कम करके डब्बा छोटा किया */
+     padding: 8px; 
      border: 1px solid rgba(255,255,255,0.2); 
      box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
      display: flex; 
@@ -98,7 +92,7 @@
      margin-bottom: 6px; 
  }
  .p-box-title { 
-     font-size: 12px; /* छोटा साफ़ फ़ॉन्ट */
+     font-size: 12px; 
      font-weight: 700; 
      color: #1b2a4a; 
      margin-bottom: 2px; 
@@ -130,7 +124,7 @@
      background: #2a6b6b; 
      color: #fff; 
      border: none; 
-     padding: 6px; /* बटन स्लिम किया */
+     padding: 6px; 
      width: 100%; 
      border-radius: 8px; 
      font-size: 11px; 
@@ -138,6 +132,35 @@
      cursor: pointer; 
      text-align: center; 
      box-shadow: 0 3px 6px rgba(42,107,107,0.15); 
+ }
+
+ /* 👑 10 CATEGORIES GRID CONTAINER STYLE */
+ .category-page-grid {
+     display: grid;
+     grid-template-columns: repeat(2, 1fr);
+     gap: 12px;
+     width: 100%;
+     padding: 10px 0;
+ }
+ .category-card-btn {
+     background: rgba(255, 255, 255, 0.15);
+     border: 1.5px solid rgba(255, 255, 255, 0.25);
+     border-radius: 16px;
+     padding: 20px 10px;
+     color: #fff;
+     font-size: 14px;
+     font-weight: 700;
+     cursor: pointer;
+     text-align: center;
+     backdrop-filter: blur(10px);
+     -webkit-backdrop-filter: blur(10px);
+     transition: all 0.2s ease;
+     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+ }
+ .category-card-btn:active {
+     transform: scale(0.96);
+     background: #fff;
+     color: #1b2a4a;
  }
 
  .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 10005; }
@@ -164,15 +187,6 @@
          <input type="text" placeholder="Search mobile, accessories...">
      </div>
  </header>
-
- <div class="category-scroll-container hidden" id="appCategoryBar">
-     <button class="cat-pill active" onclick="filterUserCategory('All', this)">✨ All Products</button>
-     <button class="cat-pill" onclick="filterUserCategory('iPhone', this)">🍏 iPhone</button>
-     <button class="cat-pill" onclick="filterUserCategory('Samsung', this)">📱 Samsung</button>
-     <button class="cat-pill" onclick="filterUserCategory('OnePlus', this)">🔴 OnePlus</button>
-     <button class="cat-pill" onclick="filterUserCategory('Vivo', this)">💎 Vivo/Oppo</button>
-     <button class="cat-pill" onclick="filterUserCategory('Accessories', this)">🎧 Accessories</button>
- </div>
 
  <div class="container" id="authContainer"> 
      <div class="tabs"> 
@@ -275,7 +289,6 @@
 
  const authContainer = document.getElementById('authContainer');
  const appHeader = document.getElementById('appHeader');
- const appCategoryBar = document.getElementById('appCategoryBar');
  const appBottomNav = document.getElementById('appBottomNav');
  const mainAppContent = document.getElementById('mainAppContent');
  
@@ -295,7 +308,6 @@
  function activateMainDashboard() {
      authContainer.classList.add('hidden'); 
      appHeader.classList.remove('hidden'); 
-     appCategoryBar.classList.remove('hidden');
      appBottomNav.classList.remove('hidden'); 
      mainAppContent.classList.remove('hidden'); 
      loadLiveProducts(); 
@@ -304,7 +316,6 @@
  function deactivateMainDashboard() {
      authContainer.classList.remove('hidden'); 
      appHeader.classList.add('hidden'); 
-     appCategoryBar.classList.add('hidden');
      appBottomNav.classList.add('hidden'); 
      mainAppContent.classList.add('hidden'); 
  }
@@ -353,38 +364,20 @@
                  allProductsArray.push(childSnapshot.val());
              });
          }
-         renderUserProductsGrid();
+         // डिफ़ॉल्ट रूप से होम पर सारे प्रोडक्ट्स दिखेंगे
+         if(activeCategory === "All") {
+             renderUserProductsGrid(allProductsArray);
+         }
      });
  }
 
- // CATEGORY PILL CLICK HANDLER
- window.filterUserCategory = function(categoryName, element) {
-     activeCategory = categoryName;
-     document.querySelectorAll('.cat-pill').forEach(btn => btn.classList.remove('active'));
-     element.classList.add('active');
-     renderUserProductsGrid();
- }
-
  // RENDER PRODUCTS IN BOX TYPE GRID
- function renderUserProductsGrid() {
+ function renderUserProductsGrid(productsToRender) {
      mainAppContent.innerHTML = "";
-     
-     let filteredProducts = allProductsArray;
-     if(activeCategory !== "All") {
-         filteredProducts = allProductsArray.filter(prod => {
-             const name = prod.name.toLowerCase();
-             if(activeCategory === "iPhone") return name.includes('iphone') || name.includes('apple');
-             if(activeCategory === "Samsung") return name.includes('samsung') || name.includes('galaxy');
-             if(activeCategory === "OnePlus") return name.includes('oneplus');
-             if(activeCategory === "Vivo") return name.includes('vivo') || name.includes('oppo');
-             if(activeCategory === "Accessories") return name.includes('buds') || name.includes('earbuds') || name.includes('charger') || name.includes('cover') || name.includes('glass') || name.includes('c-type') || name.includes('cable');
-             return false;
-         });
-     }
 
-     if(filteredProducts.length > 0) {
+     if(productsToRender.length > 0) {
          let gridHTML = '<div class="user-grid">';
-         filteredProducts.forEach((product) => {
+         productsToRender.forEach((product) => {
              gridHTML += `
                  <div class="product-box-card">
                      <img src="${product.image || 'https://via.placeholder.com/150'}" alt="Product">
@@ -401,8 +394,32 @@
          gridHTML += '</div>';
          mainAppContent.innerHTML = gridHTML;
      } else {
-         mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;font-size:14px;'>इस कैटेगॉरी में अभी कोई प्रोडक्ट लाइव नहीं है।</p>";
+         mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;font-size:14px;'>यहाँ अभी कोई प्रोडक्ट लाइव नहीं है।</p>";
      }
+ }
+  // 🛠️ 10 CATEGORIES LIST LOGIC (यहाँ से आप नाम और फ़िल्टर कीवर्ड बदल सकते हो)
+ function renderCategoryPage() {
+     mainAppContent.innerHTML = `
+         <div class="category-page-grid">
+             <button class="category-card-btn" onclick="filterBySelectedKey('iphone')">🍏 iPhone</button>
+             <button class="category-card-btn" onclick="filterBySelectedKey('samsung')">📱 Samsung</button>
+             <button class="category-card-btn" onclick="filterBySelectedKey('oneplus')">🔴 OnePlus</button>
+             <button class="category-card-btn" onclick="filterBySelectedKey('vivo')">💎 Vivo</button>
+             <button class="category-card-btn" onclick="filterBySelectedKey('oppo')">✨ Oppo</button>
+             <button class="category-card-btn" onclick="filterBySelectedKey('realme')">💛 Realme</button>
+             <button class="category-card-btn" onclick="filterBySelectedKey('xiaomi')">🍊 Redmi/Mi</button>
+             <button class="category-card-btn" onclick="filterBySelectedKey('charger')">🔌 Chargers</button>
+             <button class="category-card-btn" onclick="filterBySelectedKey('cable')">🎗️ Cables</button>
+             <button class="category-card-btn" onclick="filterBySelectedKey('buds')">🎧 Earbuds</button>
+         </div>
+     `;
+ }
+
+ // CATEGORY SELECTION FILTER
+ window.filterBySelectedKey = function(keyword) {
+     activeCategory = keyword;
+     const filtered = allProductsArray.filter(prod => prod.name.toLowerCase().includes(keyword.toLowerCase()));
+     renderUserProductsGrid(filtered);
  }
 
  window.openOrderModal = function(name, price) {
@@ -438,11 +455,12 @@
      document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
      document.getElementById(elementId).classList.add('active');
      
-     if(page === 'home' || page === 'category') { 
-         appCategoryBar.classList.remove('hidden');
-         renderUserProductsGrid(); 
+     if(page === 'home') { 
+         activeCategory = "All";
+         renderUserProductsGrid(allProductsArray); 
+     } else if(page === 'category') {
+         renderCategoryPage(); // कैटेगरी टैब पर क्लिक करते ही 10 कैटेगॉरी की ग्रिड खुलेगी
      } else if(page === 'me') {
-         appCategoryBar.classList.add('hidden');
          mainAppContent.innerHTML = `
              <div style="padding:30px 10px; text-align:center; color:#fff;">
                  <h3>Profile Section</h3>
@@ -450,7 +468,6 @@
                  <button class="logout-btn" onclick="handleLogout()">Logout Account</button>
              </div>`;
      } else { 
-         appCategoryBar.classList.add('hidden');
          mainAppContent.innerHTML = "<h3 style='padding:50px 10px; text-align:center; color:#fff'>" + page.toUpperCase() + " Content Coming Soon...</h3>"; 
      }
  }
