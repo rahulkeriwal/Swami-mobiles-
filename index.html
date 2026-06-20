@@ -59,7 +59,7 @@
  .cat-pill { flex: 0 0 auto; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.25); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; }
  .cat-pill.active { background: #fff; color: #1b2a4a; font-weight: 700; }
 
- /* BOX VIEW MODERATION GRID (3 COLUMNS) */
+ /* BOX VIEW MODERATION GRID */
  .app-content { 
      position: relative; 
      z-index: 1; 
@@ -69,7 +69,6 @@
      border-radius: 0; 
      padding: 4px; 
      color: #333; 
-     margin-top: 65px; 
      margin-bottom: 90px; 
  }
  .user-grid { 
@@ -142,15 +141,30 @@
  .checkout-btn { width: 100%; background: #fff; color: #1b2a4a; border: none; padding: 12px; border-radius: 25px; font-weight: 800; font-size: 14px; cursor: pointer; text-align: center; box-shadow: 0 4px 12px rgba(255,255,255,0.2); transition: 0.2s; }
 
  /* PROFILE ('ME') TAB STYLE CUSTOM */
- .profile-card { background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 25px 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-top: 10px; }
- .profile-img-container { position: relative; width: 110px; height: 110px; margin: 0 auto 15px auto; }
+ .profile-card { background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 22px 16px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-top: 10px; }
+ .profile-img-container { position: relative; width: 100px; height: 100px; margin: 0 auto 12px auto; }
  .profile-avatar { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 3px solid #1b2a4a; background: #e0e6ed; cursor: pointer; }
  .avatar-upload-label { position: absolute; bottom: 2px; right: 2px; background: #2a6b6b; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
- .profile-name-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 6px; }
- .profile-name { font-size: 20px; font-weight: 800; color: #1b2a4a; }
- .edit-name-pencil { font-size: 16px; cursor: pointer; color: #666; transition: color 0.2s; }
- .edit-name-pencil:hover { color: #1b2a4a; }
- .profile-email { font-size: 13px; color: #666; margin-bottom: 20px; }
+ .profile-name-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 4px; }
+ .profile-name { font-size: 19px; font-weight: 800; color: #1b2a4a; }
+ .edit-name-pencil { font-size: 15px; cursor: pointer; color: #666; }
+ .profile-email { font-size: 12.5px; color: #666; margin-bottom: 12px; }
+ 
+ .profile-info-box { background: #f8fafc; border-radius: 12px; padding: 10px 14px; text-align: left; margin-bottom: 14px; border: 1px solid #e2e8f0; }
+ .info-box-title { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 2px; display: flex; justify-content: space-between; align-items: center; }
+ .info-box-text { font-size: 13.5px; font-weight: 600; color: #334155; }
+ .info-edit-btn { font-size: 13px; cursor: pointer; color: #2a6b6b; font-weight: bold; }
+
+ .profile-action-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+ .p-action-btn { background: #e2e8f0; border: none; padding: 10px; border-radius: 12px; font-size: 12.5px; font-weight: 700; color: #1b2a4a; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+ .p-action-btn:active { background: #cbd5e1; }
+
+ /* FAQ ACCORDION ACCENT */
+ .faq-section { text-align: left; margin-top: 15px; border-top: 1px solid #e2e8f0; padding-top: 15px; }
+ .faq-section h4 { font-size: 14px; color: #1b2a4a; margin-bottom: 10px; font-weight: 800; }
+ .faq-item { border-bottom: 1px solid #f1f5f9; padding: 8px 0; cursor: pointer; }
+ .faq-question { font-size: 12.5px; font-weight: 700; color: #334155; display: flex; justify-content: space-between; }
+ .faq-answer { font-size: 12px; color: #64748b; margin-top: 4px; line-height: 1.4; display: none; }
 
  /* 10 CATEGORIES GRID */
  .category-page-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; padding: 10px 0; }
@@ -159,7 +173,7 @@
 
  .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 10005; }
  .modal-content { background: white; width: 100%; max-width: 340px; padding: 20px; border-radius: 20px; text-align: center; color: #333; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
- input[type="text"], input[type="tel"] { width: 100%; padding: 10px 14px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 12px; outline: none; font-size: 14px; color: #333; }
+ input[type="text"], input[type="tel"], input[type="password"] { width: 100%; padding: 10px 14px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 12px; outline: none; font-size: 14px; color: #333; }
  
  /* DETAIL MODAL STYLE */
  #modalProductImg { width: 100%; max-height: 190px; object-fit: contain; border-radius: 12px; margin-bottom: 12px; background: #f9f9f9; }
@@ -171,7 +185,7 @@
  .add-cart-btn { width: 100%; background: #2a6b6b; color: white; border: none; padding: 12px; border-radius: 25px; font-weight: 700; font-size: 15px; cursor: pointer; box-shadow: 0 4px 12px rgba(42, 107, 107, 0.3); margin-bottom: 8px; }
  .close-txt-btn { width: 100%; background: transparent; color: #e2654f; border: none; font-weight: 600; cursor: pointer; font-size: 13px; padding: 4px 0; }
 
- /* CYLINDER (CAPSULE) TOAST STYLE */
+ /* CAPSULE TOAST STYLE */
  .toast-cylinder {
      position: fixed;
      bottom: 85px;
@@ -193,22 +207,8 @@
      pointer-events: none;
      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
  }
- .toast-cylinder.show {
-     opacity: 1;
-     transform: translateX(-50%) translateY(0);
- }
- .toast-success-icon {
-     background: #28b4a2;
-     width: 18px;
-     height: 18px;
-     border-radius: 50%;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     font-size: 11px;
-     font-weight: 900;
-     color: #fff;
- }
+ .toast-cylinder.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+ .toast-success-icon { background: #28b4a2; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: #fff; }
 
  .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(20, 35, 55, 0.95); border-top: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); display: flex; justify-content: space-around; align-items: center; padding: 6px 10px 12px 10px; box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.4); z-index: 9999; }
  .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; background: none; border: none; color: rgba(255, 255, 255, 0.6); font-size: 10px; cursor: pointer; flex: 1; }
@@ -286,7 +286,7 @@
      <div class="modal-content">
          <img id="modalProductImg" src="" alt="Product">
          <h3 id="modalProductTitleDetail">Product Title</h3>
-         <p id="modalProductDesc">Product full description text goes here...</p>
+         <p id="modalProductDesc">Product description...</p>
          <div class="modal-price-row">
              <span id="modalBeforePrice" class="modal-before-p"></span>
              <span id="modalAfterPrice" class="modal-after-p"></span>
@@ -296,7 +296,7 @@
      </div>
  </div>
 
- <div id="userOrderModal" class="modal hidden">
+  <div id="userOrderModal" class="modal hidden">
      <div class="modal-content">
          <h3>Checkout Details</h3>
          <p style="font-size:13px; color:#666; margin-bottom:12px;">ऑर्डर पूरा करने के लिए अपना विवरण भरें।</p>
@@ -313,6 +313,24 @@
          <input type="text" id="newProfileNameInput" placeholder="अपना नया नाम दर्ज करें">
          <button onclick="saveProfileNameLive()" style="width: 100%; background: #2a6b6b; color: white; border: none; padding: 10px; border-radius: 20px; font-weight: 700; cursor:pointer;">Save Name</button>
          <button onclick="closeEditNameModal()" style="width: 100%; background: transparent; color: #e2654f; border: none; margin-top: 8px; font-weight:600; cursor:pointer;">Cancel</button>
+     </div>
+ </div>
+
+ <div id="editAddressModal" class="modal hidden">
+     <div class="modal-content">
+         <h3 style="margin-bottom:12px; color:#1b2a4a;">Update Address</h3>
+         <input type="text" id="newAddressInput" placeholder="मकान नं, गली, शहर, पिनकोड...">
+         <button onclick="saveProfileAddressLive()" style="width: 100%; background: #2a6b6b; color: white; border: none; padding: 10px; border-radius: 20px; font-weight: 700; cursor:pointer;">Save Address</button>
+         <button onclick="closeEditAddressModal()" style="width: 100%; background: transparent; color: #e2654f; border: none; margin-top: 8px; font-weight:600; cursor:pointer;">Cancel</button>
+     </div>
+ </div>
+
+ <div id="changePasswordModal" class="modal hidden">
+     <div class="modal-content">
+         <h3 style="margin-bottom:12px; color:#1b2a4a;">Change Password</h3>
+         <input type="password" id="newPasswordInput" placeholder="नया पासवर्ड दर्ज करें">
+         <button onclick="saveNewPasswordLive()" style="width: 100%; background: #2a6b6b; color: white; border: none; padding: 10px; border-radius: 20px; font-weight: 700; cursor:pointer;">Update Password</button>
+         <button onclick="closeChangePasswordModal()" style="width: 100%; background: transparent; color: #e2654f; border: none; margin-top: 8px; font-weight:600; cursor:pointer;">Cancel</button>
      </div>
  </div>
 
@@ -367,17 +385,19 @@
  let allProductsArray = []; 
  let activeCategory = "All";
 
- // LOCALSTORAGE CART & PROFILE BACKUPS
  let userCartArray = JSON.parse(localStorage.getItem('swami_cart')) || [];
  let userCustomName = "Loading..."; 
+ let userCustomAddress = "पता जोड़ने के लिए पेंसिल पर क्लिक करें"; 
  let userCustomAvatar = localStorage.getItem('swami_user_avatar') || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
  // LIVE USER STATE DETECTOR
  auth.onAuthStateChanged((user) => {
      if (user) { 
          database.ref('users/' + user.uid).once('value').then((snapshot) => {
-             if (snapshot.exists() && snapshot.val().name) {
-                 userCustomName = snapshot.val().name;
+             if (snapshot.exists()) {
+                 const userData = snapshot.val();
+                 userCustomName = userData.name || "Swami User";
+                 userCustomAddress = userData.address || "पता जोड़ने के लिए पेंसिल पर क्लिक करें";
              } else if (user.displayName) {
                  userCustomName = user.displayName;
              } else {
@@ -408,19 +428,17 @@
      mainAppContent.classList.add('hidden'); 
  }
 
- // 🔍 HEADER/SEARCH BAR CONDITIONAL TOGGLE
-  // 🔍 HEADER/SEARCH BAR CONDITIONAL TOGGLE
+ // 🔍 CONDITIONAL MARGIN FIX SYSTEM
  function toggleHeaderVisibility() {
      if (currentTab === "home") {
          appHeader.classList.remove('hidden'); 
-         mainAppContent.style.marginTop = "65px"; // Home पर सर्च बार के लिए जगह देगा
+         mainAppContent.style.marginTop = "65px"; 
      } else {
          appHeader.classList.add('hidden'); 
-         mainAppContent.style.marginTop = "15px"; // बाकी टैब्स पर खाली जगह खत्म कर देगा
+         mainAppContent.style.marginTop = "15px"; 
      }
  }
-
- window.switchTab = function(tab) {
+  window.switchTab = function(tab) {
      document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
      document.getElementById('signupForm').classList.toggle('hidden', tab !== 'signup');
      document.getElementById('loginTabBtn').classList.toggle('active', tab === 'login');
@@ -447,7 +465,8 @@
      auth.createUserWithEmailAndPassword(email, password).then((result) => {
          return database.ref('users/' + result.user.uid).set({
              name: fullName,
-             email: email
+             email: email,
+             address: ""
          });
      }).catch((err) => showCustomToastLive("Error: " + err.message));
  }
@@ -465,7 +484,7 @@
      }).catch((err) => showCustomToastLive("Google Signin Error"));
  }
 
- // LOGOUT FUNCTION
+ // LOGOUT
  window.handleLogout = function() {
      auth.signOut().then(() => { 
          localStorage.removeItem('swami_cart'); 
@@ -534,7 +553,7 @@
      }
  }
 
- // HANDLE BOTTOM NAVIGATION TABS LIVE
+ // BOTTOM NAVIGATION
  let currentTab = "home";
  window.handleNavClick = function(tabName, navId) {
      document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
@@ -562,7 +581,7 @@
      }
  }
 
- // 👤 PROFILE PAGE
+ // 👤 PROFILE PAGE WITH NEW OPTIONS & FAQ
  function renderMeProfilePage() {
      let user = auth.currentUser;
      let emailTxt = user ? user.email : 'Guest Mode';
@@ -579,14 +598,60 @@
                  <span class="profile-name" id="displayProfileName">${userCustomName}</span>
                  <span class="edit-name-pencil" onclick="openEditNameModal()">✏️</span>
              </div>
-             
              <p class="profile-email">${emailTxt}</p>
              
+             <div class="profile-info-box">
+                 <div class="info-box-title">Delivery Address <span class="info-edit-btn" onclick="openEditAddressModal()">✏️ Edit</span></div>
+                 <div class="info-box-text" id="displayProfileAddress">${userCustomAddress}</div>
+             </div>
+
+             <div class="profile-action-row">
+                 <button class="p-action-btn" onclick="openChangePasswordModal()">🔑 Password</button>
+                 <button class="p-action-btn" onclick="shareReferralLink()">🎁 Refer & Earn</button>
+             </div>
+             
              <button class='logout-btn' onclick='handleLogout()'>लॉग आउट (Sign Out)</button>
+
+             <div class="faq-section">
+                 <h4>अक्सर पूछे जाने वाले सवाल (FAQ)</h4>
+                 <div class="faq-item" onclick="toggleFaq(this)">
+                     <div class="faq-question"><span>📦 डिलीवरी में कितने दिन लगते हैं?</span><span>▼</span></div>
+                     <div class="faq-answer">आमतौर पर ऑर्डर करने के बाद आपके पते पर 2 से 4 दिनों के अंदर सुरक्षित डिलीवरी हो जाती है।</div>
+                 </div>
+                 <div class="faq-item" onclick="toggleFaq(this)">
+                     <div class="faq-question"><span>💵 क्या कैश ऑन डिलीवरी (COD) उपलब्ध है?</span><span>▼</span></div>
+                     <div class="faq-answer">हाँ भाई! हमारे यहाँ सभी सामानों पर कैश ऑन डिलीवरी (सामान मिलने पर पैसे देना) की सुविधा है।</div>
+                 </div>
+                 <div class="faq-item" onclick="toggleFaq(this)">
+                     <div class="faq-question"><span>🔄 क्या रिप्लेसमेंट की सुविधा है?</span><span>▼</span></div>
+                     <div class="faq-answer">अगर सामान टूटा हुआ या डिफेक्टिव मिलता है, तो डिलीवरी के 24 घंटे के अंदर हमसे संपर्क करके आसानी से बदल सकते हैं।</div>
+                 </div>
+             </div>
          </div>`;
  }
 
- // ✏️ PROFILE EDIT
+ // FAQ TOGGLE FUNCTION
+ window.toggleFaq = function(element) {
+     let answer = element.querySelector('.faq-answer');
+     let arrow = element.querySelector('.faq-question span:last-child');
+     if(answer.style.display === "block") {
+         answer.style.display = "none";
+         arrow.innerText = "▼";
+     } else {
+         answer.style.display = "block";
+         arrow.innerText = "▲";
+     }
+ }
+
+ // REFERRAL SHARE SYSTEM
+ window.shareReferralLink = function() {
+     let shareText = "अरे भाई! स्वामी मोबाइल्स ऐप पर एकदम सस्ते और ओरिजिनल मोबाइल एक्सेसरीज मिल रहे हैं। अभी चेक करो! 🚀";
+     navigator.clipboard.writeText(shareText).then(() => {
+         showCustomToastLive("रेफरल मैसेज कॉपी हो गया! WhatsApp पर शेयर करें।");
+     });
+ }
+
+ // ✏️ NAME EDIT FUNCTIONS
  window.openEditNameModal = function() {
      document.getElementById('newProfileNameInput').value = userCustomName;
      document.getElementById('editNameModal').classList.remove('hidden');
@@ -603,11 +668,55 @@
              document.getElementById('displayProfileName').innerText = updatedName;
              closeEditNameModal();
              showCustomToastLive("नाम सफलतापूर्वक अपडेट हुआ!");
-         }).catch((err) => showCustomToastLive("डेटाबेस एरर: " + err.message));
+         }).catch((err) => showCustomToastLive("त्रुटि: " + err.message));
      }
  }
 
- // 📸 PROFILE IMAGE UPLOAD HANDLERS
+ // 🏠 ADDRESS EDIT FUNCTIONS
+ window.openEditAddressModal = function() {
+     document.getElementById('newAddressInput').value = (userCustomAddress.includes("पेंसिल पर क्लिक करें")) ? "" : userCustomAddress;
+     document.getElementById('editAddressModal').classList.remove('hidden');
+ }
+ window.closeEditAddressModal = function() {
+     document.getElementById('editAddressModal').classList.add('hidden');
+ }
+ window.saveProfileAddressLive = function() {
+     let updatedAddress = document.getElementById('newAddressInput').value.trim();
+     let user = auth.currentUser;
+     if(updatedAddress && user) {
+         database.ref('users/' + user.uid).update({ address: updatedAddress }).then(() => {
+             userCustomAddress = updatedAddress;
+             document.getElementById('displayProfileAddress').innerText = updatedAddress;
+             closeEditAddressModal();
+             showCustomToastLive("पता सफलतापूर्वक अपडेट हुआ!");
+         }).catch((err) => showCustomToastLive("त्रुटि: " + err.message));
+     }
+ }
+
+ // 🔑 CHANGE PASSWORD FUNCTIONS
+ window.openChangePasswordModal = function() {
+     document.getElementById('newPasswordInput').value = "";
+     document.getElementById('changePasswordModal').classList.remove('hidden');
+ }
+ window.closeChangePasswordModal = function() {
+     document.getElementById('changePasswordModal').classList.add('hidden');
+ }
+ window.saveNewPasswordLive = function() {
+     let newPassword = document.getElementById('newPasswordInput').value;
+     let user = auth.currentUser;
+     if(!newPassword || newPassword.length < 6) {
+         showCustomToastLive("पासवर्ड कम से कम 6 अक्षरों का होना चाहिए!");
+         return;
+     }
+     if(user) {
+         user.updatePassword(newPassword).then(() => {
+             closeChangePasswordModal();
+             showCustomToastLive("पासवर्ड सफलतापूर्वक बदल गया!");
+         }).catch((err) => showCustomToastLive("त्रुटि: पहले लॉगआउट करके दोबारा लॉगिन करें।"));
+     }
+ }
+
+ // 📸 IMAGE UPLOAD
  window.triggerAvatarUpload = function() {
      document.getElementById('hiddenAvatarInput').click();
  }
@@ -624,7 +733,7 @@
      }
  }
 
- // RENDER 10 CATEGORIES GRID
+ // REUSE EXISTING CATEGORIES, SEARCH, CART SYSTEMS
  function renderCategoryGridPage() {
      mainAppContent.innerHTML = `
          <div class="category-page-grid">
@@ -641,155 +750,59 @@
          </div>`;
  }
 
- window.openCategoryFromGrid = function(catKey) {
-     activeCategory = catKey;
-     handleNavClick('home', 'nav-home');
- }
-
+ window.openCategoryFromGrid = function(catKey) { activeCategory = catKey; handleNavClick('home', 'nav-home'); }
  window.filterBySpecificCategory = function(catKey) {
      activeCategory = catKey;
-     if(catKey === "All") {
-         renderUserProductsGrid(allProductsArray);
-     } else {
-         let filtered = allProductsArray.filter(p => p.category === catKey);
-         renderUserProductsGrid(filtered);
-     }
+     if(catKey === "All") { renderUserProductsGrid(allProductsArray); } 
+     else { renderUserProductsGrid(allProductsArray.filter(p => p.category === catKey)); }
  }
-
- // SEARCH SYSTEM
  window.handleSearch = function() {
      let query = document.getElementById('searchInput').value.toLowerCase().trim();
-     if(query === "") {
-         renderCurrentTab();
-     } else {
-         let matched = allProductsArray.filter(p => p.name.toLowerCase().includes(query));
-         renderUserProductsGrid(matched);
-     }
+     if(query === "") { renderCurrentTab(); } 
+     else { renderUserProductsGrid(allProductsArray.filter(p => p.name.toLowerCase().includes(query))); }
  }
-
- // OPEN DETAIL MODAL FUNCTION
  window.openDetailModal = function(key, name, beforePrice, afterPrice, img, desc) {
      currentSelectedProduct = { key: key, name: name, beforePrice: beforePrice, price: afterPrice, image: img, description: desc };
-     
      document.getElementById('modalProductImg').src = img;
      document.getElementById('modalProductTitleDetail').innerText = name;
      document.getElementById('modalProductDesc').innerText = desc;
      document.getElementById('modalBeforePrice').innerText = beforePrice;
      document.getElementById('modalAfterPrice').innerText = afterPrice;
-     
      document.getElementById('productDetailModal').classList.remove('hidden');
  }
-
- window.closeDetailModal = function() {
-     document.getElementById('productDetailModal').classList.add('hidden');
- }
-
- // CYLINDER TOAST TRIGGER FUNCTION
+ window.closeDetailModal = function() { document.getElementById('productDetailModal').classList.add('hidden'); }
  function showCustomToastLive(message = "Product added to cart") {
      let toast = document.getElementById('cartToast');
      document.getElementById('toastMessage').innerText = message;
      toast.classList.add('show');
-     setTimeout(() => {
-         toast.classList.remove('show');
-     }, 2000);
+     setTimeout(() => { toast.classList.remove('show'); }, 2000);
  }
-
- // ADD TO CART TRIGGER
  window.addToCartLive = function() {
      if(currentSelectedProduct) {
          userCartArray.push(currentSelectedProduct);
          localStorage.setItem('swami_cart', JSON.stringify(userCartArray));
-         closeDetailModal(); 
-         showCustomToastLive("Product added to cart"); 
+         closeDetailModal(); showCustomToastLive("Product added to cart"); 
      }
  }
-
- // RENDER CART DYNAMICALLY WITH TOTAL & CHECKOUT
  function renderCartItemsPage() {
-     if (userCartArray.length === 0) {
-         mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;'>🛒 आपका कार्ट खाली है।</p>";
-         return;
-     }
-
-     let cartHTML = '<div class="cart-list">';
-     let totalAmount = 0;
-
+     if (userCartArray.length === 0) { mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;'>🛒 आपका कार्ट खाली है।</p>"; return; }
+     let cartHTML = '<div class="cart-list">'; let totalAmount = 0;
      userCartArray.forEach((item, index) => {
-         let cleanPrice = parseInt(item.price.replace(/[^0-9]/g, '')) || 0;
-         totalAmount += cleanPrice;
-
-         cartHTML += `
-             <div class="cart-item">
-                 <img src="${item.image}" alt="Product">
-                 <div class="cart-item-details">
-                     <div class="cart-item-title">${item.name}</div>
-                     <div class="cart-item-price">${item.price}</div>
-                 </div>
-                 <button class="cart-remove-btn" onclick="removeFromCartLive(${index})">Remove</button>
-             </div>`;
+         let cleanPrice = parseInt(item.price.replace(/[^0-9]/g, '')) || 0; totalAmount += cleanPrice;
+         cartHTML += `<div class="cart-item"><img src="${item.image}"><div class="cart-item-details"><div class="cart-item-title">${item.name}</div><div class="cart-item-price">${item.price}</div></div><button class="cart-remove-btn" onclick="removeFromCartLive(${index})">Remove</button></div>`;
      });
-
-     cartHTML += '</div>';
-
-     cartHTML += `
-         <div class="cart-summary">
-             <div class="summary-row">
-                 <span>Total Payable:</span>
-                 <span>₹${totalAmount.toLocaleString('en-IN')}</span>
-             </div>
-             <button class="checkout-btn" onclick="openOrderModal()">Checkout (Order Now) 🚀</button>
-         </div>`;
-
+     cartHTML += `</div><div class="cart-summary"><div class="summary-row"><span>Total Payable:</span><span>₹${totalAmount.toLocaleString('en-IN')}</span></div><button class="checkout-btn" onclick="openOrderModal()">Checkout (Order Now) 🚀</button></div>`;
      mainAppContent.innerHTML = cartHTML;
  }
-
- // REMOVE ITEM FROM CART
- window.removeFromCartLive = function(index) {
-     userCartArray.splice(index, 1);
-     localStorage.setItem('swami_cart', JSON.stringify(userCartArray)); 
-     renderCartItemsPage();
- }
-
- // ORDER MODAL FUNCTIONS
- window.openOrderModal = function() {
-     document.getElementById('userOrderModal').classList.remove('hidden');
- }
-
- window.closeOrderModal = function() {
-     document.getElementById('userOrderModal').classList.add('hidden');
-     document.getElementById('orderCustName').value = "";
-     document.getElementById('orderCustPhone').value = "";
- }
-
- // FINALIZE & SUBMIT ENTIRE CART ORDER TO FIREBASE
+ window.removeFromCartLive = function(index) { userCartArray.splice(index, 1); localStorage.setItem('swami_cart', JSON.stringify(userCartArray)); renderCartItemsPage(); }
+ window.openOrderModal = function() { document.getElementById('userOrderModal').classList.remove('hidden'); }
+ window.closeOrderModal = function() { document.getElementById('userOrderModal').classList.add('hidden'); }
  window.submitOrderLive = function() {
-     const name = document.getElementById('orderCustName').value.trim();
-     const phone = document.getElementById('orderCustPhone').value.trim();
-
-     if(!name || !phone) {
-         return;
-     }
-
+     const name = document.getElementById('orderCustName').value.trim(); const phone = document.getElementById('orderCustPhone').value.trim();
+     if(!name || !phone) return;
      if(userCartArray.length > 0) {
-         const itemsOrdered = userCartArray.map(item => ({
-             productKey: item.key,
-             productName: item.name,
-             price: item.price
-         }));
-
-         const orderData = {
-             customerName: name,
-             customerPhone: phone,
-             items: itemsOrdered,
-             timestamp: Date.now()
-         };
-
-         database.ref('orders').push(orderData).then(() => {
-             userCartArray = []; 
-             localStorage.removeItem('swami_cart'); 
-             closeOrderModal();
-             activeCategory = "All";
-             handleNavClick('home', 'nav-home'); 
+         database.ref('orders').push({ customerName: name, customerPhone: phone, items: userCartArray.map(item => ({ productKey: item.key, productName: item.name, price: item.price })), timestamp: Date.now() }).then(() => {
+             userCartArray = []; localStorage.removeItem('swami_cart'); closeOrderModal(); activeCategory = "All"; handleNavClick('home', 'nav-home'); 
          });
      }
  }
