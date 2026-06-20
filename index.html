@@ -1,475 +1,192 @@
-<!DOCTYPE html> 
-<html lang="hi"> 
-<head> 
-<meta charset="UTF-8"> 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
-<title>Swami Mobiles</title> 
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Swami Mobiles - Store</title>
+    <!-- Firebase Libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background: #f4f7f6; color: #333; padding-bottom: 30px; }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #1b2a4a 0%, #2a6b6b 100%); color: #fff; padding: 20px 16px; text-align: center; sticky: top; }
+        .header h1 { font-size: 22px; font-weight: 600; }
+        .header p { font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 4px; }
 
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+        /* Categories Section */
+        .category-section { padding: 16px 10px; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.02); margin-bottom: 16px; }
+        .category-title { font-size: 14px; font-weight: 700; color: #1b2a4a; margin-bottom: 10px; padding-left: 6px; }
+        .category-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
+        .category-scroll::-webkit-scrollbar { display: none; }
+        
+        .cat-chip { flex: 0 0 auto; padding: 8px 16px; background: #eef2f1; color: #1b2a4a; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: all 0.2s ease; }
+        .cat-chip.active { background: #2a6b6b; color: #fff; border-color: #2a6b6b; }
 
-<style> 
- * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; } 
- html, body { height: 100%; width: 100%; overflow-x: hidden; background: #f4f7f6; } 
- body { 
-     min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 12px; position: relative; 
-     background: linear-gradient(160deg, #1b2a4a 0%, #1f4e5f 18%, #2a6b6b 35%, #d97a5e 60%, #e2654f 75%, #7a2d3a 100%); 
-     background-attachment: fixed;
- } 
- body::before, body::after { content: ''; position: absolute; border-radius: 50%; filter: blur(80px); z-index: 0; pointer-events: none; } 
- body::before { width: 300px; height: 300px; background: rgba(255, 130, 90, 0.45); top: -50px; left: -50px; } 
- body::after { width: 300px; height: 300px; background: rgba(40, 180, 170, 0.4); bottom: -50px; right: -50px; } 
- 
- .container { 
-     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1; width: 100%; max-width: 360px; background: rgba(255, 255, 255, 0.10); 
-     border: 1.5px solid rgba(255, 255, 255, 0.35); border-radius: 22px; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); 
-     box-shadow: 0 25px 60px rgba(0,0,0,0.35); padding: 30px 24px; color: #fff; 
- } 
- .tabs { display: flex; gap: 28px; justify-content: center; margin-bottom: 24px; } 
- .tab-btn { background: none; border: none; font-size: 22px; font-weight: 300; color: rgba(255,255,255,0.5); cursor: pointer; padding-bottom: 6px; transition: 0.25s; } 
- .tab-btn.active { color: #fff; font-weight: 600; border-bottom: 2px solid #fff; } 
- .toggle-method { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; } 
- .toggle-method button { padding: 6px 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.4); background: transparent; color: rgba(255,255,255,0.7); font-size: 12px; font-weight: 600; cursor: pointer; } 
- .toggle-method button.active { background: #fff; color: #2a6b6b; border-color: #fff; } 
- .input-group { margin-bottom: 20px; } 
- .input-group label { display: block; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 6px; } 
- .input-group input { width: 100%; background: transparent; border: none; border-bottom: 1.5px solid rgba(255,255,255,0.55); padding: 6px 2px 8px; font-size: 15px; color: #fff; outline: none; } 
- .input-group input:focus { border-bottom-color: #fff; } 
- .options-row { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; margin-bottom: 20px; } 
- .options-row a { color: #fff; text-decoration: none; font-weight: 600; } 
- .checkbox-row { display: flex; align-items: center; gap: 6px; } 
- .submit-btn { width: 100%; padding: 12px 0; background: #fff; color: #2a4a4a; border: none; border-radius: 30px; font-size: 16px; font-weight: 700; cursor: pointer; } 
- .switch-text { text-align: center; margin-top: 16px; font-size: 13.5px; } 
- .switch-text a { color: #fff; font-weight: 700; text-decoration: underline; cursor: pointer; } 
- .divider { display: flex; align-items: center; text-align: center; margin: 20px 0 14px; color: rgba(255,255,255,0.6); font-size: 12px; } 
- .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid rgba(255,255,255,0.3); } 
- .divider span { padding: 0 10px; } 
- .social-buttons { display: flex; gap: 12px; } 
- .social-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 0; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 12px; background: rgba(255,255,255,0.08); font-size: 13px; color: #fff; cursor: pointer; } 
- 
- .main-header { position: fixed; top: 0; left: 0; width: 100%; padding: 12px 16px; z-index: 100; background: rgba(27, 42, 74, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
- .search-box { display: flex; align-items: center; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 30px; padding: 8px 16px; max-width: 360px; margin: 0 auto; }
- .search-box input { width: 100%; background: transparent; border: none; outline: none; color: #fff; font-size: 15px; padding-left: 8px; }
- .search-box input::placeholder { color: rgba(255, 255, 255, 0.6); }
+        /* Product Grid */
+        .container { max-width: 500px; margin: 0 auto; padding: 0 12px; }
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        
+        .product-card { background: #fff; border-radius: 18px; padding: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid #eef2f1; display: flex; flex-direction: column; justify-content: space-between; }
+        .product-card img { width: 100%; height: 140px; object-fit: cover; border-radius: 12px; background: #f9f9f9; margin-bottom: 10px; }
+        .prod-title { font-size: 14px; font-weight: 700; color: #1b2a4a; line-height: 1.3; height: 36px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        
+        .price-row { display: flex; align-items: baseline; gap: 6px; margin: 6px 0 10px 0; }
+        .price-after { font-size: 15px; font-weight: 800; color: #2a6b6b; }
+        .price-before { font-size: 12px; text-decoration: line-through; color: #999; }
+        
+        .buy-btn { width: 100%; background: #d97a5e; color: #fff; border: none; padding: 8px 0; border-radius: 12px; font-size: 12px; font-weight: 700; cursor: pointer; text-align: center; box-shadow: 0 4px 8px rgba(217, 122, 94, 0.2); }
 
- /* 🛒 BOX VIEW MODERATION GRID (3 COLUMNS) */
- .app-content { 
-     position: relative; 
-     z-index: 1; 
-     width: 100%; 
-     max-width: 380px; 
-     background: transparent; 
-     border-radius: 0; 
-     padding: 4px; 
-     color: #333; 
-     margin-top: 65px; 
-     margin-bottom: 90px; 
- }
- .user-grid { 
-     display: grid; 
-     grid-template-columns: repeat(3, 1fr); /* 👈 एक लाइन में 3 प्रोडक्ट */
-     gap: 6px; /* गैप थोड़ा कम किया ताकि स्क्रीन पर सही बैठे */
-     width: 100%; 
-     text-align: left; 
- }
- .product-box-card { 
-     background: rgba(255, 255, 255, 0.96); 
-     border-radius: 10px; 
-     padding: 6px; /* पैडिंग कम की */
-     border: 1px solid rgba(255,255,255,0.2); 
-     box-shadow: 0 2px 8px rgba(0,0,0,0.08); 
-     display: flex; 
-     flex-direction: column; 
-     justify-content: space-between; 
- }
- .product-box-card img { 
-     width: 100%; 
-     aspect-ratio: 1/1; 
-     object-fit: cover; 
-     border-radius: 6px; 
-     background: #fafafa; 
-     margin-bottom: 4px; 
- }
- .p-box-title { 
-     font-size: 10.5px; /* छोटा साफ़ फ़ॉन्ट */
-     font-weight: 700; 
-     color: #1b2a4a; 
-     margin-bottom: 2px; 
-     line-height: 1.2; 
-     display: -webkit-box; 
-     -webkit-line-clamp: 2; 
-     -webkit-box-orient: vertical; 
-     overflow: hidden; 
-     height: 26px; /* टाइटल्स की ऊंचाई 3 कॉलम के हिसाब से परफेक्ट की */
- }
- .price-box-row { 
-     margin-bottom: 4px; 
-     display: flex; 
-     align-items: center; 
-     flex-wrap: wrap; 
-     gap: 2px;
- }
- .before-p-box { 
-     font-size: 8.5px; 
-     text-decoration: line-through; 
-     color: #888; 
- }
- .after-p-box { 
-     font-size: 11px; 
-     font-weight: 800; 
-     color: #d97a5e; 
- }
- .buy-btn-box { 
-     background: #2a6b6b; 
-     color: #fff; 
-     border: none; 
-     padding: 5px 2px; /* बटन कॉम्पैक्ट किया */
-     width: 100%; 
-     border-radius: 6px; 
-     font-size: 10px; 
-     font-weight: 700; 
-     cursor: pointer; 
-     text-align: center; 
- }
+        /* Status & Loader */
+        .status-msg { text-align: center; color: #777; font-size: 14px; padding: 40px 10px; grid-column: span 2; }
+    </style>
+</head>
+<body>
 
- /* 👑 10 CATEGORIES GRID CONTAINER STYLE */
- .category-page-grid {
-     display: grid;
-     grid-template-columns: repeat(2, 1fr);
-     gap: 12px;
-     width: 100%;
-     padding: 10px 0;
- }
- .category-card-btn {
-     background: rgba(255, 255, 255, 0.15);
-     border: 1.5px solid rgba(255, 255, 255, 0.25);
-     border-radius: 16px;
-     padding: 20px 10px;
-     color: #fff;
-     font-size: 14px;
-     font-weight: 700;
-     cursor: pointer;
-     text-align: center;
-     backdrop-filter: blur(10px);
-     -webkit-backdrop-filter: blur(10px);
-     transition: all 0.2s ease;
-     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
- }
- .category-card-btn:active {
-     transform: scale(0.96);
-     background: #fff;
-     color: #1b2a4a;
- }
+    <!-- Header -->
+    <div class="header">
+        <h1>स्वामी मोबाइल्स</h1>
+        <p>सबसे बेहतरीन डील्स, सीधे आपके लिए</p>
+    </div>
 
- .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 10005; }
- .modal-content { background: white; width: 100%; max-width: 320px; padding: 20px; border-radius: 20px; text-align: center; color: #333; }
- .modal-content h3 { margin-bottom: 12px; color: #1b2a4a; font-size: 18px; }
- .modal-content input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccd5d4; border-radius: 8px; outline: none; font-size: 14px; }
+    <!-- Category Selector Navigation -->
+    <div class="category-section">
+        <div class="category-title">🔍 कैटेगॉरी के अनुसार देखें</div>
+        <div class="category-scroll">
+            <div class="cat-chip active" onclick="selectCategory('all', this)">✨ सब देखें (All)</div>
+            <div class="cat-chip" onclick="selectCategory('iphone', this)">🍏 iPhone</div>
+            <div class="cat-chip" onclick="selectCategory('samsung', this)">📱 Samsung</div>
+            <div class="cat-chip" onclick="selectCategory('oneplus', this)">🔴 OnePlus</div>
+            <div class="cat-chip" onclick="selectCategory('vivo', this)">💎 Vivo</div>
+            <div class="cat-chip" onclick="selectCategory('oppo', this)">✨ Oppo</div>
+            <div class="cat-chip" onclick="selectCategory('realme', this)">💛 Realme</div>
+            <div class="cat-chip" onclick="selectCategory('xiaomi', this)">🍊 Redmi/Mi</div>
+            <div class="cat-chip" onclick="selectCategory('charger', this)">🔌 Chargers</div>
+            <div class="cat-chip" onclick="selectCategory('cable', this)">🎗️ Cables</div>
+            <div class="cat-chip" onclick="selectCategory('buds', this)">🎧 Earbuds</div>
+        </div>
+    </div>
 
- .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(20, 35, 55, 0.95); border-top: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); display: flex; justify-content: space-around; align-items: center; padding: 6px 10px 12px 10px; box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.4); z-index: 9999; }
- .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; background: none; border: none; color: rgba(255, 255, 255, 0.6); font-size: 10px; cursor: pointer; flex: 1; }
- .nav-item svg { width: 22px; height: 22px; fill: currentColor; margin-bottom: 2px; }
- .nav-item.active { color: #fff; font-weight: 600; }
- .nav-item.unique-cart { position: relative; top: -14px; background: linear-gradient(135deg, #e2654f 0%, #d97a5e 100%); border: 3px solid #1b2a4a; width: 56px; height: 56px; flex: none; border-radius: 50%; color: #fff; box-shadow: 0 4px 15px rgba(226, 101, 79, 0.4); }
- .nav-item.unique-cart svg { width: 24px; height: 24px; margin: 0; }
+    <!-- Products Grid Container -->
+    <div class="container">
+        <div class="product-grid" id="userProductsContainer">
+            <p class="status-msg">प्रोडक्ट्स लोड हो रहे हैं...</p>
+        </div>
+    </div>
 
- .logout-btn { background: #e2654f; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; font-size: 14px; cursor: pointer; margin-top: 20px; }
- .hidden { display: none !important; } 
-</style> 
-</head> 
-<body> 
- 
- <header class="main-header hidden" id="appHeader">
-     <div class="search-box">
-         <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff;margin-right:5px;"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-         <input type="text" placeholder="Search mobile, accessories...">
-     </div>
- </header>
+    <script>
+        // 1. Firebase Configuration (एडमिन पैनल से सेम मैचिंग)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDiZSWon47tBdSIkUB3qCSsU19LN_FOBgg",
+            authDomain: "swami-mobiles-29ee3.firebaseapp.com",
+            projectId: "swami-mobiles-29ee3",
+            storageBucket: "swami-mobiles-29ee3.firebasestorage.app",
+            messagingSenderId: "497794164748",
+            appId: "1:497794164748:web:fecc6f04615fa35a5f6629",
+            measurementId: "G-GL9VG05PRN"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
 
- <div class="container" id="authContainer"> 
-     <div class="tabs"> 
-         <button class="tab-btn active" onclick="switchTab('login')" id="loginTabBtn">login</button> 
-         <button class="tab-btn" onclick="switchTab('signup')" id="signupTabBtn">register</button> 
-     </div> 
+        let currentSelectedCategory = "all";
 
-     <div id="loginForm"> 
-         <div class="toggle-method"> 
-             <button class="active" id="loginEmailBtn">Email</button> 
-             <button id="loginPhoneBtn">Phone</button> 
-         </div> 
-         <form id="mainLoginForm" onsubmit="event.preventDefault(); handleLogin();"> 
-             <div class="input-group" id="loginEmailGroup"> 
-                 <label>Email</label> 
-                 <input type="email" id="loginEmail" placeholder="aapka@email.com" required> 
-             </div> 
-             <div class="input-group hidden" id="loginPhoneGroup"> 
-                 <label>Phone Number</label> 
-                 <input type="tel" id="loginPhone" placeholder="+91 98765 43210"> 
-             </div> 
-             <div class="input-group"> 
-                 <label>Password</label> 
-                 <input type="password" id="loginPassword" placeholder="••••••••" required> 
-             </div> 
-             <div class="options-row"> 
-                 <label class="checkbox-row"><input type="checkbox"> Remember me</label> 
-                 <a href="#">Forgot?</a> 
-             </div> 
-             <button type="submit" class="submit-btn">Login</button> 
-         </form> 
-         <div class="divider"><span>or continue with</span></div> 
-         <div class="social-buttons"> 
-             <button class="social-btn" onclick="handleGoogleLogin()">Google</button> 
-             <button class="social-btn">Facebook</button> 
-         </div> 
-         <p class="switch-text">Don't have an account? <a onclick="switchTab('signup')">Register</a></p> 
-     </div> 
+        // 2. पेज लोड होते ही सारे प्रोडक्ट्स लोड करें
+        window.onload = function() {
+            loadProducts("all");
+        };
 
-     <div id="signupForm" class="hidden"> 
-         <form id="mainSignupForm" onsubmit="event.preventDefault(); handleSignup();"> 
-             <div class="input-group"><label>Full Name</label><input type="text" id="signupName" placeholder="Aapka naam" required></div> 
-             <div class="input-group"><label>Email</label><input type="email" id="signupEmail" placeholder="aapka@email.com" required></div> 
-             <div class="input-group"><label>Password</label><input type="password" id="signupPassword" placeholder="••••••••" required></div> 
-             <div class="input-group"><label>Confirm Password</label><input type="password" id="signupConfirmPassword" placeholder="••••••••" required></div> 
-             <button type="submit" class="submit-btn">Create Account</button> 
-         </form> 
-         <p class="switch-text">Already have an account? <a onclick="switchTab('login')">Login</a></p> 
-     </div> 
- </div>
+        // 3. कैटेगॉरी चिप चेंज करने का फंक्शन
+        function selectCategory(categoryKey, element) {
+            // एक्टिव क्लास को रीसेट करके करेंट पर लगाना
+            document.querySelectorAll('.cat-chip').forEach(chip => chip.classList.remove('active'));
+            element.classList.add('active');
+            
+            currentSelectedCategory = categoryKey;
+            loadProducts(categoryKey);
+        }
 
- <div class="app-content hidden" id="mainAppContent"></div>
+        // 4. 🔥 Firebase से रीयलटाइम डेटा फ़िल्टर करके लोड करने का मुख्य लॉजिक
+        function loadProducts(categoryFilter) {
+            const container = document.getElementById('userProductsContainer');
+            container.innerHTML = `<p class="status-msg">लोड हो रहा है...</p>`;
 
- <div id="userOrderModal" class="modal hidden">
-     <div class="modal-content">
-         <h3 id="modalProductTitle">Order Now</h3>
-         <input type="text" id="orderCustName" placeholder="आपका नाम" required>
-         <input type="tel" id="orderCustPhone" placeholder="मोबाइल नंबर" required>
-         <button onclick="submitOrderLive()" style="width: 100%; background: #2a6b6b; color: white; border: none; padding: 10px; border-radius: 20px; font-weight: 700; cursor:pointer;">Order Confirm (COD)</button>
-         <button onclick="closeOrderModal()" style="width: 100%; background: transparent; color: #e2654f; border: none; margin-top: 8px; font-weight:600; cursor:pointer;">Cancel</button>
-     </div>
- </div>
+            let productRef = database.ref('products');
 
- <div class="bottom-nav hidden" id="appBottomNav">
-     <button class="nav-item active" id="nav-home" onclick="handleNavClick('home', 'nav-home')">
-         <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-         <span>Home</span>
-     </button>
-     <button class="nav-item" id="nav-category" onclick="handleNavClick('category', 'nav-category')">
-         <svg viewBox="0 0 24 24"><path d="M4 11h5V5H4v6zm0 7h5v-6H4v6zm7 0h5v-6h-5v6zm0-13v6h5V5h-5z"/></svg>
-         <span>Category</span>
-     </button>
-     <button class="nav-item unique-cart" id="nav-cart" onclick="handleNavClick('cart', 'nav-cart')">
-         <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-     </button>
-     <button class="nav-item" id="nav-offers" onclick="handleNavClick('offers', 'nav-offers')">
-         <svg viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7c-.83 0-1.5-.67-1.5-1.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
-         <span>Offers</span>
-     </button>
-     <button class="nav-item" id="nav-me" onclick="handleNavClick('me', 'nav-me')">
-         <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-         <span>Me</span>
-     </button>
- </div>
+            // यदि "all" नहीं है, तो Firebase से सीधे कैटेगरी वाइज़ फ़िल्टर क्वेरी चलाएं
+            if (categoryFilter !== "all") {
+                productRef = productRef.orderByChild('category').equalTo(categoryFilter);
+            }
 
- <script>
- const firebaseConfig = {
-     apiKey: "AIzaSyDiZSWon47tBdSIkUB3qCSsU19LN_FOBgg",
-     authDomain: "swami-mobiles-29ee3.firebaseapp.com",
-     projectId: "swami-mobiles-29ee3",
-     storageBucket: "swami-mobiles-29ee3.firebasestorage.app",
-     messagingSenderId: "497794164748",
-     appId: "1:497794164748:web:fecc6f04615fa35a5f6629",
-     databaseURL: "https://swami-mobiles-29ee3-default-rtdb.firebaseio.com/" 
- };
+            productRef.on('value', (snapshot) => {
+                container.innerHTML = "";
+                
+                if (snapshot.exists()) {
+                    let hasProducts = false;
 
- firebase.initializeApp(firebaseConfig);
- const auth = firebase.auth();
- const database = firebase.database();
+                    snapshot.forEach((childSnapshot) => {
+                        const prod = childSnapshot.val();
+                        hasProducts = true;
 
- const authContainer = document.getElementById('authContainer');
- const appHeader = document.getElementById('appHeader');
- const appBottomNav = document.getElementById('appBottomNav');
- const mainAppContent = document.getElementById('mainAppContent');
- 
- let currentSelectedProduct = null;
- let allProductsArray = []; 
- let activeCategory = "All";
+                        // कार्ड का HTML स्ट्रक्चर
+                        container.innerHTML += `
+                            <div class="product-card">
+                                <div>
+                                    <img src="${prod.image}" alt="${prod.name}">
+                                    <div class="prod-title">${prod.name}</div>
+                                </div>
+                                <div>
+                                    <div class="price-row">
+                                        <span class="price-after">${prod.afterPrice}</span>
+                                        <span class="price-before">${prod.beforePrice}</span>
+                                    </div>
+                                    <button class="buy-btn" onclick="orderNow('${childSnapshot.key}', '${prod.name.replace(/'/g, "\\'")}', '${prod.afterPrice}')">Order Now</button>
+                                </div>
+                            </div>
+                        `;
+                    });
 
- // LIVE USER STATE DETECTOR
- auth.onAuthStateChanged((user) => {
-     if (user) { 
-         activateMainDashboard(); 
-     } else {
-         deactivateMainDashboard();
-     }
- });
+                    if(!hasProducts) {
+                        showNoProductMsg(container);
+                    }
 
- function activateMainDashboard() {
-     authContainer.classList.add('hidden'); 
-     appHeader.classList.remove('hidden'); 
-     appBottomNav.classList.remove('hidden'); 
-     mainAppContent.classList.remove('hidden'); 
-     loadLiveProducts(); 
- }
+                } else {
+                    showNoProductMsg(container);
+                }
+            }, (error) => {
+                container.innerHTML = `<p class="status-msg" style="color: red;">डेटा लोड करने में समस्या आई!</p>`;
+            });
+        }
 
- function deactivateMainDashboard() {
-     authContainer.classList.remove('hidden'); 
-     appHeader.add('hidden'); 
-     appBottomNav.classList.add('hidden'); 
-     mainAppContent.classList.add('hidden'); 
- }
+        function showNoProductMsg(container) {
+            container.innerHTML = `<p class="status-msg">इस कैटेगरी में अभी कोई प्रोडक्ट उपलब्ध नहीं है।</p>`;
+        }
 
- window.switchTab = function(tab) {
-     document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
-     document.getElementById('signupForm').classList.toggle('hidden', tab !== 'signup');
-     document.getElementById('loginTabBtn').classList.toggle('active', tab === 'login');
-     document.getElementById('signupTabBtn').classList.toggle('active', tab === 'signup');
- }
-
- // LOGIN
- window.handleLogin = function() {
-     const email = document.getElementById('loginEmail').value.trim();
-     const password = document.getElementById('loginPassword').value;
-     auth.signInWithEmailAndPassword(email, password).catch((err) => alert("Login Error:\n" + err.message));
- }
-
- // SIGNUP
- window.handleSignup = function() {
-     const email = document.getElementById('signupEmail').value.trim();
-     const password = document.getElementById('signupPassword').value;
-     const confirmPassword = document.getElementById('signupConfirmPassword').value;
-     if (password !== confirmPassword) { alert("पासवर्ड मैच नहीं हो रहा है!"); return; }
-     auth.createUserWithEmailAndPassword(email, password).catch((err) => alert("Signup Error:\n" + err.message));
- }
-
- // GOOGLE LOGIN
- window.handleGoogleLogin = function() {
-     const provider = new firebase.auth.GoogleAuthProvider();
-     auth.signInWithPopup(provider).catch((err) => alert("Google Login Error:\n" + err.message));
- }
-
- // LOGOUT FUNCTION
- window.handleLogout = function() {
-     auth.signOut().then(() => { alert("सफलतापूर्वक लॉगआउट हो गया!"); });
- }
-
- // LIVE PRODUCTS FETCH
- function loadLiveProducts() {
-     mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:20px;'>स्टोर लोड हो रहा है...</p>";
-     database.ref('products').on('value', (snapshot) => {
-         allProductsArray = [];
-         if(snapshot.exists()) {
-             snapshot.forEach((childSnapshot) => {
-                 allProductsArray.push(childSnapshot.val());
-             });
-         }
-         if(activeCategory === "All") {
-             renderUserProductsGrid(allProductsArray);
-         }
-     });
- }
-
- // RENDER PRODUCTS IN BOX TYPE GRID
- function renderUserProductsGrid(productsToRender) {
-     mainAppContent.innerHTML = "";
-
-     if(productsToRender.length > 0) {
-         let gridHTML = '<div class="user-grid">';
-         productsToRender.forEach((product) => {
-             gridHTML += `
-                 <div class="product-box-card">
-                     <img src="${product.image || 'https://via.placeholder.com/150'}" alt="Product">
-                     <div>
-                         <div class="p-box-title">${product.name}</div>
-                         <div class="price-box-row">
-                             <span class="before-p-box">${product.beforePrice}</span>
-                             <span class="after-p-box">${product.afterPrice}</span>
-                         </div>
-                     </div>
-                     <button class="buy-btn-box" onclick="openOrderModal('${product.name.replace(/'/g, "\\'")}', '${product.afterPrice}')">Buy Now</button>
-                 </div>`;
-         });
-         gridHTML += '</div>';
-         mainAppContent.innerHTML = gridHTML;
-     } else {
-         mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;font-size:14px;'>यहाँ अभी कोई प्रोडक्ट लाइव नहीं है।</p>";
-     }
- }
-
- // 🛠️ 10 CATEGORIES LIST LOGIC
- function renderCategoryPage() {
-     mainAppContent.innerHTML = `
-         <div class="category-page-grid">
-             <button class="category-card-btn" onclick="filterBySelectedKey('iphone')">🍏 iPhone</button>
-             <button class="category-card-btn" onclick="filterBySelectedKey('samsung')">📱 Samsung</button>
-             <button class="category-card-btn" onclick="filterBySelectedKey('oneplus')">🔴 OnePlus</button>
-             <button class="category-card-btn" onclick="filterBySelectedKey('vivo')">💎 Vivo</button>
-             <button class="category-card-btn" onclick="filterBySelectedKey('oppo')">✨ Oppo</button>
-             <button class="category-card-btn" onclick="filterBySelectedKey('realme')">💛 Realme</button>
-             <button class="category-card-btn" onclick="filterBySelectedKey('xiaomi')">🍊 Redmi/Mi</button>
-             <button class="category-card-btn" onclick="filterBySelectedKey('charger')">🔌 Chargers</button>
-             <button class="category-card-btn" onclick="filterBySelectedKey('cable')">🎗️ Cables</button>
-             <button class="category-card-btn" onclick="filterBySelectedKey('buds')">🎧 Earbuds</button>
-         </div>
-     `;
- }
-
- // CATEGORY SELECTION FILTER
- window.filterBySelectedKey = function(keyword) {
-     activeCategory = keyword;
-     const filtered = allProductsArray.filter(prod => prod.name.toLowerCase().includes(keyword.toLowerCase()));
-     renderUserProductsGrid(filtered);
- }
-
- window.openOrderModal = function(name, price) {
-     currentSelectedProduct = { name, price };
-     document.getElementById('modalProductTitle').innerText = name;
-     document.getElementById('userOrderModal').classList.remove('hidden');
- }
- 
- window.closeOrderModal = function() {
-     document.getElementById('userOrderModal').classList.add('hidden');
- }
-
- window.submitOrderLive = function() {
-     const name = document.getElementById('orderCustName').value.trim();
-     const phone = document.getElementById('orderCustPhone').value.trim();
-     if(!name || !phone) { alert("कृपया नाम और नंबर दर्ज करें!"); return; }
-
-     database.ref('orders').push({
-         productName: currentSelectedProduct.name,
-         price: currentSelectedProduct.price,
-         customerName: name,
-         customerPhone: phone,
-         timestamp: Date.now()
-     }).then(() => {
-         closeOrderModal();
-         document.getElementById('orderCustName').value = "";
-         document.getElementById('orderCustPhone').value = "";
-         alert("आपका आदेश स्वामी मोबाइल्स को मिल गया है!");
-     }).catch(err => alert("ऑर्डर एरर: " + err.message));
- }
-
- window.handleNavClick = function(page, elementId) {
-     document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
-     document.getElementById(elementId).classList.add('active');
-     
-     if(page === 'home') { 
-         activeCategory = "All";
-         renderUserProductsGrid(allProductsArray); 
-     } else if(page === 'category') {
-         renderCategoryPage();
-     } else if(page === 'me') {
-         mainAppContent.innerHTML = `
-             <div style="padding:30px 10px; text-align:center; color:#fff;">
-                 <h3>Profile Section</h3>
-                 <p style="color:#eee; margin-top:10px;">User: ${auth.currentUser ? auth.currentUser.email : 'Guest'}</p>
-                 <button class="logout-btn" onclick="handleLogout()">Logout Account</button>
-             </div>`;
-     } else { 
-         mainAppContent.innerHTML = "<h3 style='padding:50px 10px; text-align:center; color:#fff'>" + page.toUpperCase() + " Content Coming Soon...</h3>"; 
-     }
- }
- </script>
-</body> 
+        // 5. ऑर्डर प्लेस करने का सैंपल लॉजिक (आप अपने पुराने ऑर्डर फ़ंक्शन से इसे बदल भी सकते हैं)
+        function orderNow(prodKey, prodName, prodPrice) {
+            const name = prompt("अपना नाम दर्ज करें:");
+            const phone = prompt("अपना मोबाइल नंबर दर्ज करें:");
+            
+            if(name && phone) {
+                const orderData = {
+                    productKey: prodKey,
+                    productName: prodName,
+                    price: prodPrice,
+                    customerName: name,
+                    customerPhone: phone,
+                    timestamp: Date.now()
+                };
+                
+                database.ref('orders').push(orderData).then(() => {
+                    alert("आपका ऑर्डर सफलतापूर्वक दर्ज हो गया है! हमारी टीम आपसे संपर्क करेगी।");
+                }).catch(() => {
+                    alert("ऑर्डर फेल हो गया, कृपया दोबारा प्रयास करें।");
+                });
+            } else if (name || phone) {
+                alert("कृपया ऑर्डर पूरा करने के लिए दोनों जानकारियां भरें।");
+            }
+        }
+    </script>
+</body>
 </html>
