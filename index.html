@@ -117,6 +117,7 @@
  .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 10005; }
  .modal-content { background: white; width: 100%; max-width: 340px; padding: 20px; border-radius: 20px; text-align: center; color: #333; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
  input[type="text"], input[type="tel"], input[type="password"] { width: 100%; padding: 10px 14px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 12px; outline: none; font-size: 14px; color: #333; }
+ .payment-select { width: 100%; padding: 10px 14px; background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 12px; outline: none; font-size: 14px; color: #333; font-weight: 600; }
  
  #modalProductImg { width: 100%; max-height: 190px; object-fit: contain; border-radius: 12px; margin-bottom: 12px; background: #f9f9f9; }
  #modalProductTitleDetail { font-size: 17px; font-weight: 700; color: #1b2a4a; margin-bottom: 6px; text-align: left; }
@@ -129,7 +130,7 @@
 
  .toast-cylinder { position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%) translateY(30px); background: rgba(20, 35, 55, 0.95); color: #fff; padding: 10px 22px; border-radius: 30px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; box-shadow: 0 8px 25px rgba(0,0,0,0.35); border: 1px solid rgba(255, 255, 255, 0.2); z-index: 10010; opacity: 0; pointer-events: none; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease; }
  .toast-cylinder.show { opacity: 1; transform: translateX(-50%) translateY(0); }
- .toast-success-icon { background: #28b4a2; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: #fff; }
+ .toast-success-icon { background: #28b4a2; width: 18px; height: 18px; border-radius: 50%; display: flex; opacity: 1; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: #fff; }
 
  .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(20, 35, 55, 0.95); border-top: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); display: flex; justify-content: space-around; align-items: center; padding: 6px 10px 12px 10px; box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.4); z-index: 9999; }
  .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; background: none; border: none; color: rgba(255, 255, 255, 0.6); font-size: 10px; cursor: pointer; flex: 1; }
@@ -222,7 +223,14 @@
          <p style="font-size:13px; color:#666; margin-bottom:12px;">Complete your details to place the order.</p>
          <input type="text" id="orderCustName" placeholder="Your Name" required>
          <input type="tel" id="orderCustPhone" placeholder="Mobile Number" required>
-         <button onclick="submitOrderLive()" style="width: 100%; background: #2a6b6b; color: white; border: none; padding: 10px; border-radius: 20px; font-weight: 700; cursor:pointer;">Confirm Order (COD)</button>
+         
+         <label style="font-size:12px; font-weight:700; color:#1b2a4a; display:block; text-align:left; margin-bottom:4px;">Select Payment Method:</label>
+         <select id="orderPaymentMethod" class="payment-select">
+             <option value="COD">💵 Cash on Delivery (COD)</option>
+             <option value="PAYTM_UPI">📱 Paytm / Online UPI</option>
+         </select>
+
+         <button onclick="submitOrderLive()" style="width: 100%; background: #2a6b6b; color: white; border: none; padding: 10px; border-radius: 20px; font-weight: 700; cursor:pointer;">Confirm & Process Order</button>
          <button onclick="closeOrderModal()" style="width: 100%; background: transparent; color: #e2654f; border: none; margin-top: 8px; font-weight:600; cursor:pointer;">Cancel</button>
      </div>
  </div>
@@ -309,10 +317,11 @@
  let userCustomAddress = "Click edit to add your delivery address"; 
  let userCustomAvatar = localStorage.getItem('swami_user_avatar') || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
- // LINKS CONFIGURATION SECTION (PUT YOUR LINKS HERE)
+ // LINKS & PAYTM CONFIGURATION
  const YOUTUBE_LINK = "#";   
  const WHATSAPP_LINK = "#";  
  const INSTAGRAM_LINK = "#"; 
+ const MY_PAYTM_UPI_ID = "YOUR_PAYTM_UPI_HERE@paytm"; // <-- Yahan apni Paytm Business UPI ID dalo!
 
  auth.onAuthStateChanged((user) => {
      if (user) { 
@@ -345,7 +354,7 @@
  }
 
  function deactivateMainDashboard() {
-     authContainer.remove('hidden'); 
+     authContainer.classList.remove('hidden'); 
      appHeader.classList.add('hidden'); 
      appBottomNav.classList.add('hidden'); 
      mainAppContent.classList.add('hidden'); 
@@ -619,9 +628,9 @@
      </div>`;
  }
  window.openCategoryFromGrid = function(catKey) { activeCategory = catKey; handleNavClick('home', 'nav-home'); }
- window.filterBySpecificCategory = function(catKey) { activeCategory = catKey; if(catKey === "All") { renderUserProductsGrid(allProductsArray); } else { renderUserProductsGrid(allProductsArray.filter(p => p.category === catKey)); } }
- window.handleSearch = function() { let query = document.getElementById('searchInput').value.toLowerCase().trim(); if(query === "") { renderCurrentTab(); } else { renderUserProductsGrid(allProductsArray.filter(p => p.name.toLowerCase().includes(query))); } }
-   window.openDetailModal = function(key, name, beforePrice, afterPrice, img, desc) { currentSelectedProduct = { key: key, name: name, beforePrice: beforePrice, price: afterPrice, image: img, description: desc }; document.getElementById('modalProductImg').src = img; document.getElementById('modalProductTitleDetail').innerText = name; document.getElementById('modalProductDesc').innerText = desc; document.getElementById('modalBeforePrice').innerText = beforePrice; document.getElementById('modalAfterPrice').innerText = afterPrice; document.getElementById('productDetailModal').classList.remove('hidden'); }
+ window.filterBySpecificCategory = function(catKey) { activeCategory = catKey; if(catKey === "All") { renderUserProductsGrid(allProductsArray); } else { renderUserProductsGrid(allProductsArray.filter(p => p.category === catKey)); } 
+  window.handleSearch = function() { let query = document.getElementById('searchInput').value.toLowerCase().trim(); if(query === "") { renderCurrentTab(); } else { renderUserProductsGrid(allProductsArray.filter(p => p.name.toLowerCase().includes(query))); } }
+ window.openDetailModal = function(key, name, beforePrice, afterPrice, img, desc) { currentSelectedProduct = { key: key, name: name, beforePrice: beforePrice, price: afterPrice, image: img, description: desc }; document.getElementById('modalProductImg').src = img; document.getElementById('modalProductTitleDetail').innerText = name; document.getElementById('modalProductDesc').innerText = desc; document.getElementById('modalBeforePrice').innerText = beforePrice; document.getElementById('modalAfterPrice').innerText = afterPrice; document.getElementById('productDetailModal').classList.remove('hidden'); }
  window.closeDetailModal = function() { document.getElementById('productDetailModal').classList.add('hidden'); }
  function showCustomToastLive(message) { let toast = document.getElementById('cartToast'); document.getElementById('toastMessage').innerText = message; toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); }, 2000); }
  window.addToCartLive = function() { if(currentSelectedProduct) { userCartArray.push(currentSelectedProduct); localStorage.setItem('swami_cart', JSON.stringify(userCartArray)); closeDetailModal(); showCustomToastLive("Added to cart!"); } }
@@ -634,11 +643,56 @@
  window.removeFromCartLive = function(index) { userCartArray.splice(index, 1); localStorage.setItem('swami_cart', JSON.stringify(userCartArray)); renderCartItemsPage(); }
  window.openOrderModal = function() { document.getElementById('userOrderModal').classList.remove('hidden'); }
  window.closeOrderModal = function() { document.getElementById('userOrderModal').classList.add('hidden'); }
+ 
  window.submitOrderLive = function() {
-     const name = document.getElementById('orderCustName').value.trim(); const phone = document.getElementById('orderCustPhone').value.trim(); if(!name || !phone) return;
-     if(userCartArray.length > 0) { database.ref('orders').push({ customerName: name, customerPhone: phone, items: userCartArray.map(item => ({ productKey: item.key, productName: item.name, price: item.price })), timestamp: Date.now() }).then(() => { userCartArray = []; localStorage.removeItem('swami_cart'); closeOrderModal(); activeCategory = "All"; handleNavClick('home', 'nav-home'); }); }
+     const name = document.getElementById('orderCustName').value.trim(); 
+     const phone = document.getElementById('orderCustPhone').value.trim(); 
+     const pMethod = document.getElementById('orderPaymentMethod').value;
+     
+     if(!name || !phone) { alert("Please enter Name and Phone!"); return; }
+     if(userCartArray.length === 0) return;
+
+     let totalAmount = 0;
+     userCartArray.forEach(item => { 
+         let cleanPrice = parseInt(item.price.replace(/[^0-9]/g, '')) || 0; 
+         totalAmount += cleanPrice; 
+     });
+
+     const localOrderId = "SWAMI_" + Date.now();
+
+     // Case 1: Agar user Paytm UPI chunta hai
+     if(pMethod === "PAYTM_UPI") {
+         let upiUrl = `upi://pay?pa=${encodeURIComponent(MY_PAYTM_UPI_ID)}&pn=Swami%20Mobiles&am=${totalAmount}&cu=INR&tn=Order%20${localOrderId}`;
+         
+         // Direct mobile payment apps toggle trigger karega
+         window.location.href = upiUrl;
+
+         // User payment karke jaise hi app par lautega, order automatically store ho chuka hoga
+         saveOrderToFirebaseLive(name, phone, "Paytm UPI / Online", localOrderId);
+     } 
+     // Case 2: Agar user Cash on Delivery chunta hai
+     else {
+         saveOrderToFirebaseLive(name, phone, "Cash on Delivery (COD)", localOrderId);
+     }
+ }
+
+ function saveOrderToFirebaseLive(name, phone, statusText, orderId) {
+     database.ref('orders').push({ 
+         orderId: orderId,
+         customerName: name, 
+         customerPhone: phone, 
+         paymentMethod: statusText,
+         items: userCartArray.map(item => ({ productKey: item.key, productName: item.name, price: item.price })), 
+         timestamp: Date.now() 
+     }).then(() => { 
+         userCartArray = []; 
+         localStorage.removeItem('swami_cart'); 
+         closeOrderModal(); 
+         alert("Order updates sent! Thank you. 🎉");
+         activeCategory = "All"; 
+         handleNavClick('home', 'nav-home'); 
+     });
  }
  </script>
 </body>
 </html>
-                                                                                                                     
