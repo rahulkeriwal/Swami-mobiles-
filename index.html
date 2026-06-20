@@ -13,7 +13,7 @@
  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; } 
  html, body { height: 100%; width: 100%; overflow-x: hidden; background: #f4f7f6; } 
  body { 
-     min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 16px; position: relative; 
+     min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 12px; position: relative; 
      background: linear-gradient(160deg, #1b2a4a 0%, #1f4e5f 18%, #2a6b6b 35%, #d97a5e 60%, #e2654f 75%, #7a2d3a 100%); 
      background-attachment: fixed;
  } 
@@ -53,32 +53,32 @@
  .search-box input { width: 100%; background: transparent; border: none; outline: none; color: #fff; font-size: 15px; padding-left: 8px; }
  .search-box input::placeholder { color: rgba(255, 255, 255, 0.6); }
 
- /* 🛒 BOX VIEW MODERATION GRID */
+ /* 🛒 BOX VIEW MODERATION GRID (3 COLUMNS) */
  .app-content { 
      position: relative; 
      z-index: 1; 
      width: 100%; 
-     max-width: 360px; 
+     max-width: 380px; 
      background: transparent; 
      border-radius: 0; 
-     padding: 8px; 
+     padding: 4px; 
      color: #333; 
-     margin-top: 65px; /* ऊपर से स्पेस सेट किया क्योंकि पुराना बार हट चुका है */
+     margin-top: 65px; 
      margin-bottom: 90px; 
  }
  .user-grid { 
      display: grid; 
-     grid-template-columns: repeat(2, 1fr); 
-     gap: 10px; 
+     grid-template-columns: repeat(3, 1fr); /* 👈 एक लाइन में 3 प्रोडक्ट */
+     gap: 6px; /* गैप थोड़ा कम किया ताकि स्क्रीन पर सही बैठे */
      width: 100%; 
      text-align: left; 
  }
  .product-box-card { 
-     background: rgba(255, 255, 255, 0.95); 
-     border-radius: 14px; 
-     padding: 8px; 
+     background: rgba(255, 255, 255, 0.96); 
+     border-radius: 10px; 
+     padding: 6px; /* पैडिंग कम की */
      border: 1px solid rgba(255,255,255,0.2); 
-     box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+     box-shadow: 0 2px 8px rgba(0,0,0,0.08); 
      display: flex; 
      flex-direction: column; 
      justify-content: space-between; 
@@ -87,12 +87,12 @@
      width: 100%; 
      aspect-ratio: 1/1; 
      object-fit: cover; 
-     border-radius: 10px; 
+     border-radius: 6px; 
      background: #fafafa; 
-     margin-bottom: 6px; 
+     margin-bottom: 4px; 
  }
  .p-box-title { 
-     font-size: 12px; 
+     font-size: 10.5px; /* छोटा साफ़ फ़ॉन्ट */
      font-weight: 700; 
      color: #1b2a4a; 
      margin-bottom: 2px; 
@@ -101,22 +101,22 @@
      -webkit-line-clamp: 2; 
      -webkit-box-orient: vertical; 
      overflow: hidden; 
-     height: 30px; 
+     height: 26px; /* टाइटल्स की ऊंचाई 3 कॉलम के हिसाब से परफेक्ट की */
  }
  .price-box-row { 
-     margin-bottom: 6px; 
+     margin-bottom: 4px; 
      display: flex; 
      align-items: center; 
      flex-wrap: wrap; 
-     gap: 4px;
+     gap: 2px;
  }
  .before-p-box { 
-     font-size: 10px; 
+     font-size: 8.5px; 
      text-decoration: line-through; 
      color: #888; 
  }
  .after-p-box { 
-     font-size: 13px; 
+     font-size: 11px; 
      font-weight: 800; 
      color: #d97a5e; 
  }
@@ -124,14 +124,13 @@
      background: #2a6b6b; 
      color: #fff; 
      border: none; 
-     padding: 6px; 
+     padding: 5px 2px; /* बटन कॉम्पैक्ट किया */
      width: 100%; 
-     border-radius: 8px; 
-     font-size: 11px; 
+     border-radius: 6px; 
+     font-size: 10px; 
      font-weight: 700; 
      cursor: pointer; 
      text-align: center; 
-     box-shadow: 0 3px 6px rgba(42,107,107,0.15); 
  }
 
  /* 👑 10 CATEGORIES GRID CONTAINER STYLE */
@@ -315,7 +314,7 @@
 
  function deactivateMainDashboard() {
      authContainer.classList.remove('hidden'); 
-     appHeader.classList.add('hidden'); 
+     appHeader.add('hidden'); 
      appBottomNav.classList.add('hidden'); 
      mainAppContent.classList.add('hidden'); 
  }
@@ -364,7 +363,6 @@
                  allProductsArray.push(childSnapshot.val());
              });
          }
-         // डिफ़ॉल्ट रूप से होम पर सारे प्रोडक्ट्स दिखेंगे
          if(activeCategory === "All") {
              renderUserProductsGrid(allProductsArray);
          }
@@ -397,7 +395,8 @@
          mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;font-size:14px;'>यहाँ अभी कोई प्रोडक्ट लाइव नहीं है।</p>";
      }
  }
-  // 🛠️ 10 CATEGORIES LIST LOGIC (यहाँ से आप नाम और फ़िल्टर कीवर्ड बदल सकते हो)
+
+ // 🛠️ 10 CATEGORIES LIST LOGIC
  function renderCategoryPage() {
      mainAppContent.innerHTML = `
          <div class="category-page-grid">
@@ -459,7 +458,7 @@
          activeCategory = "All";
          renderUserProductsGrid(allProductsArray); 
      } else if(page === 'category') {
-         renderCategoryPage(); // कैटेगरी टैब पर क्लिक करते ही 10 कैटेगॉरी की ग्रिड खुलेगी
+         renderCategoryPage();
      } else if(page === 'me') {
          mainAppContent.innerHTML = `
              <div style="padding:30px 10px; text-align:center; color:#fff;">
