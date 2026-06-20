@@ -59,16 +59,86 @@
  .cat-pill { background: rgba(255,255,255,0.2); color: #fff; padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid rgba(255,255,255,0.3); white-space: nowrap; cursor: pointer; transition: all 0.2s ease; backdrop-filter: blur(10px); }
  .cat-pill.active { background: #fff; color: #1b2a4a; border-color: #fff; box-shadow: 0 4px 12px rgba(255,255,255,0.3); }
 
- /* 🛒 BOX VIEW MODERATION GRID */
- .app-content { position: relative; z-index: 1; width: 100%; max-width: 360px; background: rgba(255, 255, 255, 0.95); border-radius: 22px; padding: 14px; color: #333; margin-top: 5px; margin-bottom: 90px; }
- .user-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; text-align: left; }
- .product-box-card { background: #fff; border-radius: 18px; padding: 10px; border: 1px solid #eef2f1; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column; justify-content: space-between; }
- .product-box-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 12px; background: #fafafa; margin-bottom: 8px; }
- .p-box-title { font-size: 13.5px; font-weight: 700; color: #1b2a4a; margin-bottom: 4px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 35px; }
- .price-box-row { margin-bottom: 8px; display: flex; align-items: center; flex-wrap: wrap; }
- .before-p-box { font-size: 11px; text-decoration: line-through; color: #999; margin-right: 4px; }
- .after-p-box { font-size: 14px; font-weight: 800; color: #d97a5e; }
- .buy-btn-box { background: #2a6b6b; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; text-align: center; box-shadow: 0 3px 8px rgba(42,107,107,0.15); }
+ /* 🛒 BOX VIEW MODERATION GRID - UPDATE */
+ .app-content { 
+     position: relative; 
+     z-index: 1; 
+     width: 100%; 
+     max-width: 360px; 
+     background: transparent; /* पीछे का सफेद बॉक्स हटाया */
+     border-radius: 0; 
+     padding: 8px; 
+     color: #333; 
+     margin-top: 5px; 
+     margin-bottom: 90px; 
+ }
+ .user-grid { 
+     display: grid; 
+     grid-template-columns: repeat(2, 1fr); 
+     gap: 10px; /* डब्बों के बीच की दूरी */
+     width: 100%; 
+     text-align: left; 
+ }
+ .product-box-card { 
+     background: rgba(255, 255, 255, 0.95); /* सुंदर चमकदार ग्लास लुक डब्बा */
+     border-radius: 14px; 
+     padding: 8px; /* पैडिंग कम करके डब्बा छोटा किया */
+     border: 1px solid rgba(255,255,255,0.2); 
+     box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+     display: flex; 
+     flex-direction: column; 
+     justify-content: space-between; 
+ }
+ .product-box-card img { 
+     width: 100%; 
+     aspect-ratio: 1/1; 
+     object-fit: cover; 
+     border-radius: 10px; 
+     background: #fafafa; 
+     margin-bottom: 6px; 
+ }
+ .p-box-title { 
+     font-size: 12px; /* छोटा साफ़ फ़ॉन्ट */
+     font-weight: 700; 
+     color: #1b2a4a; 
+     margin-bottom: 2px; 
+     line-height: 1.2; 
+     display: -webkit-box; 
+     -webkit-line-clamp: 2; 
+     -webkit-box-orient: vertical; 
+     overflow: hidden; 
+     height: 30px; 
+ }
+ .price-box-row { 
+     margin-bottom: 6px; 
+     display: flex; 
+     align-items: center; 
+     flex-wrap: wrap; 
+     gap: 4px;
+ }
+ .before-p-box { 
+     font-size: 10px; 
+     text-decoration: line-through; 
+     color: #888; 
+ }
+ .after-p-box { 
+     font-size: 13px; 
+     font-weight: 800; 
+     color: #d97a5e; 
+ }
+ .buy-btn-box { 
+     background: #2a6b6b; 
+     color: #fff; 
+     border: none; 
+     padding: 6px; /* बटन स्लिम किया */
+     width: 100%; 
+     border-radius: 8px; 
+     font-size: 11px; 
+     font-weight: 700; 
+     cursor: pointer; 
+     text-align: center; 
+     box-shadow: 0 3px 6px rgba(42,107,107,0.15); 
+ }
 
  .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 10005; }
  .modal-content { background: white; width: 100%; max-width: 320px; padding: 20px; border-radius: 20px; text-align: center; color: #333; }
@@ -275,7 +345,7 @@
 
  // LIVE PRODUCTS FETCH
  function loadLiveProducts() {
-     mainAppContent.innerHTML = "<p style='text-align:center;color:#666;padding:20px;'>स्टोर लोड हो रहा है...</p>";
+     mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:20px;'>स्टोर लोड हो रहा है...</p>";
      database.ref('products').on('value', (snapshot) => {
          allProductsArray = [];
          if(snapshot.exists()) {
@@ -307,11 +377,12 @@
              if(activeCategory === "Samsung") return name.includes('samsung') || name.includes('galaxy');
              if(activeCategory === "OnePlus") return name.includes('oneplus');
              if(activeCategory === "Vivo") return name.includes('vivo') || name.includes('oppo');
-             if(activeCategory === "Accessories") return name.includes('buds') || name.includes('earbuds') || name.includes('charger') || name.includes('cover') || name.includes('glass');
+             if(activeCategory === "Accessories") return name.includes('buds') || name.includes('earbuds') || name.includes('charger') || name.includes('cover') || name.includes('glass') || name.includes('c-type') || name.includes('cable');
              return false;
          });
      }
-  if(filteredProducts.length > 0) {
+
+     if(filteredProducts.length > 0) {
          let gridHTML = '<div class="user-grid">';
          filteredProducts.forEach((product) => {
              gridHTML += `
@@ -330,7 +401,7 @@
          gridHTML += '</div>';
          mainAppContent.innerHTML = gridHTML;
      } else {
-         mainAppContent.innerHTML = "<p style='text-align:center;color:#777;padding:40px 10px;font-size:14px;'>इस कैटेगॉरी में अभी कोई प्रोडक्ट लाइव नहीं है।</p>";
+         mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;font-size:14px;'>इस कैटेगॉरी में अभी कोई प्रोडक्ट लाइव नहीं है।</p>";
      }
  }
 
@@ -359,7 +430,7 @@
          closeOrderModal();
          document.getElementById('orderCustName').value = "";
          document.getElementById('orderCustPhone').value = "";
-         alert("आपका ऑर्डर स्वामी मोबाइल्स को मिल गया है!");
+         alert("आपका आदेश स्वामी मोबाइल्स को मिल गया है!");
      }).catch(err => alert("ऑर्डर एरर: " + err.message));
  }
 
@@ -373,14 +444,14 @@
      } else if(page === 'me') {
          appCategoryBar.classList.add('hidden');
          mainAppContent.innerHTML = `
-             <div style="padding:30px 10px; text-align:center;">
+             <div style="padding:30px 10px; text-align:center; color:#fff;">
                  <h3>Profile Section</h3>
-                 <p style="color:#666; margin-top:10px;">User: ${auth.currentUser ? auth.currentUser.email : 'Guest'}</p>
+                 <p style="color:#eee; margin-top:10px;">User: ${auth.currentUser ? auth.currentUser.email : 'Guest'}</p>
                  <button class="logout-btn" onclick="handleLogout()">Logout Account</button>
              </div>`;
      } else { 
          appCategoryBar.classList.add('hidden');
-         mainAppContent.innerHTML = "<h3 style='padding:50px 10px; text-align:center; color:#333'>" + page.toUpperCase() + " Content Coming Soon...</h3>"; 
+         mainAppContent.innerHTML = "<h3 style='padding:50px 10px; text-align:center; color:#fff'>" + page.toUpperCase() + " Content Coming Soon...</h3>"; 
      }
  }
  </script>
