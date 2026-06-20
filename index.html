@@ -210,7 +210,7 @@
  const mainAppContent = document.getElementById('mainAppContent');
  
  let currentSelectedProduct = null;
- let allProductsArray = []; // लोकल एरे फ़िल्टरिंग के लिए
+ let allProductsArray = []; 
  let activeCategory = "All";
 
  // LIVE USER STATE DETECTOR
@@ -232,7 +232,7 @@
  }
 
  function deactivateMainDashboard() {
-     authContainer.remove('hidden'); 
+     authContainer.classList.remove('hidden'); 
      appHeader.classList.add('hidden'); 
      appCategoryBar.classList.add('hidden');
      appBottomNav.classList.add('hidden'); 
@@ -273,7 +273,7 @@
      auth.signOut().then(() => { alert("सफलतापूर्वक लॉगआउट हो गया!"); });
  }
 
- // LIVE PRODUCTS FETCH WITH LOCAL CACHING
+ // LIVE PRODUCTS FETCH
  function loadLiveProducts() {
      mainAppContent.innerHTML = "<p style='text-align:center;color:#666;padding:20px;'>स्टोर लोड हो रहा है...</p>";
      database.ref('products').on('value', (snapshot) => {
@@ -299,11 +299,90 @@
  function renderUserProductsGrid() {
      mainAppContent.innerHTML = "";
      
-     // फ़िल्टरिंग लॉजिक (नाम के आधार पर)
      let filteredProducts = allProductsArray;
      if(activeCategory !== "All") {
          filteredProducts = allProductsArray.filter(prod => {
              const name = prod.name.toLowerCase();
              if(activeCategory === "iPhone") return name.includes('iphone') || name.includes('apple');
              if(activeCategory === "Samsung") return name.includes('samsung') || name.includes('galaxy');
-             if(active
+             if(activeCategory === "OnePlus") return name.includes('oneplus');
+             if(activeCategory === "Vivo") return name.includes('vivo') || name.includes('oppo');
+             if(activeCategory === "Accessories") return name.includes('buds') || name.includes('earbuds') || name.includes('charger') || name.includes('cover') || name.includes('glass');
+             return false;
+         });
+     }
+  if(filteredProducts.length > 0) {
+         let gridHTML = '<div class="user-grid">';
+         filteredProducts.forEach((product) => {
+             gridHTML += `
+                 <div class="product-box-card">
+                     <img src="${product.image || 'https://via.placeholder.com/150'}" alt="Product">
+                     <div>
+                         <div class="p-box-title">${product.name}</div>
+                         <div class="price-box-row">
+                             <span class="before-p-box">${product.beforePrice}</span>
+                             <span class="after-p-box">${product.afterPrice}</span>
+                         </div>
+                     </div>
+                     <button class="buy-btn-box" onclick="openOrderModal('${product.name.replace(/'/g, "\\'")}', '${product.afterPrice}')">Buy Now</button>
+                 </div>`;
+         });
+         gridHTML += '</div>';
+         mainAppContent.innerHTML = gridHTML;
+     } else {
+         mainAppContent.innerHTML = "<p style='text-align:center;color:#777;padding:40px 10px;font-size:14px;'>इस कैटेगॉरी में अभी कोई प्रोडक्ट लाइव नहीं है।</p>";
+     }
+ }
+
+ window.openOrderModal = function(name, price) {
+     currentSelectedProduct = { name, price };
+     document.getElementById('modalProductTitle').innerText = name;
+     document.getElementById('userOrderModal').classList.remove('hidden');
+ }
+ 
+ window.closeOrderModal = function() {
+     document.getElementById('userOrderModal').classList.add('hidden');
+ }
+
+ window.submitOrderLive = function() {
+     const name = document.getElementById('orderCustName').value.trim();
+     const phone = document.getElementById('orderCustPhone').value.trim();
+     if(!name || !phone) { alert("कृपया नाम और नंबर दर्ज करें!"); return; }
+
+     database.ref('orders').push({
+         productName: currentSelectedProduct.name,
+         price: currentSelectedProduct.price,
+         customerName: name,
+         customerPhone: phone,
+         timestamp: Date.now()
+     }).then(() => {
+         closeOrderModal();
+         document.getElementById('orderCustName').value = "";
+         document.getElementById('orderCustPhone').value = "";
+         alert("आपका ऑर्डर स्वामी मोबाइल्स को मिल गया है!");
+     }).catch(err => alert("ऑर्डर एरर: " + err.message));
+ }
+
+ window.handleNavClick = function(page, elementId) {
+     document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+     document.getElementById(elementId).classList.add('active');
+     
+     if(page === 'home' || page === 'category') { 
+         appCategoryBar.classList.remove('hidden');
+         renderUserProductsGrid(); 
+     } else if(page === 'me') {
+         appCategoryBar.classList.add('hidden');
+         mainAppContent.innerHTML = `
+             <div style="padding:30px 10px; text-align:center;">
+                 <h3>Profile Section</h3>
+                 <p style="color:#666; margin-top:10px;">User: ${auth.currentUser ? auth.currentUser.email : 'Guest'}</p>
+                 <button class="logout-btn" onclick="handleLogout()">Logout Account</button>
+             </div>`;
+     } else { 
+         appCategoryBar.classList.add('hidden');
+         mainAppContent.innerHTML = "<h3 style='padding:50px 10px; text-align:center; color:#333'>" + page.toUpperCase() + " Content Coming Soon...</h3>"; 
+     }
+ }
+ </script>
+</body> 
+</html>
