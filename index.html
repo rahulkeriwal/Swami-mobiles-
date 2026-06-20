@@ -322,7 +322,7 @@
  </div>
 
  <div class="bottom-nav hidden" id="appBottomNav">
-       <button class="nav-item active" id="nav-home" onclick="handleNavClick('home', 'nav-home')">
+     <button class="nav-item active" id="nav-home" onclick="handleNavClick('home', 'nav-home')">
          <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
          <span>Home</span>
      </button>
@@ -369,13 +369,25 @@
 
  // LOCALSTORAGE CART & PROFILE BACKUPS
  let userCartArray = JSON.parse(localStorage.getItem('swami_cart')) || [];
- let userCustomName = localStorage.getItem('swami_user_name') || "Swami User";
+ let userCustomName = "Loading..."; 
  let userCustomAvatar = localStorage.getItem('swami_user_avatar') || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
  // LIVE USER STATE DETECTOR
  auth.onAuthStateChanged((user) => {
      if (user) { 
-         activateMainDashboard(); 
+         database.ref('users/' + user.uid).once('value').then((snapshot) => {
+             if (snapshot.exists() && snapshot.val().name) {
+                 userCustomName = snapshot.val().name;
+             } else if (user.displayName) {
+                 userCustomName = user.displayName;
+             } else {
+                 userCustomName = "Swami User";
+             }
+             activateMainDashboard(); 
+         }).catch(() => {
+             userCustomName = "Swami User";
+             activateMainDashboard();
+         });
      } else {
          deactivateMainDashboard();
      }
@@ -385,7 +397,6 @@
      authContainer.classList.add('hidden'); 
      appBottomNav.classList.remove('hidden'); 
      mainAppContent.classList.remove('hidden'); 
-     // Login होने पर Header और Search Bar की Visibility चेक करें
      toggleHeaderVisibility();
      loadLiveProducts(); 
  }
@@ -400,9 +411,9 @@
  // 🔍 HEADER/SEARCH BAR CONDITIONAL TOGGLE
  function toggleHeaderVisibility() {
      if (currentTab === "home") {
-         appHeader.classList.remove('hidden'); // सिर्फ Home टैब पर दिखेगा
+         appHeader.classList.remove('hidden'); 
      } else {
-         appHeader.classList.add('hidden'); // बाकी सब जगह गायब
+         appHeader.classList.add('hidden'); 
      }
  }
 
@@ -422,17 +433,33 @@
 
  // SIGNUP
  window.handleSignup = function() {
+     const fullName = document.getElementById('signupName').value.trim();
      const email = document.getElementById('signupEmail').value.trim();
      const password = document.getElementById('signupPassword').value;
      const confirmPassword = document.getElementById('signupConfirmPassword').value;
+     
+     if (!fullName) { showCustomToastLive("कृपया अपना नाम दर्ज करें!"); return; }
      if (password !== confirmPassword) { showCustomToastLive("पासवर्ड मैच नहीं हुआ!"); return; }
-     auth.createUserWithEmailAndPassword(email, password).catch((err) => showCustomToastLive("Error: " + err.message));
+     
+     auth.createUserWithEmailAndPassword(email, password).then((result) => {
+         return database.ref('users/' + result.user.uid).set({
+             name: fullName,
+             email: email
+         });
+     }).catch((err) => showCustomToastLive("Error: " + err.message));
  }
 
  // GOOGLE LOGIN
  window.handleGoogleLogin = function() {
      const provider = new firebase.auth.GoogleAuthProvider();
-     auth.signInWithPopup(provider).catch((err) => showCustomToastLive("Google Signin Error"));
+     auth.signInWithPopup(provider).then((result) => {
+         if(result.user) {
+             database.ref('users/' + result.user.uid).update({
+                 name: result.user.displayName,
+                 email: result.user.email
+             });
+         }
+     }).catch((err) => showCustomToastLive("Google Signin Error"));
  }
 
  // LOGOUT FUNCTION
@@ -510,7 +537,7 @@
      document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
      document.getElementById(navId).classList.add('active');
      currentTab = tabName;
-     toggleHeaderVisibility(); // जब भी टैब बदले, सर्च बार की मौजूदगी सेट करें
+     toggleHeaderVisibility(); 
      renderCurrentTab();
  }
 
@@ -532,7 +559,7 @@
      }
  }
 
- // 👤 PROFILE PAGE DYNAMIC GENERATION ('ME' TAB)
+ // 👤 PROFILE PAGE
  function renderMeProfilePage() {
      let user = auth.currentUser;
      let emailTxt = user ? user.email : 'Guest Mode';
@@ -556,7 +583,7 @@
          </div>`;
  }
 
- // ✏️ PROFILE EDIT CONTEXTS
+ // ✏️ PROFILE EDIT
  window.openEditNameModal = function() {
      document.getElementById('newProfileNameInput').value = userCustomName;
      document.getElementById('editNameModal').classList.remove('hidden');
@@ -566,12 +593,14 @@
  }
  window.saveProfileNameLive = function() {
      let updatedName = document.getElementById('newProfileNameInput').value.trim();
-     if(updatedName) {
-         userCustomName = updatedName;
-         localStorage.setItem('swami_user_name', updatedName);
-         document.getElementById('displayProfileName').innerText = updatedName;
-         closeEditNameModal();
-         showCustomToastLive("नाम सफलतापूर्वक अपडेट हुआ!");
+     let user = auth.currentUser;
+     if(updatedName && user) {
+         database.ref('users/' + user.uid).update({ name: updatedName }).then(() => {
+             userCustomName = updatedName;
+             document.getElementById('displayProfileName').innerText = updatedName;
+             closeEditNameModal();
+             showCustomToastLive("नाम सफलतापूर्वक अपडेट हुआ!");
+         }).catch((err) => showCustomToastLive("डेटाबेस एरर: " + err.message));
      }
  }
 
