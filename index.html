@@ -409,11 +409,14 @@
  }
 
  // 🔍 HEADER/SEARCH BAR CONDITIONAL TOGGLE
+  // 🔍 HEADER/SEARCH BAR CONDITIONAL TOGGLE
  function toggleHeaderVisibility() {
      if (currentTab === "home") {
          appHeader.classList.remove('hidden'); 
+         mainAppContent.style.marginTop = "65px"; // Home पर सर्च बार के लिए जगह देगा
      } else {
          appHeader.classList.add('hidden'); 
+         mainAppContent.style.marginTop = "15px"; // बाकी टैब्स पर खाली जगह खत्म कर देगा
      }
  }
 
