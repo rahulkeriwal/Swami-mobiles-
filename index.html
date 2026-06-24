@@ -1265,12 +1265,12 @@
     <div class="container" id="authContainer">
         <div id="phoneAuthForm">
             <h2 style="text-align:center;font-size:24px;margin-bottom:20px;">Mobile Authentication</h2>
-            <form id="mainPhoneForm" onsubmit="event.preventDefault(); sendPhoneOtp();">
+            <form id="mainPhoneForm" onsubmit="sendPhoneOtp(event);">
                 <div class="input-group">
                     <label>Phone Number</label>
                     <input type="tel" id="loginPhone" autocomplete="tel" placeholder="+91 98765 43210" required>
                 </div>
-                <button type="submit" class="submit-btn">Send OTP</button>
+                <button type="submit" class="submit-btn" onclick="sendPhoneOtp(event)">Send OTP</button>
             </form>
 
             <div id="otpSection" class="hidden" style="margin-top:18px;">
@@ -1608,7 +1608,9 @@
             });
         }
 
-        window.sendPhoneOtp = function () {
+        window.sendPhoneOtp = function (event) {
+            if (event && event.preventDefault) event.preventDefault();
+            console.log('sendPhoneOtp called');
             const phone = document.getElementById('loginPhone').value.trim();
             if (!phone) {
                 showCustomToastLive('Enter your mobile number.');
@@ -2305,6 +2307,7 @@
                     navigator.serviceWorker.register('./sw.js').catch(() => { });
                 });
             }
+        }
     </script>
 </body>
 
