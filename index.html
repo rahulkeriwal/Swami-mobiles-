@@ -1593,7 +1593,14 @@
         let recaptchaVerifier = null;
 
         function initPhoneRecaptcha() {
-            if (recaptchaVerifier) return;
+            if (recaptchaVerifier) {
+                try {
+                    recaptchaVerifier.clear();
+                } catch (clearErr) {
+                    console.warn('Failed to clear existing reCAPTCHA verifier:', clearErr);
+                }
+                recaptchaVerifier = null;
+            }
             recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
                 size: 'invisible',
                 callback: function (response) {
@@ -1603,8 +1610,11 @@
                     showCustomToastLive('reCAPTCHA expired. Please try again.');
                 }
             });
-            recaptchaVerifier.render().catch((err) => {
+            recaptchaVerifier.render().then((widgetId) => {
+                console.log('reCAPTCHA rendered:', widgetId);
+            }).catch((err) => {
                 console.warn('reCAPTCHA render failed:', err);
+                showCustomToastLive('reCAPTCHA initialization failed. Refresh the page and try again.');
             });
         }
 
@@ -1634,8 +1644,14 @@
                     showCustomToastLive('OTP sent to ' + formattedPhone);
                 })
                 .catch((err) => {
-                    console.error('Phone OTP error:', err);
-                    showCustomToastLive('Failed to send OTP: ' + (err.message || err));
+                    console.error('Phone OTP error:', err.code || err, err.message || err);
+                    let displayMessage = 'Failed to send OTP. ' + (err.message || err.code || 'Please try again.');
+                    if (err.code === 'auth/unauthorized-domain') {
+                        displayMessage = 'This site is not authorized for Firebase Phone Auth. Add your domain to Firebase Authorized Domains.';
+                    } else if (err.code === 'auth/too-many-requests' || err.code === 'auth/quota-exceeded') {
+                        displayMessage = 'OTP send blocked due to too many attempts. Try again later or use a test phone in Firebase.';
+                    }
+                    showCustomToastLive(displayMessage);
                 });
         }
 
