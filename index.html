@@ -1508,6 +1508,8 @@
         let userOrdersArray = [];
         let notificationsArray = [];
         let currentMeTab = 'profile';
+        let pendingNewUserUid = null;
+        let isFirstTimeRegistration = false;
 
         const YOUTUBE_LINK = "#";
         const WHATSAPP_LINK = "#";
@@ -1517,18 +1519,22 @@
         auth.onAuthStateChanged((user) => {
             console.log('AUTH STATE CHANGED:', user);
             if (user) {
-                try { showCustomToastLive('Signed in as ' + (user.email || user.uid)); } catch (e) { console.log('toast error', e); }
                 database.ref('users/' + user.uid).once('value').then((snapshot) => {
                     if (snapshot.exists()) {
                         const userData = snapshot.val();
                         userCustomName = userData.name || "Swami User";
                         userCustomAddress = userData.address || "Click edit to add your delivery address";
-                    } else if (user.displayName) {
-                        userCustomName = user.displayName;
+                        showCustomToastLive('Welcome back, ' + userCustomName + '!');
+                        activateMainDashboard();
                     } else {
-                        userCustomName = "Swami User";
+                        pendingNewUserUid = user.uid;
+                        isFirstTimeRegistration = true;
+                        userCustomName = user.displayName || "";
+                        userCustomAddress = "Click edit to add your delivery address";
+                        activateMainDashboard();
+                        openRegisterNameModal();
+                        showCustomToastLive('Welcome! Please tell us your name.');
                     }
-                    activateMainDashboard();
                 }).catch((err) => {
                     console.error('User data read error:', err);
                     userCustomName = "Swami User";
@@ -2065,8 +2071,79 @@
                 reader.readAsDataURL(inputElement.files[0]);
             }
         }
+        window.openRegisterNameModal = function () {
+            document.getElementById('registerFirstName').value = '';
+            document.getElementById('registerLastName').value = '';
+            document.getElementById('registerNameModal').classList.remove('hidden');
+        }
+        window.closeRegisterNameModal = function () {
+            document.getElementById('registerNameModal').classList.add('hidden');
+            if (isFirstTimeRegistration) {
+                showCustomToastLive('First name is required to continue.');
+            }
+        }
+        window.saveRegisterName = function () {
+            const firstName = document.getElementById('registerFirstName').value.trim();
+            const lastName = document.getElementById('registerLastName').value.trim();
+            if (!firstName) {
+                showCustomToastLive('First name is required.');
+                return;
+            }
+            const displayName = firstName + (lastName ? ' ' + lastName : '');
+            const uid = pendingNewUserUid || (auth.currentUser ? auth.currentUser.uid : null);
+            if (!uid) {
+                showCustomToastLive('Unable to save name right now.');
+                return;
+            }
+            const userData = {
+                phone: auth.currentUser ? auth.currentUser.phoneNumber || '' : '',
+                name: displayName,
+                address: userCustomAddress,
+                createdAt: Date.now()
+            };
+            database.ref('users/' + uid).set(userData).then(() => {
+                userCustomName = displayName;
+                if (auth.currentUser) {
+                    auth.currentUser.updateProfile({ displayName: displayName }).catch(() => { });
+                }
+                document.getElementById('displayProfileName').innerText = displayName;
+                document.getElementById('registerNameModal').classList.add('hidden');
+                isFirstTimeRegistration = false;
+                pendingNewUserUid = null;
+                showCustomToastLive('Welcome, ' + displayName + '!');
+            }).catch((err) => {
+                console.error('Name save failed:', err);
+                showCustomToastLive('Could not save name. Please try again.');
+            });
+        }
         function renderCategoryGridPage() {
-            mainAppContent.innerHTML = `<div class="category-page-grid">
+            window.closeEditAddressModal = function () { document.getElementById('editAddressModal').classList.add('hidden'); }
+            window.saveProfileAddressLive = function () {
+                let updatedAddress = document.getElementById('newAddressInput').value.trim();
+                let user = auth.currentUser;
+                if (updatedAddress && user) {
+                    database.ref('users/' + user.uid).update({ address: updatedAddress }).then(() => {
+                        userCustomAddress = updatedAddress; document.getElementById('displayProfileAddress').innerText = updatedAddress; closeEditAddressModal(); showCustomToastLive("Address updated!");
+                    });
+                }
+            }
+            window.openChangePasswordModal = function () { document.getElementById('newPasswordInput').value = ""; document.getElementById('changePasswordModal').classList.remove('hidden'); }
+            window.closeChangePasswordModal = function () { document.getElementById('changePasswordModal').classList.add('hidden'); }
+            window.saveNewPasswordLive = function () {
+                let newPassword = document.getElementById('newPasswordInput').value; let user = auth.currentUser;
+                if (!newPassword || newPassword.length < 6) { showCustomToastLive("Password too short!"); return; }
+                if (user) { user.updatePassword(newPassword).then(() => { closeChangePasswordModal(); showCustomToastLive("Password updated!"); }); }
+            }
+            window.triggerAvatarUpload = function () { document.getElementById('hiddenAvatarInput').click(); }
+            window.handleAvatarFileChange = function (inputElement) {
+                if (inputElement.files && inputElement.files[0]) {
+                    let reader = new FileReader();
+                    reader.onload = function (e) { userCustomAvatar = e.target.result; localStorage.setItem('swami_user_avatar', userCustomAvatar); document.getElementById('userProfilePic').src = userCustomAvatar; };
+                    reader.readAsDataURL(inputElement.files[0]);
+                }
+            }
+            function renderCategoryGridPage() {
+                mainAppContent.innerHTML = `<div class="category-page-grid">
          <button class="category-card-btn" onclick="openCategoryFromGrid('iphone')">🍏 iPhone</button>
          <button class="category-card-btn" onclick="openCategoryFromGrid('samsung')">📱 Samsung</button>
          <button class="category-card-btn" onclick="openCategoryFromGrid('oneplus')">🔴 OnePlus</button>
@@ -2076,158 +2153,158 @@
          <button class="category-card-btn" onclick="openCategoryFromGrid('xiaomi')">🍊 Redmi</button>
          <button class="category-card-btn" onclick="openCategoryFromGrid('charger')">🔌 Chargers</button>
      </div>`;
-        }
-        window.openCategoryFromGrid = function (catKey) { activeCategory = catKey; handleNavClick('home', 'nav-home'); }
-        window.filterBySpecificCategory = function (catKey) { activeCategory = catKey; if (catKey === "All") { renderUserProductsGrid(allProductsArray); } else { renderUserProductsGrid(allProductsArray.filter(p => p.category === catKey)); } }
-        window.handleSearch = function () {
-            let query = document.getElementById('searchInput').value.toLowerCase().trim();
-            if (query === "") {
-                renderCurrentTab();
-                return;
             }
-            renderUserProductsGrid(allProductsArray.filter(p => {
-                const nameMatch = (p.name || '').toLowerCase().includes(query);
-                const descMatch = (p.description || '').toLowerCase().includes(query);
-                const categoryMatch = (p.category || '').toLowerCase().includes(query);
-                return nameMatch || descMatch || categoryMatch;
-            }));
-        }
-        window.openDetailModal = function (product) {
-            currentSelectedProduct = {
-                key: product.key,
-                name: product.name,
-                beforePrice: product.beforePrice,
-                price: product.afterPrice,
-                image: product.image,
-                description: product.description,
-                replacementDays: product.replacementDays || '0'
-            };
-            document.getElementById('modalProductImg').src = currentSelectedProduct.image;
-            document.getElementById('modalProductTitleDetail').innerText = currentSelectedProduct.name;
-            document.getElementById('modalReplacementInfo').innerText = currentSelectedProduct.replacementDays && currentSelectedProduct.replacementDays !== '0' ? `Replacement: ${currentSelectedProduct.replacementDays} days` : 'No replacement available';
-            document.getElementById('modalProductDesc').innerText = currentSelectedProduct.description;
-            document.getElementById('modalBeforePrice').innerText = currentSelectedProduct.beforePrice;
-            document.getElementById('modalAfterPrice').innerText = currentSelectedProduct.price;
-            document.getElementById('productDetailModal').classList.remove('hidden');
-        }
-        window.closeDetailModal = function () { document.getElementById('productDetailModal').classList.add('hidden'); }
-        function showCustomToastLive(message) { let toast = document.getElementById('cartToast'); document.getElementById('toastMessage').innerText = message; toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); }, 2200); }
-        window.addToCartLive = function () { if (currentSelectedProduct) { userCartArray.push({ ...currentSelectedProduct }); localStorage.setItem('swami_cart', JSON.stringify(userCartArray)); renderCartCount(); closeDetailModal(); showCustomToastLive("Added to cart!"); } }
-        function renderCartItemsPage() {
-            if (userCartArray.length === 0) { mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;'>🛒 Your cart is empty.</p>"; return; }
-            let cartHTML = '<div class="cart-list">'; let totalAmount = 0;
-            userCartArray.forEach((item, index) => { let cleanPrice = parseInt((item.price || '').replace(/[^0-9]/g, '')) || 0; totalAmount += cleanPrice; cartHTML += `<div class="cart-item"><img src="${item.image}"><div class="cart-item-details"><div class="cart-item-title">${item.name}</div><div class="cart-item-price">${item.price}</div></div><button class="cart-remove-btn" onclick="removeFromCartLive(${index})">Remove</button></div>`; });
-            cartHTML += `</div><div class="cart-summary"><div class="summary-row"><span>Total Payable:</span><span>${formatCurrency(totalAmount)}</span></div><button class="checkout-btn" onclick="openOrderModal()">Checkout 🚀</button></div>`;
-            mainAppContent.innerHTML = cartHTML;
-        }
-        window.removeFromCartLive = function (index) { userCartArray.splice(index, 1); localStorage.setItem('swami_cart', JSON.stringify(userCartArray)); renderCartItemsPage(); }
-        window.openOrderModal = function () { document.getElementById('userOrderModal').classList.remove('hidden'); }
-        window.closeOrderModal = function () { document.getElementById('userOrderModal').classList.add('hidden'); }
-
-        window.submitOrderLive = function () {
-            const name = document.getElementById('orderCustName').value.trim();
-            const phone = document.getElementById('orderCustPhone').value.trim();
-            const flat = document.getElementById('orderCustFlat').value.trim();
-            const area = document.getElementById('orderCustArea').value.trim();
-            const landmark = document.getElementById('orderCustLandmark').value.trim();
-            const pincode = document.getElementById('orderCustPincode').value.trim();
-            const city = document.getElementById('orderCustCity').value.trim();
-            const state = document.getElementById('orderCustState').value.trim();
-            const instructions = document.getElementById('orderCustInstructions').value.trim();
-            const pMethod = document.getElementById('orderPaymentMethod').value;
-            const makeDefault = document.getElementById('orderMakeDefault').checked;
-
-            if (!name || !phone || !flat || !area || !pincode || !city || !state) {
-                alert("Please fill all required fields (marked with *)");
-                return;
-            }
-            if (phone.length !== 10 || !/^[0-9]{10}$/.test(phone)) {
-                alert("Please enter a valid 10-digit mobile number!");
-                return;
-            }
-            if (pincode.length !== 6 || !/^[0-9]{6}$/.test(pincode)) {
-                alert("Please enter a valid 6-digit pincode!");
-                return;
-            }
-            if (userCartArray.length === 0) return;
-
-            let totalAmount = 0;
-            const orderItems = userCartArray.map(item => {
-                const cleanPrice = parseInt((item.price || '').replace(/[^0-9]/g, '')) || 0;
-                totalAmount += cleanPrice;
-                return {
-                    productKey: item.key,
-                    productName: item.name,
-                    price: item.price,
-                    replacementDays: item.replacementDays || '0'
-                };
-            });
-
-            const user = auth.currentUser;
-            const localOrderId = "SWAMI_" + Date.now();
-            const fullAddress = `${flat}, ${area}${landmark ? ', ' + landmark : ''}, ${city} - ${pincode}, ${state}`;
-            const orderData = {
-                orderId: localOrderId,
-                customerName: name,
-                customerPhone: phone,
-                customerFlat: flat,
-                customerArea: area,
-                customerLandmark: landmark,
-                customerCity: city,
-                customerState: state,
-                customerPincode: pincode,
-                customerInstructions: instructions,
-                deliveryAddress: fullAddress,
-                customerEmail: user ? user.email : '',
-                userUid: user ? user.uid : '',
-                paymentMethod: pMethod === "PAYTM_UPI" ? "Paytm UPI / Online" : "Cash on Delivery (COD)",
-                items: orderItems,
-                totalAmount: totalAmount,
-                orderStatus: 'Processing',
-                timestamp: Date.now()
-            };
-
-            if (user && makeDefault) {
-                database.ref('users/' + user.uid).update({
-                    address: fullAddress,
-                    phone: phone
-                }).catch((err) => console.error('Error saving address:', err));
-            }
-
-            if (pMethod === "PAYTM_UPI") {
-                if (!MY_PAYTM_UPI_ID || MY_PAYTM_UPI_ID.includes("YOUR_PAYTM_UPI_HERE")) {
-                    showCustomToastLive("Paytm UPI ID is not configured yet.");
+            window.openCategoryFromGrid = function (catKey) { activeCategory = catKey; handleNavClick('home', 'nav-home'); }
+            window.filterBySpecificCategory = function (catKey) { activeCategory = catKey; if (catKey === "All") { renderUserProductsGrid(allProductsArray); } else { renderUserProductsGrid(allProductsArray.filter(p => p.category === catKey)); } }
+            window.handleSearch = function () {
+                let query = document.getElementById('searchInput').value.toLowerCase().trim();
+                if (query === "") {
+                    renderCurrentTab();
                     return;
                 }
-                saveOrderToFirebaseLive(orderData, true);
-                return;
+                renderUserProductsGrid(allProductsArray.filter(p => {
+                    const nameMatch = (p.name || '').toLowerCase().includes(query);
+                    const descMatch = (p.description || '').toLowerCase().includes(query);
+                    const categoryMatch = (p.category || '').toLowerCase().includes(query);
+                    return nameMatch || descMatch || categoryMatch;
+                }));
             }
-            saveOrderToFirebaseLive(orderData);
-        }
+            window.openDetailModal = function (product) {
+                currentSelectedProduct = {
+                    key: product.key,
+                    name: product.name,
+                    beforePrice: product.beforePrice,
+                    price: product.afterPrice,
+                    image: product.image,
+                    description: product.description,
+                    replacementDays: product.replacementDays || '0'
+                };
+                document.getElementById('modalProductImg').src = currentSelectedProduct.image;
+                document.getElementById('modalProductTitleDetail').innerText = currentSelectedProduct.name;
+                document.getElementById('modalReplacementInfo').innerText = currentSelectedProduct.replacementDays && currentSelectedProduct.replacementDays !== '0' ? `Replacement: ${currentSelectedProduct.replacementDays} days` : 'No replacement available';
+                document.getElementById('modalProductDesc').innerText = currentSelectedProduct.description;
+                document.getElementById('modalBeforePrice').innerText = currentSelectedProduct.beforePrice;
+                document.getElementById('modalAfterPrice').innerText = currentSelectedProduct.price;
+                document.getElementById('productDetailModal').classList.remove('hidden');
+            }
+            window.closeDetailModal = function () { document.getElementById('productDetailModal').classList.add('hidden'); }
+            function showCustomToastLive(message) { let toast = document.getElementById('cartToast'); document.getElementById('toastMessage').innerText = message; toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); }, 2200); }
+            window.addToCartLive = function () { if (currentSelectedProduct) { userCartArray.push({ ...currentSelectedProduct }); localStorage.setItem('swami_cart', JSON.stringify(userCartArray)); renderCartCount(); closeDetailModal(); showCustomToastLive("Added to cart!"); } }
+            function renderCartItemsPage() {
+                if (userCartArray.length === 0) { mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;'>🛒 Your cart is empty.</p>"; return; }
+                let cartHTML = '<div class="cart-list">'; let totalAmount = 0;
+                userCartArray.forEach((item, index) => { let cleanPrice = parseInt((item.price || '').replace(/[^0-9]/g, '')) || 0; totalAmount += cleanPrice; cartHTML += `<div class="cart-item"><img src="${item.image}"><div class="cart-item-details"><div class="cart-item-title">${item.name}</div><div class="cart-item-price">${item.price}</div></div><button class="cart-remove-btn" onclick="removeFromCartLive(${index})">Remove</button></div>`; });
+                cartHTML += `</div><div class="cart-summary"><div class="summary-row"><span>Total Payable:</span><span>${formatCurrency(totalAmount)}</span></div><button class="checkout-btn" onclick="openOrderModal()">Checkout 🚀</button></div>`;
+                mainAppContent.innerHTML = cartHTML;
+            }
+            window.removeFromCartLive = function (index) { userCartArray.splice(index, 1); localStorage.setItem('swami_cart', JSON.stringify(userCartArray)); renderCartItemsPage(); }
+            window.openOrderModal = function () { document.getElementById('userOrderModal').classList.remove('hidden'); }
+            window.closeOrderModal = function () { document.getElementById('userOrderModal').classList.add('hidden'); }
 
-        function saveOrderToFirebaseLive(orderData, redirectToUpi = false) {
-            database.ref('orders').push(orderData).then(() => {
-                userCartArray = [];
-                localStorage.removeItem('swami_cart');
-                renderCartCount();
-                closeOrderModal();
-                showCustomToastLive("Order Placed Successfully! 🎉");
-                activeCategory = "All";
-                handleNavClick('home', 'nav-home');
-                if (redirectToUpi) {
-                    let upiUrl = `upi://pay?pa=${encodeURIComponent(MY_PAYTM_UPI_ID)}&pn=Swami%20Mobiles&am=${orderData.totalAmount}&cu=INR&tn=Order%20${orderData.orderId}`;
-                    window.location.href = upiUrl;
+            window.submitOrderLive = function () {
+                const name = document.getElementById('orderCustName').value.trim();
+                const phone = document.getElementById('orderCustPhone').value.trim();
+                const flat = document.getElementById('orderCustFlat').value.trim();
+                const area = document.getElementById('orderCustArea').value.trim();
+                const landmark = document.getElementById('orderCustLandmark').value.trim();
+                const pincode = document.getElementById('orderCustPincode').value.trim();
+                const city = document.getElementById('orderCustCity').value.trim();
+                const state = document.getElementById('orderCustState').value.trim();
+                const instructions = document.getElementById('orderCustInstructions').value.trim();
+                const pMethod = document.getElementById('orderPaymentMethod').value;
+                const makeDefault = document.getElementById('orderMakeDefault').checked;
+
+                if (!name || !phone || !flat || !area || !pincode || !city || !state) {
+                    alert("Please fill all required fields (marked with *)");
+                    return;
                 }
-            }).catch((err) => {
-                showCustomToastLive('Unable to save order: ' + (err.message || err));
-            });
-        }
+                if (phone.length !== 10 || !/^[0-9]{10}$/.test(phone)) {
+                    alert("Please enter a valid 10-digit mobile number!");
+                    return;
+                }
+                if (pincode.length !== 6 || !/^[0-9]{6}$/.test(pincode)) {
+                    alert("Please enter a valid 6-digit pincode!");
+                    return;
+                }
+                if (userCartArray.length === 0) return;
 
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(() => { });
-            });
-        }
+                let totalAmount = 0;
+                const orderItems = userCartArray.map(item => {
+                    const cleanPrice = parseInt((item.price || '').replace(/[^0-9]/g, '')) || 0;
+                    totalAmount += cleanPrice;
+                    return {
+                        productKey: item.key,
+                        productName: item.name,
+                        price: item.price,
+                        replacementDays: item.replacementDays || '0'
+                    };
+                });
+
+                const user = auth.currentUser;
+                const localOrderId = "SWAMI_" + Date.now();
+                const fullAddress = `${flat}, ${area}${landmark ? ', ' + landmark : ''}, ${city} - ${pincode}, ${state}`;
+                const orderData = {
+                    orderId: localOrderId,
+                    customerName: name,
+                    customerPhone: phone,
+                    customerFlat: flat,
+                    customerArea: area,
+                    customerLandmark: landmark,
+                    customerCity: city,
+                    customerState: state,
+                    customerPincode: pincode,
+                    customerInstructions: instructions,
+                    deliveryAddress: fullAddress,
+                    customerEmail: user ? user.email : '',
+                    userUid: user ? user.uid : '',
+                    paymentMethod: pMethod === "PAYTM_UPI" ? "Paytm UPI / Online" : "Cash on Delivery (COD)",
+                    items: orderItems,
+                    totalAmount: totalAmount,
+                    orderStatus: 'Processing',
+                    timestamp: Date.now()
+                };
+
+                if (user && makeDefault) {
+                    database.ref('users/' + user.uid).update({
+                        address: fullAddress,
+                        phone: phone
+                    }).catch((err) => console.error('Error saving address:', err));
+                }
+
+                if (pMethod === "PAYTM_UPI") {
+                    if (!MY_PAYTM_UPI_ID || MY_PAYTM_UPI_ID.includes("YOUR_PAYTM_UPI_HERE")) {
+                        showCustomToastLive("Paytm UPI ID is not configured yet.");
+                        return;
+                    }
+                    saveOrderToFirebaseLive(orderData, true);
+                    return;
+                }
+                saveOrderToFirebaseLive(orderData);
+            }
+
+            function saveOrderToFirebaseLive(orderData, redirectToUpi = false) {
+                database.ref('orders').push(orderData).then(() => {
+                    userCartArray = [];
+                    localStorage.removeItem('swami_cart');
+                    renderCartCount();
+                    closeOrderModal();
+                    showCustomToastLive("Order Placed Successfully! 🎉");
+                    activeCategory = "All";
+                    handleNavClick('home', 'nav-home');
+                    if (redirectToUpi) {
+                        let upiUrl = `upi://pay?pa=${encodeURIComponent(MY_PAYTM_UPI_ID)}&pn=Swami%20Mobiles&am=${orderData.totalAmount}&cu=INR&tn=Order%20${orderData.orderId}`;
+                        window.location.href = upiUrl;
+                    }
+                }).catch((err) => {
+                    showCustomToastLive('Unable to save order: ' + (err.message || err));
+                });
+            }
+
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('./sw.js').catch(() => { });
+                });
+            }
     </script>
 </body>
 
