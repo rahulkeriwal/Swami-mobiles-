@@ -136,4 +136,2099 @@
             border-color: #fff;
         }
 
-        ...
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 6px;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1.5px solid rgba(255, 255, 255, 0.55);
+            padding: 6px 2px 8px;
+            font-size: 15px;
+            color: #fff;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-bottom-color: #fff;
+        }
+
+        .options-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12.5px;
+            margin-bottom: 20px;
+        }
+
+        .options-row a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px 0;
+            background: #fff;
+            color: #2a4a4a;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .switch-text {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 13.5px;
+        }
+
+        .switch-text a {
+            color: #fff;
+            font-weight: 700;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0 14px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .divider span {
+            padding: 0 10px;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 0;
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            font-size: 13px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 12px 16px;
+            z-index: 100;
+            background: rgba(27, 42, 74, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 30px;
+            padding: 8px 16px;
+            max-width: 360px;
+            margin: 0 auto;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 15px;
+            padding-left: 8px;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .category-nav-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            width: 100%;
+            max-width: 380px;
+            margin: 10px auto 5px auto;
+            padding: 4px 2px;
+            scrollbar-width: none;
+        }
+
+        .category-nav-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-pill {
+            flex: 0 0 auto;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .cat-pill.active {
+            background: #fff;
+            color: #1b2a4a;
+            font-weight: 700;
+        }
+
+        .app-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 380px;
+            background: transparent;
+            padding: 4px;
+            color: #333;
+            margin-bottom: 90px;
+        }
+
+        .user-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .product-box-card {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 10px;
+            padding: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .product-box-card img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #fafafa;
+            margin-bottom: 4px;
+        }
+
+        .p-box-title {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #1b2a4a;
+            margin-bottom: 2px;
+            line-height: 1.2;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 26px;
+        }
+
+        .price-box-row {
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2px;
+        }
+
+        .before-p-box {
+            font-size: 8.5px;
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .after-p-box {
+            font-size: 11px;
+            font-weight: 800;
+            color: #d97a5e;
+        }
+
+        .cart-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            padding: 5px 0;
+        }
+
+        .cart-item {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #eee;
+        }
+
+        .cart-item-details {
+            flex: 1;
+            text-align: left;
+        }
+
+        .cart-item-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1b2a4a;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .cart-item-price {
+            font-size: 13px;
+            font-weight: 800;
+            color: #d97a5e;
+            margin-top: 2px;
+        }
+
+        .cart-remove-btn {
+            background: none;
+            border: none;
+            color: #e2654f;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .cart-summary {
+            background: rgba(27, 42, 74, 0.9);
+            border-radius: 16px;
+            padding: 16px;
+            color: #fff;
+            margin-top: 15px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+            padding-bottom: 8px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: #fff;
+            color: #1b2a4a;
+            border: none;
+            padding: 12px;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+            transition: 0.2s;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 22px 16px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            margin-top: 10px;
+        }
+
+        .profile-img-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 12px auto;
+        }
+
+        .profile-avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #1b2a4a;
+            background: #e0e6ed;
+            cursor: pointer;
+        }
+
+        .avatar-upload-label {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: #2a6b6b;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-name-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .profile-name {
+            font-size: 19px;
+            font-weight: 800;
+            color: #1b2a4a;
+        }
+
+        .edit-name-pencil {
+            font-size: 15px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .profile-email {
+            font-size: 12.5px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .profile-info-box {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 10px 14px;
+            text-align: left;
+            margin-bottom: 14px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .info-box-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-box-text {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .info-edit-btn {
+            font-size: 13px;
+            cursor: pointer;
+            color: #2a6b6a;
+            font-weight: bold;
+        }
+
+        .profile-action-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .p-action-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #1b2a4a;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .p-action-btn:active {
+            background: #cbd5e1;
+        }
+
+        .social-media-footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .social-media-footer p {
+            font-size: 12px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .social-icons-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-icon-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            text-decoration: none;
+            transition: transform 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .social-icon-link:active {
+            transform: scale(0.9);
+        }
+
+        .social-icon-link svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .faq-section {
+            text-align: left;
+            margin-top: 15px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 15px;
+        }
+
+        .faq-section h4 {
+            font-size: 14px;
+            color: #1b2a4a;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #f1f5f9;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        .faq-question {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #334155;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .faq-answer {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+            line-height: 1.4;
+            display: none;
+        }
+
+        .category-page-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        .category-card-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            border-radius: 16px;
+            padding: 20px 10px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-card-btn:active {
+            transform: scale(0.96);
+            background: #fff;
+            color: #1b2a4a;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 10005;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 340px;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            color: #333;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 14px;
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            outline: none;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .payment-select {
+            width: 100%;
+            padding: 10px 14px;
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            outline: none;
+            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        #modalProductImg {
+            width: 100%;
+            max-height: 190px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            background: #f9f9f9;
+        }
+
+        #modalProductTitleDetail {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1b2a4a;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        #modalProductDesc {
+            font-size: 12.5px;
+            color: #666;
+            text-align: left;
+            margin-bottom: 12px;
+            max-height: 60px;
+            overflow-y: auto;
+            line-height: 1.4;
+        }
+
+        .modal-price-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            justify-content: flex-start;
+        }
+
+        .modal-before-p {
+            font-size: 13px;
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .modal-after-p {
+            font-size: 18px;
+            font-weight: 800;
+            color: #d97a5e;
+        }
+
+        .add-cart-btn {
+            width: 100%;
+            background: #2a6b6b;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(42, 107, 107, 0.3);
+            margin-bottom: 8px;
+        }
+
+        .close-txt-btn {
+            width: 100%;
+            background: transparent;
+            color: #e2654f;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+            padding: 4px 0;
+        }
+
+        .toast-cylinder {
+            position: fixed;
+            bottom: 85px;
+            left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: rgba(20, 35, 55, 0.95);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 10010;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+        }
+
+        .toast-cylinder.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast-success-icon {
+            background: #28b4a2;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(20, 35, 55, 0.96);
+            border-top: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 10px 12px 10px;
+            box-shadow: 0 -6px 30px rgba(0, 0, 0, 0.35);
+            z-index: 9999;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 10px;
+            cursor: pointer;
+            flex: 1;
+            gap: 4px;
+            padding: 10px 6px;
+            border-radius: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+            margin-bottom: 3px;
+        }
+
+        .nav-item.active {
+            color: #1b2a4a;
+            background: #fff;
+            font-weight: 700;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+        }
+
+        .nav-item.unique-cart {
+            position: relative;
+            top: -14px;
+            background: linear-gradient(135deg, #e2654f 0%, #d97a5e 100%);
+            border: 3px solid #1b2a4a;
+            width: 56px;
+            height: 56px;
+            flex: none;
+            border-radius: 50%;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(226, 101, 79, 0.4);
+        }
+
+        .nav-item.unique-cart svg {
+            width: 24px;
+            height: 24px;
+            margin: 0;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 12px;
+            background: #ffd700;
+            color: #1b2a4a;
+            font-size: 11px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .cart-badge.hidden {
+            display: none;
+        }
+
+        .me-sub-tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 12px 0 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .sub-tab-btn {
+            padding: 12px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .sub-tab-btn.active {
+            background: #fff;
+            color: #1b2a4a;
+            border-color: #fff;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+        }
+
+        .order-history-card,
+        .notification-card,
+        .return-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 14px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+            color: #1b2a4a;
+        }
+
+        .order-history-title {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .order-meta-row,
+        .notification-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            color: #475569;
+            margin-bottom: 10px;
+        }
+
+        .tracking-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .tracking-step .step-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            flex-shrink: 0;
+        }
+
+        .tracking-step.active .step-dot {
+            background: #2a6b6b;
+        }
+
+        .tracking-step .step-label {
+            font-size: 13px;
+            color: #334155;
+        }
+
+        .notification-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.07);
+        }
+
+        .notification-card h4 {
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 800;
+            color: #1b2a4a;
+        }
+
+        .notification-card p {
+            font-size: 13px;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        .notification-badge {
+            min-width: 22px;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: #e2e8f0;
+            color: #1b2a4a;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .logout-btn {
+            background: #e2654f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 5px;
+            width: 100%;
+        }
+
+        .address-form-section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 18px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .address-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #eef2f1;
+        }
+
+        .address-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1b2a4a;
+            margin: 0;
+        }
+
+        .address-close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .form-field {
+            margin-bottom: 14px;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1b2a4a;
+            margin-bottom: 6px;
+        }
+
+        .form-field input,
+        .form-field select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #ccd5d4;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            background: #fafafa;
+            font-family: inherit;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus {
+            border-color: #2a6b6b;
+            background: #fff;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-field-half {
+            margin-bottom: 0;
+        }
+
+        .form-field input::placeholder {
+            color: #999;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 14px;
+            padding: 12px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+
+        .checkbox-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-row label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1b2a4a;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+            border-top: 2px solid #eef2f1;
+            padding-top: 14px;
+        }
+
+        .form-actions button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit {
+            background: #2a6b6b;
+            color: white;
+        }
+
+        .btn-submit:active {
+            background: #1f5050;
+        }
+
+        .btn-cancel {
+            background: #eef2f1;
+            color: #1b2a4a;
+        }
+
+        .btn-cancel:active {
+            background: #ddd;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main-header hidden" id="appHeader">
+        <div class="search-box">
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff;margin-right:5px;">
+                <path
+                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+            </svg>
+            <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Search mobile, accessories..."
+                autocomplete="off" aria-label="Search products">
+        </div>
+    </header>
+
+    <div class="container" id="authContainer">
+        <div id="phoneAuthForm">
+            <h2 style="text-align:center;font-size:24px;margin-bottom:20px;">Mobile Authentication</h2>
+            <form id="mainPhoneForm" onsubmit="event.preventDefault(); sendPhoneOtp();">
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="loginPhone" autocomplete="tel" placeholder="+91 98765 43210" required>
+                </div>
+                <button type="submit" class="submit-btn">Send OTP</button>
+            </form>
+
+            <div id="otpSection" class="hidden" style="margin-top:18px;">
+                <div class="input-group">
+                    <label>Enter OTP</label>
+                    <input type="text" id="loginOtp" maxlength="6" placeholder="6-digit code" required>
+                </div>
+                <button class="submit-btn" onclick="verifyPhoneOtp()">Verify OTP</button>
+            </div>
+
+            <div id="recaptcha-container" style="margin-top:20px; width:100%;"></div>
+            <p style="font-size:12px;color:#fff;margin-top:10px;line-height:1.4;">Phone auth requires serving the page
+                from <strong>localhost</strong> or an <strong>HTTPS</strong> URL. It will not work on
+                <code>file://</code>.
+            </p>
+            <p class="switch-text">Sign in using only your mobile number. No email login is supported here.</p>
+        </div>
+    </div>
+
+    <div class="app-content hidden" id="mainAppContent"></div>
+
+    <div id="productDetailModal" class="modal hidden">
+        <div class="modal-content">
+            <img id="modalProductImg" src="" alt="Product">
+            <h3 id="modalProductTitleDetail">Product Title</h3>
+            <div id="modalReplacementInfo" style="font-size:13px;color:#1b6b3f;margin-bottom:8px;"></div>
+            <p id="modalProductDesc">Product description...</p>
+            <div class="modal-price-row">
+                <span id="modalBeforePrice" class="modal-before-p"></span>
+                <span id="modalAfterPrice" class="modal-after-p"></span>
+            </div>
+            <button class="add-cart-btn" onclick="addToCartLive()">Add to Cart 🛒</button>
+            <button class="close-txt-btn" onclick="closeDetailModal()">Close</button>
+        </div>
+    </div>
+
+    <div id="userOrderModal" class="modal hidden">
+        <div class="address-form-section">
+            <div class="address-header">
+                <h3>Delivery Address</h3>
+                <button class="address-close-btn" onclick="closeOrderModal()">✕</button>
+            </div>
+
+            <div class="form-field">
+                <label>Full Name *</label>
+                <input type="text" id="orderCustName" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-field">
+                <label>Mobile Number *</label>
+                <input type="tel" id="orderCustPhone" placeholder="10-digit mobile number" inputmode="numeric"
+                    pattern="[0-9]*" required>
+            </div>
+
+            <div class="form-field">
+                <label>Flat, House no., Building, Company, Apartment *</label>
+                <input type="text" id="orderCustFlat" placeholder="e.g. Apartment 4B, Building C" required>
+            </div>
+
+            <div class="form-field">
+                <label>Area, Street, Sector, Village *</label>
+                <input type="text" id="orderCustArea" placeholder="e.g. Main Street, Sector 15" required>
+            </div>
+
+            <div class="form-field">
+                <label>Landmark (Optional)</label>
+                <input type="text" id="orderCustLandmark" placeholder="e.g. near Apollo Hospital">
+            </div>
+
+            <div class="form-row">
+                <div class="form-field form-field-half">
+                    <label>Pincode *</label>
+                    <input type="text" id="orderCustPincode" placeholder="6-digit pincode" inputmode="numeric"
+                        pattern="[0-9]{6}" required>
+                </div>
+                <div class="form-field form-field-half">
+                    <label>Town/City *</label>
+                    <input type="text" id="orderCustCity" placeholder="e.g. Jaipur" required>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label>State *</label>
+                <select id="orderCustState" required>
+                    <option value="">-- Select State --</option>
+                    <option value="RAJASTHAN">Rajasthan</option>
+                    <option value="DELHI">Delhi</option>
+                    <option value="MUMBAI">Maharashtra</option>
+                    <option value="BANGALORE">Karnataka</option>
+                    <option value="HYDERABAD">Telangana</option>
+                    <option value="KOLKATA">West Bengal</option>
+                    <option value="PUNJAB">Punjab</option>
+                    <option value="TAMIL_NADU">Tamil Nadu</option>
+                    <option value="OTHERS">Other States</option>
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label>Delivery Instructions (Optional)</label>
+                <input type="text" id="orderCustInstructions"
+                    placeholder="e.g. Ring the doorbell twice, call before delivery">
+            </div>
+
+            <div class="checkbox-row">
+                <input type="checkbox" id="orderMakeDefault" checked>
+                <label for="orderMakeDefault">Save this as my default address</label>
+            </div>
+
+            <div class="form-field">
+                <label
+                    style="font-size:12px; font-weight:700; color:#1b2a4a; display:block; text-align:left; margin-bottom:8px;">Payment
+                    Method *</label>
+                <select id="orderPaymentMethod" required>
+                    <option value="COD">💵 Cash on Delivery (COD)</option>
+                    <option value="PAYTM_UPI">📱 Paytm / Online UPI</option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn-submit" onclick="submitOrderLive()">✓ Confirm Order</button>
+                <button class="btn-cancel" onclick="closeOrderModal()">✕ Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="editNameModal" class="modal hidden">
+        <div class="modal-content">
+            <h3 style="margin-bottom:12px; color:#1b2a4a;">Edit Profile Name</h3>
+            <input type="text" id="newProfileNameInput" placeholder="Enter your new name">
+            <button onclick="saveProfileNameLive()"
+                style="width: 100%; background: #2a6b6b; color: white; border: none; padding: 10px; border-radius: 20px; font-weight: 700; cursor:pointer;">Save
+                Name</button>
+            <button onclick="closeEditNameModal()"
+                style="width: 100%; background: transparent; color: #e2654f; border: none; margin-top: 8px; font-weight:600; cursor:pointer;">Cancel</button>
+        </div>
+    </div>
+
+    <div id="editAddressModal" class="modal hidden">
+        <div class="modal-content">
+            <h3 style="margin-bottom:12px; color:#1b2a4a;">Update Address</h3>
+            <input type="text" id="newAddressInput" placeholder="House No, Street, City...">
+            <button onclick="saveProfileAddressLive()"
+                style="width: 100%; background: #2a6b6b; color: white; border: none; padding: 10px; border-radius: 20px; font-weight: 700; cursor:pointer;">Save
+                Address</button>
+            <button onclick="closeEditAddressModal()"
+                style="width: 100%; background: transparent; color: #e2654f; border: none; margin-top: 8px; font-weight:600; cursor:pointer;">Cancel</button>
+        </div>
+    </div>
+
+    <div id="changePasswordModal" class="modal hidden">
+        <div class="modal-content">
+            <h3 style="margin-bottom:12px; color:#1b2a4a;">Change Password</h3>
+            <input type="password" id="newPasswordInput" placeholder="Enter new password">
+            <button onclick="saveNewPasswordLive()"
+                style="width: 100%; background: #2a6b6b; color: white; border: none; padding: 10px; border-radius: 20px; font-weight: 700; cursor:pointer;">Update
+                Password</button>
+            <button onclick="closeChangePasswordModal()"
+                style="width: 100%; background: transparent; color: #e2654f; border: none; margin-top: 8px; font-weight:600; cursor:pointer;">Cancel</button>
+        </div>
+    </div>
+
+    <div id="cartToast" class="toast-cylinder">
+        <span class="toast-success-icon">✓</span>
+        <span id="toastMessage">Action Completed</span>
+    </div>
+
+    <div class="bottom-nav hidden" id="appBottomNav">
+        <button class="nav-item active" id="nav-home" onclick="handleNavClick('home', 'nav-home')">
+            <svg viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+            <span>Home</span>
+        </button>
+        <button class="nav-item" id="nav-category" onclick="handleNavClick('category', 'nav-category')">
+            <svg viewBox="0 0 24 24">
+                <path d="M4 11h5V5H4v6zm0 7h5v-6H4v6zm7 0h5v-6h-5v6zm0-13v6h5V5h-5z" />
+            </svg>
+            <span>Category</span>
+        </button>
+        <button class="nav-item unique-cart" id="nav-cart" onclick="handleNavClick('cart', 'nav-cart')">
+            <span id="cartCountBadge" class="cart-badge hidden">0</span>
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
+            </svg>
+        </button>
+        <button class="nav-item" id="nav-offers" onclick="handleNavClick('offers', 'nav-offers')">
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7c-.83 0-1.5-.67-1.5-1.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" />
+            </svg>
+            <span>Offers</span>
+        </button>
+        <button class="nav-item" id="nav-me" onclick="handleNavClick('me', 'nav-me')">
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+            </svg>
+            <span>Me</span>
+        </button>
+    </div>
+    <script>
+        // Firebase Initialization Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDiZSWon47tBdSIkUB3qCSsU19LN_FOBgg",
+            authDomain: "swami-mobiles-29ee3.firebaseapp.com",
+            projectId: "swami-mobiles-29ee3",
+            storageBucket: "swami-mobiles-29ee3.firebasestorage.app",
+            messagingSenderId: "497794164748",
+            appId: "1:497794164748:web:fecc6f04615fa35a5f6629",
+            databaseURL: "https://swami-mobiles-29ee3-default-rtdb.firebaseio.com/"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        // Ensure auth persistence is local (persist across browser sessions)
+        try { auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch((e) => { console.warn('Auth persistence set failed:', e); }); } catch (e) { console.warn('setPersistence unavailable:', e); }
+        const database = firebase.database();
+
+        const authContainer = document.getElementById('authContainer');
+        const appHeader = document.getElementById('appHeader');
+        const appBottomNav = document.getElementById('appBottomNav');
+        const mainAppContent = document.getElementById('mainAppContent');
+
+        let currentSelectedProduct = null;
+        let allProductsArray = [];
+        let allDealsArray = [];
+        let activeCategory = "All";
+        let currentTab = "home";
+
+        let userCartArray = JSON.parse(localStorage.getItem('swami_cart')) || [];
+        let userCustomName = "Loading...";
+        let userCustomAddress = "Click edit to add your delivery address";
+        let userCustomAvatar = localStorage.getItem('swami_user_avatar') || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+        let userOrdersArray = [];
+        let notificationsArray = [];
+        let currentMeTab = 'profile';
+
+        const YOUTUBE_LINK = "#";
+        const WHATSAPP_LINK = "#";
+        const INSTAGRAM_LINK = "#";
+        const MY_PAYTM_UPI_ID = "YOUR_PAYTM_UPI_HERE@paytm";
+
+        auth.onAuthStateChanged((user) => {
+            console.log('AUTH STATE CHANGED:', user);
+            if (user) {
+                try { showCustomToastLive('Signed in as ' + (user.email || user.uid)); } catch (e) { console.log('toast error', e); }
+                database.ref('users/' + user.uid).once('value').then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const userData = snapshot.val();
+                        userCustomName = userData.name || "Swami User";
+                        userCustomAddress = userData.address || "Click edit to add your delivery address";
+                    } else if (user.displayName) {
+                        userCustomName = user.displayName;
+                    } else {
+                        userCustomName = "Swami User";
+                    }
+                    activateMainDashboard();
+                }).catch((err) => {
+                    console.error('User data read error:', err);
+                    userCustomName = "Swami User";
+                    activateMainDashboard();
+                });
+            } else {
+                try { showCustomToastLive('Signed out'); } catch (e) { }
+                deactivateMainDashboard();
+            }
+        });
+
+        function activateMainDashboard() {
+            authContainer.classList.add('hidden');
+            appBottomNav.classList.remove('hidden');
+            mainAppContent.classList.remove('hidden');
+            toggleHeaderVisibility();
+            renderCartCount();
+            loadLiveProducts();
+            loadLiveDeals();
+            loadUserOrders();
+            loadNotifications();
+        }
+
+        function deactivateMainDashboard() {
+            authContainer.classList.remove('hidden');
+            appBottomNav.classList.add('hidden');
+            appHeader.classList.add('hidden');
+            mainAppContent.classList.add('hidden');
+        }
+
+        function toggleHeaderVisibility() {
+            if (currentTab === 'home' || currentTab === 'category' || currentTab === 'offers') {
+                appHeader.classList.remove('hidden');
+            } else {
+                appHeader.classList.add('hidden');
+            }
+        }
+
+        function formatCurrency(total) {
+            return '₹' + total.toLocaleString('en-IN');
+        }
+
+        function renderCartCount() {
+            const badge = document.getElementById('cartCountBadge');
+            if (!badge) return;
+            const count = userCartArray.length;
+            if (count > 0) {
+                badge.innerText = count > 99 ? '99+' : count;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        let confirmationResult = null;
+        let recaptchaVerifier = null;
+
+        function initPhoneRecaptcha() {
+            if (recaptchaVerifier) return;
+            recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                size: 'invisible',
+                callback: function (response) {
+                    console.log('reCAPTCHA solved', response);
+                },
+                'expired-callback': function () {
+                    showCustomToastLive('reCAPTCHA expired. Please try again.');
+                }
+            });
+            recaptchaVerifier.render().catch((err) => {
+                console.warn('reCAPTCHA render failed:', err);
+            });
+        }
+
+        window.sendPhoneOtp = function () {
+            const phone = document.getElementById('loginPhone').value.trim();
+            if (!phone) {
+                showCustomToastLive('Enter your mobile number.');
+                return;
+            }
+            if (location.protocol === 'file:' || (window.location.hostname !== 'localhost' && location.protocol !== 'https:')) {
+                showCustomToastLive('Open this page via localhost or HTTPS. Phone auth does not work on file://');
+                return;
+            }
+            const digits = phone.replace(/\D/g, '');
+            if (digits.length < 10 || digits.length > 15) {
+                showCustomToastLive('Enter a valid mobile number.');
+                return;
+            }
+            const formattedPhone = phone.startsWith('+') ? phone.replace(/\s+/g, '') : '+91' + digits;
+            initPhoneRecaptcha();
+            auth.signInWithPhoneNumber(formattedPhone, recaptchaVerifier)
+                .then((result) => {
+                    confirmationResult = result;
+                    document.getElementById('otpSection').classList.remove('hidden');
+                    showCustomToastLive('OTP sent to ' + formattedPhone);
+                })
+                .catch((err) => {
+                    console.error('Phone OTP error:', err);
+                    showCustomToastLive('Failed to send OTP: ' + (err.message || err));
+                });
+        }
+
+        window.verifyPhoneOtp = function () {
+            const otp = document.getElementById('loginOtp').value.trim();
+            if (!otp) { showCustomToastLive('Enter the OTP.'); return; }
+            if (!confirmationResult) { showCustomToastLive('Please request OTP again.'); return; }
+            confirmationResult.confirm(otp).then((result) => {
+                const user = result.user;
+                if (user) {
+                    database.ref('users/' + user.uid).update({
+                        phone: user.phoneNumber || '',
+                        name: user.displayName || 'Swami User'
+                    }).catch((err) => console.warn('Error updating user phone:', err));
+                }
+                document.getElementById('otpSection').classList.add('hidden');
+                document.getElementById('loginOtp').value = '';
+                showCustomToastLive('Phone verified and signed in!');
+            }).catch((err) => {
+                console.error('OTP verification failed:', err);
+                showCustomToastLive('OTP verification failed: ' + (err.message || err));
+            });
+        }
+
+        window.handleLogout = function () {
+            auth.signOut().then(() => {
+                localStorage.removeItem('swami_cart');
+                userCartArray = [];
+                showCustomToastLive("Logged Out Successfully!");
+            });
+        }
+
+        function loadLiveProducts() {
+            mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:20px;'>Syncing Catalog...</p>";
+            database.ref('products').off('value');
+            database.ref('products').on('value', (snapshot) => {
+                allProductsArray = [];
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        let data = childSnapshot.val();
+                        data.key = childSnapshot.key;
+                        allProductsArray.push(data);
+                    });
+                }
+                renderCurrentTab();
+            });
+        }
+        function loadLiveDeals() {
+            database.ref('deals').off('value');
+            database.ref('deals').on('value', (snapshot) => {
+                allDealsArray = [];
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        let data = childSnapshot.val();
+                        data.key = childSnapshot.key;
+                        allDealsArray.push(data);
+                    });
+                }
+                if (currentTab === 'offers') {
+                    renderDealsPage();
+                }
+            });
+        }
+
+        function loadUserOrders() {
+            let user = auth.currentUser;
+            if (!user) {
+                userOrdersArray = [];
+                if (currentTab === 'me') renderMePage();
+                return;
+            }
+            database.ref('orders').off('value');
+            database.ref('orders').on('value', (snapshot) => {
+                userOrdersArray = [];
+                const normalizePhone = (p) => {
+                    if (!p) return '';
+                    const digits = ('' + p).replace(/\D/g, '');
+                    return digits.length > 10 ? digits.slice(-10) : digits;
+                };
+                const myEmail = user.email || '';
+                const myUid = user.uid || '';
+                const myPhoneNorm = normalizePhone(user.phoneNumber || user.phone || '');
+                console.log('Loading orders for user:', { uid: myUid, email: myEmail, phoneNorm: myPhoneNorm });
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        let order = childSnapshot.val();
+                        order.key = childSnapshot.key;
+                        const orderPhoneNorm = normalizePhone(order.customerPhone || order.phone || '');
+                        if (order.userUid === myUid || (order.customerEmail && order.customerEmail === myEmail) || (orderPhoneNorm && myPhoneNorm && orderPhoneNorm === myPhoneNorm)) {
+                            userOrdersArray.push(order);
+                        }
+                    });
+                }
+                console.log('Found user orders count:', userOrdersArray.length);
+                if (currentTab === 'me') renderMePage();
+            });
+        }
+
+        function loadNotifications() {
+            database.ref('notifications').off('value');
+            database.ref('notifications').on('value', (snapshot) => {
+                notificationsArray = [];
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        let note = childSnapshot.val();
+                        note.key = childSnapshot.key;
+                        notificationsArray.push(note);
+                    });
+                }
+                if (notificationsArray.length === 0) {
+                    notificationsArray.push({
+                        title: 'Welcome to Swami Mobiles',
+                        message: 'Your order updates, return requests, and deals will show up here.',
+                        timestamp: Date.now(),
+                        type: 'Info'
+                    });
+                }
+                if (currentTab === 'me') renderMePage();
+            });
+        }
+
+        function renderUserProductsGrid(productsToRender) {
+            mainAppContent.innerHTML = "";
+            let navHTML = `
+         <div class="category-nav-scroll">
+             <button class="cat-pill ${activeCategory === 'All' ? 'active' : ''}" onclick="filterBySpecificCategory('All')">✨ All Products</button>
+             <button class="cat-pill ${activeCategory === 'iphone' ? 'active' : ''}" onclick="filterBySpecificCategory('iphone')">🍏 iPhone</button>
+             <button class="cat-pill ${activeCategory === 'samsung' ? 'active' : ''}" onclick="filterBySpecificCategory('samsung')">📱 Samsung</button>
+             <button class="cat-pill ${activeCategory === 'oneplus' ? 'active' : ''}" onclick="filterBySpecificCategory('oneplus')">🔴 OnePlus</button>
+             <button class="cat-pill ${activeCategory === 'vivo' ? 'active' : ''}" onclick="filterBySpecificCategory('vivo')">💎 Vivo</button>
+             <button class="cat-pill ${activeCategory === 'oppo' ? 'active' : ''}" onclick="filterBySpecificCategory('oppo')">✨ Oppo</button>
+             <button class="cat-pill ${activeCategory === 'realme' ? 'active' : ''}" onclick="filterBySpecificCategory('realme')">💛 Realme</button>
+             <button class="cat-pill ${activeCategory === 'xiaomi' ? 'active' : ''}" onclick="filterBySpecificCategory('xiaomi')">🍊 Redmi</button>
+             <button class="cat-pill ${activeCategory === 'charger' ? 'active' : ''}" onclick="filterBySpecificCategory('charger')">🔌 Chargers</button>
+         </div>
+     `;
+
+            if (productsToRender.length > 0) {
+                let gridHTML = '<div class="user-grid">';
+                productsToRender.forEach((product) => {
+                    let safeImg = product.image || 'https://via.placeholder.com/150';
+                    let productData = encodeURIComponent(JSON.stringify({
+                        key: product.key,
+                        name: product.name || 'Untitled product',
+                        beforePrice: product.beforePrice || '',
+                        afterPrice: product.afterPrice || '',
+                        image: safeImg,
+                        description: (product.description || 'No description available.').replace(/\n/g, ' '),
+                        replacementDays: product.replacementDays || '0'
+                    }));
+
+                    gridHTML += `
+                 <div class="product-box-card" data-product="${productData}">
+                     <img src="${safeImg}" loading="lazy" alt="${product.name || 'Product'}">
+                     <div>
+                         <div class="p-box-title">${product.name || 'Untitled'}</div>
+                         <div class="price-box-row">
+                             <span class="before-p-box">${product.beforePrice || ''}</span>
+                             <span class="after-p-box">${product.afterPrice || ''}</span>
+                         </div>
+                     </div>
+                 </div>`;
+                });
+                gridHTML += '</div>';
+                mainAppContent.innerHTML = navHTML + gridHTML;
+                document.querySelectorAll('.product-box-card[data-product]').forEach((card) => {
+                    card.addEventListener('click', () => {
+                        const data = JSON.parse(decodeURIComponent(card.dataset.product));
+                        openDetailModal(data);
+                    });
+                });
+            } else {
+                mainAppContent.innerHTML = navHTML + "<p style='text-align:center;color:#fff;padding:40px 10px;'>No products found in this category.</p>";
+            }
+        }
+
+        window.handleNavClick = function (tabName, navId) {
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(navId).classList.add('active');
+            currentTab = tabName;
+            toggleHeaderVisibility();
+            renderCurrentTab();
+        }
+
+        function renderCurrentTab() {
+            if (currentTab === "home") {
+                if (activeCategory === "All") { renderUserProductsGrid(allProductsArray); }
+                else { filterBySpecificCategory(activeCategory); }
+            } else if (currentTab === "category") {
+                renderCategoryGridPage();
+            } else if (currentTab === "cart") {
+                renderCartItemsPage();
+            } else if (currentTab === "offers") {
+                renderDealsPage();
+            } else if (currentTab === "me") {
+                renderMePage();
+            }
+        }
+
+        function renderDealsPage() {
+            if (allDealsArray.length === 0) {
+                mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;'>No deals available right now.</p>";
+                return;
+            }
+            let dealsHTML = '<div class="user-grid">';
+            allDealsArray.forEach((deal) => {
+                let safeImg = deal.image || 'https://via.placeholder.com/150';
+                let dealData = encodeURIComponent(JSON.stringify({
+                    key: deal.key,
+                    name: deal.title || 'Deal',
+                    beforePrice: '',
+                    afterPrice: deal.price || '',
+                    image: safeImg,
+                    description: (deal.description || 'No description available.').replace(/\n/g, ' '),
+                    replacementDays: '0'
+                }));
+                dealsHTML += `
+                    <div class="product-box-card" data-product="${dealData}">
+                        <img src="${safeImg}" loading="lazy" alt="Deal">
+                        <div>
+                            <div class="p-box-title">${deal.title || 'Deal'}</div>
+                            <div class="price-box-row">
+                                <span class="after-p-box">${deal.price || ''}</span>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+            dealsHTML += '</div>';
+            mainAppContent.innerHTML = dealsHTML;
+            document.querySelectorAll('.product-box-card[data-product]').forEach((card) => {
+                card.addEventListener('click', () => {
+                    const data = JSON.parse(decodeURIComponent(card.dataset.product));
+                    openDetailModal(data);
+                });
+            });
+        }
+
+        function renderMePage() {
+            let user = auth.currentUser;
+            let emailTxt = user ? user.email : 'Guest Mode';
+            let notificationCount = notificationsArray.length;
+            let orderCount = userOrdersArray.length;
+
+            const tabButtons = `
+            <div class="me-sub-tabs">
+                <button class="sub-tab-btn ${currentMeTab === 'profile' ? 'active' : ''}" onclick="openMeSubTab('profile')">Profile</button>
+                <button class="sub-tab-btn ${currentMeTab === 'orders' ? 'active' : ''}" onclick="openMeSubTab('orders')">Orders ${orderCount ? '(' + orderCount + ')' : ''}</button>
+                <button class="sub-tab-btn ${currentMeTab === 'notifications' ? 'active' : ''}" onclick="openMeSubTab('notifications')">Notifications ${notificationCount ? '(' + notificationCount + ')' : ''}</button>
+            </div>`;
+
+            let contentHTML = '';
+            if (currentMeTab === 'profile') {
+                contentHTML = renderProfileSection(user, emailTxt, orderCount, notificationCount);
+            } else if (currentMeTab === 'orders') {
+                contentHTML = renderOrderHistorySection();
+            } else {
+                contentHTML = renderNotificationsSection();
+            }
+
+            mainAppContent.innerHTML = tabButtons + contentHTML;
+        }
+
+        function renderProfileSection(user, emailTxt, orderCount, notificationCount) {
+            return `
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <img src="${userCustomAvatar}" id="userProfilePic" class="profile-avatar" alt="Avatar" onclick="triggerAvatarUpload()">
+                        <label class="avatar-upload-label" onclick="triggerAvatarUpload()">📸</label>
+                        <input type="file" id="hiddenAvatarInput" accept="image/*" style="display:none;" onchange="handleAvatarFileChange(this)">
+                    </div>
+                    <div class="profile-name-row">
+                        <span class="profile-name" id="displayProfileName">${userCustomName}</span>
+                        <span class="edit-name-pencil" onclick="openEditNameModal()">✏️</span>
+                    </div>
+                    <p class="profile-email">${emailTxt}</p>
+                    <div class="profile-info-box">
+                        <div class="info-box-title">Delivery Address <span class="info-edit-btn" onclick="openEditAddressModal()">✏️ Edit</span></div>
+                        <div class="info-box-text" id="displayProfileAddress">${userCustomAddress}</div>
+                    </div>
+                    <div class="profile-action-row">
+                        <button class="p-action-btn" onclick="openChangePasswordModal()">🔑 Password</button>
+                        <button class="p-action-btn" onclick="triggerNativeShare()">🚀 Refer App</button>
+                    </div>
+                    <div class="order-meta-row" style="margin-top:12px;">
+                        <span class="notification-badge">Orders: ${orderCount}</span>
+                        <span class="notification-badge">Notifications: ${notificationCount}</span>
+                    </div>
+                    <button class='logout-btn' onclick='handleLogout()'>Sign Out</button>
+                </div>
+            `;
+        }
+
+        function renderOrderHistorySection() {
+            if (userOrdersArray.length === 0) {
+                return `<p style='text-align:center;color:#fff;padding:40px 10px;'>You have not placed any orders yet.</p>`;
+            }
+            let historyHTML = '';
+            const now = Date.now();
+            userOrdersArray.forEach((order) => {
+                let itemList = '';
+                let replacementStatusHtml = '';
+                (order.items || []).forEach((item) => {
+                    const days = parseInt(item.replacementDays || '0', 10);
+                    const itemLine = `<li>${item.productName} - ${item.price}${days > 0 ? ` (${days}d replacement)` : ''}</li>`;
+                    itemList += itemLine;
+                    if (days > 0 && order.timestamp) {
+                        const expiry = (order.timestamp || 0) + days * 24 * 60 * 60 * 1000;
+                        const expired = now > expiry;
+                        replacementStatusHtml += `<div style="font-size:13px; color:${expired ? '#e03e2d' : '#1b6b3f'}; margin-top:6px;">Replacement ${expired ? 'expired' : 'active'} for ${item.productName} (${days} days${order.timestamp ? ` until ${new Date(expiry).toLocaleDateString()}` : ''})</div>`;
+                    }
+                });
+                let trackingHtml = renderTrackingSteps(order.orderStatus || 'Processing');
+                let returnButton = '';
+                if (order.returnRequested) {
+                    returnButton = `<button class="checkout-btn" style="background:#e2e8f0;color:#1b2a4a;">Return ${order.returnStatus || 'Requested'}</button>`;
+                } else {
+                    returnButton = `<button class="checkout-btn" onclick="requestOrderReturn('${order.key}')">Request Return</button>`;
+                }
+                historyHTML += `
+                    <div class="order-history-card">
+                        <div class="order-history-title">Order #${order.orderId || order.key}</div>
+                        <div class="order-meta-row"><span>${formatCurrency(order.totalAmount || 0)}</span><span>${order.paymentMethod || 'COD'}</span></div>
+                        <div class="order-meta-row"><span>${new Date(order.timestamp || Date.now()).toLocaleDateString()}</span><span>${order.orderStatus || 'Processing'}</span></div>
+                        <div style="margin-bottom:10px;"><strong>Items:</strong><ul style="padding-left:18px;margin:8px 0;">${itemList}</ul></div>
+                        ${replacementStatusHtml}
+                        ${trackingHtml}
+                        ${returnButton}
+                    </div>`;
+            });
+            return historyHTML;
+        }
+
+        function renderTrackingSteps(status) {
+            const steps = ['Processing', 'Dispatched', 'Out for delivery', 'Delivered'];
+            const activeIndex = steps.indexOf(status) === -1 ? 0 : steps.indexOf(status);
+            let html = '<div style="margin-bottom:10px;">';
+            steps.forEach((step, index) => {
+                html += `
+                    <div class="tracking-step ${index <= activeIndex ? 'active' : ''}">
+                        <span class="step-dot"></span>
+                        <span class="step-label">${step}</span>
+                    </div>`;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function renderNotificationsSection() {
+            if (notificationsArray.length === 0) {
+                return `<p style='text-align:center;color:#fff;padding:40px 10px;'>No notifications available right now.</p>`;
+            }
+            let notifHTML = '';
+            notificationsArray.forEach((note) => {
+                notifHTML += `
+                    <div class="notification-card">
+                        <h4>${note.title || 'Notification'}</h4>
+                        <p>${note.message || note.body || 'No details available.'}</p>
+                        <div class="order-meta-row"><span>${note.timestamp ? new Date(note.timestamp).toLocaleString() : ''}</span><span>${note.type || ''}</span></div>
+                    </div>`;
+            });
+            return notifHTML;
+        }
+
+        window.openMeSubTab = function (tab) {
+            currentMeTab = tab;
+            renderMePage();
+        }
+
+        function requestOrderReturn(orderKey) {
+            let user = auth.currentUser;
+            if (!user) {
+                showCustomToastLive('Please sign in to request a return.');
+                return;
+            }
+            let orderRef = database.ref('orders/' + orderKey);
+            orderRef.update({ returnRequested: true, returnStatus: 'Requested', returnTimestamp: Date.now() }).then(() => {
+                showCustomToastLive('Return requested successfully.');
+            }).catch((err) => {
+                console.error('Return request failed:', err);
+                showCustomToastLive('Could not request return: ' + (err.message || err));
+            });
+        }
+
+        window.toggleFaq = function (element) {
+            let answer = element.querySelector('.faq-answer');
+            let arrow = element.querySelector('.faq-question span:last-child');
+            if (answer.style.display === "block") { answer.style.display = "none"; arrow.innerText = "▼"; }
+            else { answer.style.display = "block"; arrow.innerText = "▲"; }
+        }
+
+        window.triggerNativeShare = function () {
+            let shareData = {
+                title: 'Swami Mobiles',
+                text: 'Check out original mobile components and premium accessories at unbeatable wholesale prices on the Swami Mobiles store!',
+                url: window.location.href
+            };
+            if (navigator.share) { navigator.share(shareData).catch(() => { }); }
+            else { navigator.clipboard.writeText(shareData.text + " " + shareData.url).then(() => { showCustomToastLive("Share link copied!"); }); }
+        }
+
+        window.openEditNameModal = function () { document.getElementById('newProfileNameInput').value = userCustomName; document.getElementById('editNameModal').classList.remove('hidden'); }
+        window.closeEditNameModal = function () { document.getElementById('editNameModal').classList.add('hidden'); }
+        window.saveProfileNameLive = function () {
+            let updatedName = document.getElementById('newProfileNameInput').value.trim();
+            let user = auth.currentUser;
+            if (updatedName && user) {
+                database.ref('users/' + user.uid).update({ name: updatedName }).then(() => {
+                    userCustomName = updatedName; document.getElementById('displayProfileName').innerText = updatedName; closeEditNameModal(); showCustomToastLive("Name updated!");
+                });
+            }
+        }
+        window.openEditAddressModal = function () { document.getElementById('newAddressInput').value = (userCustomAddress.includes("Click edit")) ? "" : userCustomAddress; document.getElementById('editAddressModal').classList.remove('hidden'); }
+        window.closeEditAddressModal = function () { document.getElementById('editAddressModal').classList.add('hidden'); }
+        window.saveProfileAddressLive = function () {
+            let updatedAddress = document.getElementById('newAddressInput').value.trim();
+            let user = auth.currentUser;
+            if (updatedAddress && user) {
+                database.ref('users/' + user.uid).update({ address: updatedAddress }).then(() => {
+                    userCustomAddress = updatedAddress; document.getElementById('displayProfileAddress').innerText = updatedAddress; closeEditAddressModal(); showCustomToastLive("Address updated!");
+                });
+            }
+        }
+        window.openChangePasswordModal = function () { document.getElementById('newPasswordInput').value = ""; document.getElementById('changePasswordModal').classList.remove('hidden'); }
+        window.closeChangePasswordModal = function () { document.getElementById('changePasswordModal').classList.add('hidden'); }
+        window.saveNewPasswordLive = function () {
+            let newPassword = document.getElementById('newPasswordInput').value; let user = auth.currentUser;
+            if (!newPassword || newPassword.length < 6) { showCustomToastLive("Password too short!"); return; }
+            if (user) { user.updatePassword(newPassword).then(() => { closeChangePasswordModal(); showCustomToastLive("Password updated!"); }); }
+        }
+        window.triggerAvatarUpload = function () { document.getElementById('hiddenAvatarInput').click(); }
+        window.handleAvatarFileChange = function (inputElement) {
+            if (inputElement.files && inputElement.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function (e) { userCustomAvatar = e.target.result; localStorage.setItem('swami_user_avatar', userCustomAvatar); document.getElementById('userProfilePic').src = userCustomAvatar; };
+                reader.readAsDataURL(inputElement.files[0]);
+            }
+        }
+        function renderCategoryGridPage() {
+            mainAppContent.innerHTML = `<div class="category-page-grid">
+         <button class="category-card-btn" onclick="openCategoryFromGrid('iphone')">🍏 iPhone</button>
+         <button class="category-card-btn" onclick="openCategoryFromGrid('samsung')">📱 Samsung</button>
+         <button class="category-card-btn" onclick="openCategoryFromGrid('oneplus')">🔴 OnePlus</button>
+         <button class="category-card-btn" onclick="openCategoryFromGrid('vivo')">💎 Vivo</button>
+         <button class="category-card-btn" onclick="openCategoryFromGrid('oppo')">✨ Oppo</button>
+         <button class="category-card-btn" onclick="openCategoryFromGrid('realme')">💛 Realme</button>
+         <button class="category-card-btn" onclick="openCategoryFromGrid('xiaomi')">🍊 Redmi</button>
+         <button class="category-card-btn" onclick="openCategoryFromGrid('charger')">🔌 Chargers</button>
+     </div>`;
+        }
+        window.openCategoryFromGrid = function (catKey) { activeCategory = catKey; handleNavClick('home', 'nav-home'); }
+        window.filterBySpecificCategory = function (catKey) { activeCategory = catKey; if (catKey === "All") { renderUserProductsGrid(allProductsArray); } else { renderUserProductsGrid(allProductsArray.filter(p => p.category === catKey)); } }
+        window.handleSearch = function () {
+            let query = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (query === "") {
+                renderCurrentTab();
+                return;
+            }
+            renderUserProductsGrid(allProductsArray.filter(p => {
+                const nameMatch = (p.name || '').toLowerCase().includes(query);
+                const descMatch = (p.description || '').toLowerCase().includes(query);
+                const categoryMatch = (p.category || '').toLowerCase().includes(query);
+                return nameMatch || descMatch || categoryMatch;
+            }));
+        }
+        window.openDetailModal = function (product) {
+            currentSelectedProduct = {
+                key: product.key,
+                name: product.name,
+                beforePrice: product.beforePrice,
+                price: product.afterPrice,
+                image: product.image,
+                description: product.description,
+                replacementDays: product.replacementDays || '0'
+            };
+            document.getElementById('modalProductImg').src = currentSelectedProduct.image;
+            document.getElementById('modalProductTitleDetail').innerText = currentSelectedProduct.name;
+            document.getElementById('modalReplacementInfo').innerText = currentSelectedProduct.replacementDays && currentSelectedProduct.replacementDays !== '0' ? `Replacement: ${currentSelectedProduct.replacementDays} days` : 'No replacement available';
+            document.getElementById('modalProductDesc').innerText = currentSelectedProduct.description;
+            document.getElementById('modalBeforePrice').innerText = currentSelectedProduct.beforePrice;
+            document.getElementById('modalAfterPrice').innerText = currentSelectedProduct.price;
+            document.getElementById('productDetailModal').classList.remove('hidden');
+        }
+        window.closeDetailModal = function () { document.getElementById('productDetailModal').classList.add('hidden'); }
+        function showCustomToastLive(message) { let toast = document.getElementById('cartToast'); document.getElementById('toastMessage').innerText = message; toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); }, 2200); }
+        window.addToCartLive = function () { if (currentSelectedProduct) { userCartArray.push({ ...currentSelectedProduct }); localStorage.setItem('swami_cart', JSON.stringify(userCartArray)); renderCartCount(); closeDetailModal(); showCustomToastLive("Added to cart!"); } }
+        function renderCartItemsPage() {
+            if (userCartArray.length === 0) { mainAppContent.innerHTML = "<p style='text-align:center;color:#fff;padding:40px 10px;'>🛒 Your cart is empty.</p>"; return; }
+            let cartHTML = '<div class="cart-list">'; let totalAmount = 0;
+            userCartArray.forEach((item, index) => { let cleanPrice = parseInt((item.price || '').replace(/[^0-9]/g, '')) || 0; totalAmount += cleanPrice; cartHTML += `<div class="cart-item"><img src="${item.image}"><div class="cart-item-details"><div class="cart-item-title">${item.name}</div><div class="cart-item-price">${item.price}</div></div><button class="cart-remove-btn" onclick="removeFromCartLive(${index})">Remove</button></div>`; });
+            cartHTML += `</div><div class="cart-summary"><div class="summary-row"><span>Total Payable:</span><span>${formatCurrency(totalAmount)}</span></div><button class="checkout-btn" onclick="openOrderModal()">Checkout 🚀</button></div>`;
+            mainAppContent.innerHTML = cartHTML;
+        }
+        window.removeFromCartLive = function (index) { userCartArray.splice(index, 1); localStorage.setItem('swami_cart', JSON.stringify(userCartArray)); renderCartItemsPage(); }
+        window.openOrderModal = function () { document.getElementById('userOrderModal').classList.remove('hidden'); }
+        window.closeOrderModal = function () { document.getElementById('userOrderModal').classList.add('hidden'); }
+
+        window.submitOrderLive = function () {
+            const name = document.getElementById('orderCustName').value.trim();
+            const phone = document.getElementById('orderCustPhone').value.trim();
+            const flat = document.getElementById('orderCustFlat').value.trim();
+            const area = document.getElementById('orderCustArea').value.trim();
+            const landmark = document.getElementById('orderCustLandmark').value.trim();
+            const pincode = document.getElementById('orderCustPincode').value.trim();
+            const city = document.getElementById('orderCustCity').value.trim();
+            const state = document.getElementById('orderCustState').value.trim();
+            const instructions = document.getElementById('orderCustInstructions').value.trim();
+            const pMethod = document.getElementById('orderPaymentMethod').value;
+            const makeDefault = document.getElementById('orderMakeDefault').checked;
+
+            if (!name || !phone || !flat || !area || !pincode || !city || !state) {
+                alert("Please fill all required fields (marked with *)");
+                return;
+            }
+            if (phone.length !== 10 || !/^[0-9]{10}$/.test(phone)) {
+                alert("Please enter a valid 10-digit mobile number!");
+                return;
+            }
+            if (pincode.length !== 6 || !/^[0-9]{6}$/.test(pincode)) {
+                alert("Please enter a valid 6-digit pincode!");
+                return;
+            }
+            if (userCartArray.length === 0) return;
+
+            let totalAmount = 0;
+            const orderItems = userCartArray.map(item => {
+                const cleanPrice = parseInt((item.price || '').replace(/[^0-9]/g, '')) || 0;
+                totalAmount += cleanPrice;
+                return {
+                    productKey: item.key,
+                    productName: item.name,
+                    price: item.price,
+                    replacementDays: item.replacementDays || '0'
+                };
+            });
+
+            const user = auth.currentUser;
+            const localOrderId = "SWAMI_" + Date.now();
+            const fullAddress = `${flat}, ${area}${landmark ? ', ' + landmark : ''}, ${city} - ${pincode}, ${state}`;
+            const orderData = {
+                orderId: localOrderId,
+                customerName: name,
+                customerPhone: phone,
+                customerFlat: flat,
+                customerArea: area,
+                customerLandmark: landmark,
+                customerCity: city,
+                customerState: state,
+                customerPincode: pincode,
+                customerInstructions: instructions,
+                deliveryAddress: fullAddress,
+                customerEmail: user ? user.email : '',
+                userUid: user ? user.uid : '',
+                paymentMethod: pMethod === "PAYTM_UPI" ? "Paytm UPI / Online" : "Cash on Delivery (COD)",
+                items: orderItems,
+                totalAmount: totalAmount,
+                orderStatus: 'Processing',
+                timestamp: Date.now()
+            };
+
+            if (user && makeDefault) {
+                database.ref('users/' + user.uid).update({
+                    address: fullAddress,
+                    phone: phone
+                }).catch((err) => console.error('Error saving address:', err));
+            }
+
+            if (pMethod === "PAYTM_UPI") {
+                if (!MY_PAYTM_UPI_ID || MY_PAYTM_UPI_ID.includes("YOUR_PAYTM_UPI_HERE")) {
+                    showCustomToastLive("Paytm UPI ID is not configured yet.");
+                    return;
+                }
+                saveOrderToFirebaseLive(orderData, true);
+                return;
+            }
+            saveOrderToFirebaseLive(orderData);
+        }
+
+        function saveOrderToFirebaseLive(orderData, redirectToUpi = false) {
+            database.ref('orders').push(orderData).then(() => {
+                userCartArray = [];
+                localStorage.removeItem('swami_cart');
+                renderCartCount();
+                closeOrderModal();
+                showCustomToastLive("Order Placed Successfully! 🎉");
+                activeCategory = "All";
+                handleNavClick('home', 'nav-home');
+                if (redirectToUpi) {
+                    let upiUrl = `upi://pay?pa=${encodeURIComponent(MY_PAYTM_UPI_ID)}&pn=Swami%20Mobiles&am=${orderData.totalAmount}&cu=INR&tn=Order%20${orderData.orderId}`;
+                    window.location.href = upiUrl;
+                }
+            }).catch((err) => {
+                showCustomToastLive('Unable to save order: ' + (err.message || err));
+            });
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(() => { });
+            });
+        }
+    </script>
+</body>
+
+</html>
